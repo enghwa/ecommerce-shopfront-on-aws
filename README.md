@@ -25,6 +25,7 @@ ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
 ### 1. Primary region - CFN
 Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book, bestselleors), s3 (version enable)
 input param (vpc cdk#1)
+route53 hostzone -> call remote api do nsrecord xyz (random number acm) -> origincal acm region1/2 (auto approval)
 
 ### 2. Build multi-region solution - Aurora (2nd region)
 aws rds create-db-cluster \
@@ -83,3 +84,6 @@ input param (vpc cdk#1, s3 #2, dynamodb #2)
 3. Delete (aurora, dynamdb) - video 
 
 Low priority: Cloudfront s3 origin group
+
+how to automate route53 registation
+we need to acm auto approval
