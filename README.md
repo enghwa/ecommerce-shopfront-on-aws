@@ -24,7 +24,7 @@ ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
 
 ### 1. Primary region - CFN
 Remove metadata, neptune, search (dependson), apigateway (auth:none), s3 (version enable)
-input param (vpc cdk#1 for cache)
+input param (vpc cdk#1)
 
 ### 2. Build multi-region solution - Aurora (2nd region)
 aws rds create-db-cluster \
@@ -39,12 +39,15 @@ aws rds create-db-instance \
 
 ### 2. Build multi-region solution - S3
 aws s3api create-bucket \
---bucket <destination> \
+--bucket <AssetsBucketName-region2> \
+--acl private \ 
 --region <us-west-2> \
 
 aws s3api put-bucket-versioning \
---bucket destination \
+--bucket <AssetsBucketName-region2> \
 --versioning-configuration Status=Enabled \
+
+aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html
 
 $ aws iam create-role \
 --role-name crrRole \
@@ -63,7 +66,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
 
 ### 2. Build multi-region solution - DynamoDB
 aws dynamodb create-global-table \
---global-table-name <item> \
+--global-table-name <Books, Orders, Cart> \
 --replication-group RegionName=<eu-west-1> RegionName=<ap-southeast-1> \
 --region <eu-west-1>
 

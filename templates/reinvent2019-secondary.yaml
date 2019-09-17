@@ -1,18 +1,21 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   ProjectName:
-    Description: Name of the project (lowercase and under ten characters)
+    Description: Name of the project (lowercase and under ten characters) (ex. ProjectNameSecondaryRegion)
     Type: String
     AllowedPattern: "^[a-z]{0,10}$"
-    ConstraintDescription: Must be lowercase and under ten characters
+    ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
   AssetsBucketName:
     Type: String
-    Description: Name of assets S3 bucket to create (lowercase, numbers or - only, S3 Buckets are globally unique)
-    AllowedPattern: "^[a-z0-9-]{3,53}$"
-    ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
+    Description: Name of assets S3 bucket replicated from the secondary region (ex. AssetsBucketName-secondary)
+    # AllowedPattern: "^[a-z0-9-]{3,53}$"
+    # ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
     Default: 'http://woof.kopi.io/bookshop.zip'
+  bookstoreVPC:
+    Type: String
+    Description: VPC ID of Secondary Region (ex. vpc-xxx)
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -50,10 +53,10 @@ Mappings:
 Resources:
 # ---------- VPC - SUBNET - SECURITY GROUPS  ---------
 
-  bookstoreVPC:
-    Type: "AWS::EC2::VPC"
-    Properties:
-      CidrBlock: '172.31.0.0/16'
+  # bookstoreVPC:
+  #   Type: "AWS::EC2::VPC"
+  #   Properties:
+  #     CidrBlock: '172.31.0.0/16'
   
   bookstoreSubnet1:
     Type: "AWS::EC2::Subnet"
@@ -63,8 +66,8 @@ Resources:
           - 0
           - Fn::Cidr:
             - Fn::GetAtt: [bookstoreVPC, CidrBlock]
-            - 3
-            - 8
+            - 2
+            - 5
       VpcId:
         Ref: bookstoreVPC
       AvailabilityZone:
@@ -73,30 +76,30 @@ Resources:
           - Fn::GetAZs:
               Ref: "AWS::Region"
 
-  bookstoreSubnet2:
-    Type: "AWS::EC2::Subnet"
-    Properties:
-      CidrBlock:
-        Fn::Select:
-          - 1
-          - Fn::Cidr:
-            - Fn::GetAtt: [bookstoreVPC, CidrBlock]
-            - 3
-            - 8
-      VpcId:
-        Ref: bookstoreVPC
-      AvailabilityZone:
-        Fn::Select:
-          - 1
-          - Fn::GetAZs:
-              Ref: "AWS::Region"  
+  # bookstoreSubnet2:
+  #   Type: "AWS::EC2::Subnet"
+  #   Properties:
+  #     CidrBlock:
+  #       Fn::Select:
+  #         - 1
+  #         - Fn::Cidr:
+  #           - Fn::GetAtt: [bookstoreVPC, CidrBlock]
+  #           - 3
+  #           - 8
+  #     VpcId:
+  #       Ref: bookstoreVPC
+  #     AvailabilityZone:
+  #       Fn::Select:
+  #         - 1
+  #         - Fn::GetAZs:
+  #             Ref: "AWS::Region"  
 
-  bookstoreSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupName: !Sub '${ProjectName}-SG'
-      GroupDescription: Lock cache down to webserver access only
-      VpcId: !Ref bookstoreVPC
+  # bookstoreSecurityGroup:
+  #   Type: 'AWS::EC2::SecurityGroup'
+  #   Properties:
+  #     GroupName: !Sub '${ProjectName}-SG'
+  #     GroupDescription: Lock cache down to webserver access only
+  #     VpcId: !Ref bookstoreVPC
 
   bookstoreVPCRouteTable:  
     Type: AWS::EC2::RouteTable
@@ -109,11 +112,11 @@ Resources:
       RouteTableId: !Ref bookstoreVPCRouteTable
       SubnetId: !Ref bookstoreSubnet1
 
-  bookstoreVPCRouteTableAssociationTwo:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties: 
-      RouteTableId: !Ref bookstoreVPCRouteTable
-      SubnetId: !Ref bookstoreSubnet2    
+  # bookstoreVPCRouteTableAssociationTwo:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties: 
+  #     RouteTableId: !Ref bookstoreVPCRouteTable
+  #     SubnetId: !Ref bookstoreSubnet2    
 
   redisLambdaSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
@@ -146,7 +149,7 @@ Resources:
   DynamoDbRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-DynamoDbLambda'
+      RoleName: !Sub '${ProjectName}-DynamoDbLambda2'
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -174,93 +177,93 @@ Resources:
                   - 'dynamodb:GetItem'
                   - 'dynamodb:Scan'
                   - 'dynamodb:DeleteItem'
-                Resource:
-                  - !GetAtt 
-                    - TBooks
-                    - Arn
-                  - !GetAtt 
-                    - TOrders
-                    - Arn
-                  - !GetAtt 
-                    - TCart
-                    - Arn
-                  - !Join 
-                    - ''
-                    - - !GetAtt 
-                        - TBooks
-                        - Arn
-                      - /*
+                Resource: "*"
+                  # - !GetAtt 
+                  #   - TBooks
+                  #   - Arn
+                  # - !GetAtt 
+                  #   - TOrders
+                  #   - Arn
+                  # - !GetAtt 
+                  #   - TCart
+                  #   - Arn
+                  # - !Join 
+                  #   - ''
+                  #   - - !GetAtt 
+                  #       - TBooks
+                  #       - Arn
+                  #     - /*
 
 # ---------- DYNAMODB TABLES DEFINITIONS ---------
-  TBooks:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      TableName: !Sub '${ProjectName}-Books'
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-        - AttributeName: category
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      GlobalSecondaryIndexes:
-        - IndexName: category-index
-          KeySchema:
-            - AttributeName: category
-              KeyType: HASH
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
-  TOrders:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      TableName: !Sub '${ProjectName}-Orders'
-      AttributeDefinitions:
-        - AttributeName: customerId
-          AttributeType: S
-        - AttributeName: orderId
-          AttributeType: S
-      KeySchema:
-        - AttributeName: customerId
-          KeyType: HASH
-        - AttributeName: orderId
-          KeyType: RANGE
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES  
-  TCart:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      TableName: !Sub '${ProjectName}-Cart'
-      AttributeDefinitions:
-        - AttributeName: customerId
-          AttributeType: S
-        - AttributeName: bookId
-          AttributeType: S
-      KeySchema:
-        - AttributeName: customerId
-          KeyType: HASH
-        - AttributeName: bookId
-          KeyType: RANGE
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+  # TBooks:
+  #   Type: 'AWS::DynamoDB::Table'
+  #   Properties:
+  #     TableName: !Sub '${ProjectName}-Books'
+  #     AttributeDefinitions:
+  #       - AttributeName: id
+  #         AttributeType: S
+  #       - AttributeName: category
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: id
+  #         KeyType: HASH
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
+  #     GlobalSecondaryIndexes:
+  #       - IndexName: category-index
+  #         KeySchema:
+  #           - AttributeName: category
+  #             KeyType: HASH
+  #         Projection:
+  #           ProjectionType: ALL
+  #         ProvisionedThroughput:
+  #           ReadCapacityUnits: 1
+  #           WriteCapacityUnits: 1
+  #     StreamSpecification:
+  #       StreamViewType: NEW_AND_OLD_IMAGES
+  # TOrders:
+  #   Type: 'AWS::DynamoDB::Table'
+  #   Properties:
+  #     TableName: !Sub '${ProjectName}-Orders'
+  #     AttributeDefinitions:
+  #       - AttributeName: customerId
+  #         AttributeType: S
+  #       - AttributeName: orderId
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: customerId
+  #         KeyType: HASH
+  #       - AttributeName: orderId
+  #         KeyType: RANGE
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
+  #     StreamSpecification:
+  #       StreamViewType: NEW_AND_OLD_IMAGES  
+  # TCart:
+  #   Type: 'AWS::DynamoDB::Table'
+  #   Properties:
+  #     TableName: !Sub '${ProjectName}-Cart'
+  #     AttributeDefinitions:
+  #       - AttributeName: customerId
+  #         AttributeType: S
+  #       - AttributeName: bookId
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: customerId
+  #         KeyType: HASH
+  #       - AttributeName: bookId
+  #         KeyType: RANGE
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
 
 # ---------- ROLES FOR ELASTICACHE ---------  
   RedisRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-RedisRole'
+      RoleName: !Sub '${ProjectName}-RedisRole2'
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -1471,16 +1474,16 @@ Resources:
     Properties:
       RepositoryDescription: Code repository for web application
       RepositoryName: !Sub '${ProjectName}-WebAssets'
-  AssetsBucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Ref AssetsBucketName
-      AccessControl: Private
-      MetricsConfigurations:
-        - Id: EntireBucket
-      VersioningConfiguration: Enabled
-      WebsiteConfiguration:
-        IndexDocument: index.html
+  # AssetsBucket:
+  #   Type: 'AWS::S3::Bucket'
+  #   Properties:
+  #     BucketName: !Ref AssetsBucketName
+  #     AccessControl: Private
+  #     MetricsConfigurations:
+  #       - Id: EntireBucket
+  #     VersioningConfiguration: Enabled
+  #     WebsiteConfiguration:
+  #       IndexDocument: index.html
   AssetsBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -1529,7 +1532,7 @@ Resources:
     Description: Creating service role in IAM for AWS CodeBuild
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-codebuild-role'
+      RoleName: !Sub '${ProjectName}-codebuild-role2'
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -1571,7 +1574,7 @@ Resources:
     Description: Creating service role in IAM for AWS CodePipeline
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-CodePipeline-Role'
+      RoleName: !Sub '${ProjectName}-CodePipeline-Role2'
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
