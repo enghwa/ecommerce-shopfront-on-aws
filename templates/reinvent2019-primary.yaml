@@ -1478,7 +1478,8 @@ Resources:
       AccessControl: Private
       MetricsConfigurations:
         - Id: EntireBucket
-      VersioningConfiguration: Enabled
+      VersioningConfiguration: 
+        Status: Enabled
       WebsiteConfiguration:
         IndexDocument: index.html
   AssetsBucketPolicy:
