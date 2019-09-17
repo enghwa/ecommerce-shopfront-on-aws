@@ -12,7 +12,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
-    Default: 'https://s3.amazonaws.com/aws-bookstore-demo/bookstore-webapp.zip'
+    Default: 'http://woof.kopi.io/bookshop.zip'
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -275,6 +275,51 @@ Resources:
         - 'arn:aws:iam::aws:policy/AmazonElastiCacheFullAccess'
         - 'arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole'
         - 'arn:aws:iam::aws:policy/AWSLambdaInvocation-DynamoDB'
+
+  S3crrRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectName}-S3crrRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: S3crrReplicationPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:UpdateTable'
+                  - 'dynamodb:UpdateItem'
+                  - 'dynamodb:BatchWriteItem'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:DeleteItem'
+                Resource:
+                  - !GetAtt 
+                    - TBooks
+                    - Arn
+                  - !GetAtt 
+                    - TOrders
+                    - Arn
+                  - !GetAtt 
+                    - TCart
+                    - Arn
+                  - !Join 
+                    - ''
+                    - - !GetAtt 
+                        - TBooks
+                        - Arn
+                      - /*        
 
 # ---------- ELASTICACHE DEFINITIONS ---------         
   ElastiCacheCluster:
@@ -795,7 +840,7 @@ Resources:
       - FunctionListOrdersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -852,7 +897,7 @@ Resources:
     DependsOn: FunctionGetBookPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -1478,6 +1523,7 @@ Resources:
       AccessControl: Private
       MetricsConfigurations:
         - Id: EntireBucket
+      VersioningConfiguration: Enabled
       WebsiteConfiguration:
         IndexDocument: index.html
   AssetsBucketPolicy:
