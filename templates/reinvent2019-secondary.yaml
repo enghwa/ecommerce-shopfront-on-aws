@@ -302,7 +302,7 @@ Resources:
     DependsOn:
       - RedisRole
       - ElastiCacheCluster
-      - TOrders
+      # - TOrders
     Properties:
       FunctionName: !Sub '${ProjectName}-UpdateBestSellers'
       Description: 'Updates BestSellers as orders are placed'
@@ -334,7 +334,7 @@ Resources:
 
  # ----------  STREAMING TRIGGERS ---------                     
   OrderTableStream:
-    DependsOn: TOrders
+    # DependsOn: TOrders
     Type: 'AWS::Lambda::EventSourceMapping'
     Properties:
       BatchSize: 1

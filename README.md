@@ -20,7 +20,7 @@ The application will utilize three layers:
 ### 1. Primary region - CDK
 VPC, Subnet, Security group, routetable (refer to cfn)
 ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
-2nd region PC, Subnet, Security group, routetable (refer to cfn) 
+2nd region VPC, Subnet, Security group, routetable (refer to cfn) 
 
 ### 1. Primary region - CFN
 Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book, bestselleors), s3 (version enable)
@@ -74,7 +74,7 @@ aws dynamodb create-global-table \
 ALB, fargate, input param (VPC cdk#1, aurora read endpoint of #2)
 
 ### 3. Secondary region - CFN
-cognito, apigateway, lambdea, cache 
+cognito, apigateway, lambda, cache 
 input param (vpc cdk#1, s3 #2, dynamodb #2)
 
 ### 5. Failover
