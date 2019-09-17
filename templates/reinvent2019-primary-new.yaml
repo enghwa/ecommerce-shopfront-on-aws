@@ -45,7 +45,7 @@ Mappings:
       RemoveFromCartCode: functions/RemoveFromCart.zip
       GetBestSellersCode: functions/GetBestSellers.zip
       CheckoutCode: functions/Checkout.zip
-      UploadBooksCode: functions/UploadBooks.zip
+      # UploadBooksCode: functions/UploadBooks.zip
       UpdateBestSellersCode: functions/UpdateBestSellers.zip
       booksData: data/books.json
       UpdateConfigCode: functions/UpdateConfig.zip
@@ -258,6 +258,8 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES  
 
 # ---------- ROLES FOR ELASTICACHE ---------  
   RedisRole:
@@ -565,37 +567,37 @@ Resources:
           - Constants
           - S3Keys
           - CheckoutCode
-  FunctionUploadBooks:
-    Type: 'AWS::Lambda::Function'
-    Properties:
-      FunctionName: !Sub '${ProjectName}-UploadBooks'
-      Description: Upload sample data for books
-      Handler: index.handler
-      Runtime: nodejs8.10
-      Role: !GetAtt 
-        - DynamoDbRole
-        - Arn
-      Timeout: 120
-      Environment:
-        Variables:
-          TABLE_NAME: !Sub '${ProjectName}-Books'
-          S3_BUCKET: !FindInMap 
-                    - S3Buckets
-                    - !Ref 'AWS::Region'
-                    - Bucket
-          FILE_NAME: !FindInMap 
-                    - Constants
-                    - S3Keys
-                    - booksData
-      Code:
-        S3Bucket: !FindInMap 
-          - S3Buckets
-          - !Ref 'AWS::Region'
-          - Bucket
-        S3Key: !FindInMap 
-          - Constants
-          - S3Keys
-          - UploadBooksCode
+  # FunctionUploadBooks:
+  #   Type: 'AWS::Lambda::Function'
+  #   Properties:
+  #     FunctionName: !Sub '${ProjectName}-UploadBooks'
+  #     Description: Upload sample data for books
+  #     Handler: index.handler
+  #     Runtime: nodejs8.10
+  #     Role: !GetAtt 
+  #       - DynamoDbRole
+  #       - Arn
+  #     Timeout: 120
+  #     Environment:
+  #       Variables:
+  #         TABLE_NAME: !Sub '${ProjectName}-Books'
+  #         S3_BUCKET: !FindInMap 
+  #                   - S3Buckets
+  #                   - !Ref 'AWS::Region'
+  #                   - Bucket
+  #         FILE_NAME: !FindInMap 
+  #                   - Constants
+  #                   - S3Keys
+  #                   - booksData
+  #     Code:
+  #       S3Bucket: !FindInMap 
+  #         - S3Buckets
+  #         - !Ref 'AWS::Region'
+  #         - Bucket
+  #       S3Key: !FindInMap 
+  #         - Constants
+  #         - S3Keys
+  #         - UploadBooksCode
 
 # ---------- LAMBDA FUNCTIONS for ELASTICACHE  ---------          
   FunctionGetBestSellers:
@@ -1187,7 +1189,7 @@ Resources:
     DependsOn: FunctionGetBestSellersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -1460,13 +1462,13 @@ Resources:
         unauthenticated: !GetAtt 
           - CognitoUnAuthorizedRole
           - Arn
-  BooksUploader:
-    Type: 'Custom::CustomResource'
-    Properties:
-      ServiceToken: !GetAtt FunctionUploadBooks.Arn
-      ParameterOne: Parameter to pass into Custom Lambda Function
-      DependsOn: 
-       - FunctionUploadBooks
+  # BooksUploader:
+  #   Type: 'Custom::CustomResource'
+  #   Properties:
+  #     ServiceToken: !GetAtt FunctionUploadBooks.Arn
+  #     ParameterOne: Parameter to pass into Custom Lambda Function
+  #     DependsOn: 
+  #      - FunctionUploadBooks
 
 # ------------------------ FRONTEND ------------------------
   AssetsCodeRepository:
@@ -1839,4 +1841,3 @@ Outputs:
     Value: !Sub
       - https://${Domain}
       - { Domain: !GetAtt AssetsCDN.DomainName }
-

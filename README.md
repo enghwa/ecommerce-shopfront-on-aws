@@ -23,7 +23,7 @@ ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
 2nd region PC, Subnet, Security group, routetable (refer to cfn) 
 
 ### 1. Primary region - CFN
-Remove metadata, neptune, search (dependson), apigateway (auth:none), s3 (version enable)
+Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book, bestselleors), s3 (version enable)
 input param (vpc cdk#1)
 
 ### 2. Build multi-region solution - Aurora (2nd region)
@@ -77,3 +77,9 @@ ALB, fargate, input param (VPC cdk#1, aurora read endpoint of #2)
 cognito, apigateway, lambdea, cache 
 input param (vpc cdk#1, s3 #2, dynamodb #2)
 
+### 5. Failover
+1. Delete Fargate Service
+2. API gateway: books get disable
+3. Delete (aurora, dynamdb) - video 
+
+Low priority: Cloudfront s3 origin group

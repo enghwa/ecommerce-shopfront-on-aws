@@ -1184,7 +1184,7 @@ Resources:
     DependsOn: FunctionGetBestSellersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY

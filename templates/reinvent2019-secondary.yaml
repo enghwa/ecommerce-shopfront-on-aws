@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   ProjectName:
-    Description: Name of the project (lowercase and under ten characters) (ex. ProjectNameSecondaryRegion)
+    Description: The same name of the project (lowercase and under ten characters)
     Type: String
     AllowedPattern: "^[a-z]{0,10}$"
     ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
@@ -1187,7 +1187,7 @@ Resources:
     DependsOn: FunctionGetBestSellersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -1484,50 +1484,50 @@ Resources:
   #     VersioningConfiguration: Enabled
   #     WebsiteConfiguration:
   #       IndexDocument: index.html
-  AssetsBucketPolicy:
-    Type: 'AWS::S3::BucketPolicy'
-    Properties:
-      Bucket: !Ref AssetsBucketName
-      PolicyDocument:
-        Statement:
-          - Action: 's3:GetObject'
-            Effect: Allow
-            Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
-            Principal:
-              AWS: !Sub
-                arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity
-                ${AssetsBucketOriginAccessIdentity}
-    DependsOn:
-      - AssetsBucketOriginAccessIdentity
-  AssetsBucketOriginAccessIdentity:
-    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub 'OriginAccessIdentity for ${AssetsBucketName}'
-  AssetsCDN:
-    Type: 'AWS::CloudFront::Distribution'
-    DependsOn:
-      - AssetsBucketOriginAccessIdentity
-    Properties:
-      DistributionConfig:
-        Enabled: true
-        Comment: !Sub 'CDN for ${AssetsBucketName}'
-        DefaultRootObject: index.html
-        Origins:
-          - DomainName: !Join
-              - ''
-              - - !Sub '${AssetsBucketName}.s3'
-                - !If [IADRegion, '', !Sub '-${AWS::Region}']
-                - '.amazonaws.com'
-            Id: S3
-            S3OriginConfig:
-              OriginAccessIdentity: !Sub >-
-                origin-access-identity/cloudfront/${AssetsBucketOriginAccessIdentity}
-        DefaultCacheBehavior:
-          TargetOriginId: S3
-          ViewerProtocolPolicy: https-only
-          ForwardedValues:
-            QueryString: 'false'
+  # AssetsBucketPolicy:
+  #   Type: 'AWS::S3::BucketPolicy'
+  #   Properties:
+  #     Bucket: !Ref AssetsBucketName
+  #     PolicyDocument:
+  #       Statement:
+  #         - Action: 's3:GetObject'
+  #           Effect: Allow
+  #           Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
+  #           Principal:
+  #             AWS: !Sub
+  #               arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity
+  #               ${AssetsBucketOriginAccessIdentity}
+  #   DependsOn:
+  #     - AssetsBucketOriginAccessIdentity
+  # AssetsBucketOriginAccessIdentity:
+  #   Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+  #   Properties:
+  #     CloudFrontOriginAccessIdentityConfig:
+  #       Comment: !Sub 'OriginAccessIdentity for ${AssetsBucketName}'
+  # AssetsCDN:
+  #   Type: 'AWS::CloudFront::Distribution'
+  #   DependsOn:
+  #     - AssetsBucketOriginAccessIdentity
+  #   Properties:
+  #     DistributionConfig:
+  #       Enabled: true
+  #       Comment: !Sub 'CDN for ${AssetsBucketName}'
+  #       DefaultRootObject: index.html
+  #       Origins:
+  #         - DomainName: !Join
+  #             - ''
+  #             - - !Sub '${AssetsBucketName}.s3'
+  #               - !If [IADRegion, '', !Sub '-${AWS::Region}']
+  #               - '.amazonaws.com'
+  #           Id: S3
+  #           S3OriginConfig:
+  #             OriginAccessIdentity: !Sub >-
+  #               origin-access-identity/cloudfront/${AssetsBucketOriginAccessIdentity}
+  #       DefaultCacheBehavior:
+  #         TargetOriginId: S3
+  #         ViewerProtocolPolicy: https-only
+  #         ForwardedValues:
+  #           QueryString: 'false'
   CodeBuildRole:
     Description: Creating service role in IAM for AWS CodeBuild
     Type: 'AWS::IAM::Role'
