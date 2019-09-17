@@ -276,6 +276,51 @@ Resources:
         - 'arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole'
         - 'arn:aws:iam::aws:policy/AWSLambdaInvocation-DynamoDB'
 
+  S3crrRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectName}-S3crrRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: S3crrReplicationPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:UpdateTable'
+                  - 'dynamodb:UpdateItem'
+                  - 'dynamodb:BatchWriteItem'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:DeleteItem'
+                Resource:
+                  - !GetAtt 
+                    - TBooks
+                    - Arn
+                  - !GetAtt 
+                    - TOrders
+                    - Arn
+                  - !GetAtt 
+                    - TCart
+                    - Arn
+                  - !Join 
+                    - ''
+                    - - !GetAtt 
+                        - TBooks
+                        - Arn
+                      - /*        
+
 # ---------- ELASTICACHE DEFINITIONS ---------         
   ElastiCacheCluster:
     DependsOn: 
@@ -1478,6 +1523,7 @@ Resources:
       AccessControl: Private
       MetricsConfigurations:
         - Id: EntireBucket
+      VersioningConfiguration: Enabled
       WebsiteConfiguration:
         IndexDocument: index.html
   AssetsBucketPolicy:
