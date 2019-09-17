@@ -1,3 +1,27 @@
+# Lab 
+
+make sure you are in `wordpress-lab` directory:
+
+deploy wordpress on fargate, ALB, vpc, aurora-primary in Primary Region.
+
+```bash
+//nvm ....
+npm install
+npx cdk@1.8.0 deploy
+
+```
+
+```
+Do you wish to deploy these changes (y/n)?
+```
+Type "Y".
+this will take 12 min..
+
+
+
+deploy 
+
+
 # Useful commands
 
  * `npm run build`   compile typescript to js
