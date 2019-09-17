@@ -12,7 +12,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
-    Default: 'https://s3.amazonaws.com/aws-bookstore-demo/bookstore-webapp.zip'
+    Default: 'http://woof.kopi.io/bookshop.zip'
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -795,7 +795,7 @@ Resources:
       - FunctionListOrdersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -852,7 +852,7 @@ Resources:
     DependsOn: FunctionGetBookPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: AWS_IAM
+      AuthorizationType: NONE
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
