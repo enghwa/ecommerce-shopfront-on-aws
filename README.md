@@ -10,9 +10,10 @@ The application will utilize three layers:
 
 ### Modules
 0. Create AWS Cloud9 Environment
-1. Build a Primary region Bookstore (Aurora replica/S3 replication) - Enable DynamoDB Global Table 
-2. Build a Seconary region Bookstore
-3. Congifure Active-Active: Route53, ACM, DNS Health Check
-4. Test failover
-5. Cleaning Up
+1. Build a Primary region Bookstore: CFN / CDK
+2. Build multi-region solution: Aurora, S3, DynamoDB
+3. Build a Seconary region Bookstore: CFN / CDK
+4. Congifure Active-Active: Route53, ACM, DNS Health Check
+5. Test failover
+6. Cleaning Up
 
