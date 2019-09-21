@@ -20,12 +20,14 @@
     "typescript": "~3.6.2"
   },
   "dependencies": {
+    "@aws-cdk/aws-certificatemanager": "^1.8.0",
     "@aws-cdk/aws-ec2": "^1.8.0",
     "@aws-cdk/aws-ecs": "^1.8.0",
     "@aws-cdk/aws-ecs-patterns": "^1.8.0",
     "@aws-cdk/aws-elasticloadbalancingv2": "^1.8.0",
     "@aws-cdk/aws-iam": "^1.8.0",
     "@aws-cdk/aws-rds": "^1.8.0",
+    "@aws-cdk/aws-route53": "^1.8.0",
     "@aws-cdk/aws-secretsmanager": "^1.8.0",
     "@aws-cdk/core": "^1.8.0",
     "@aws-cdk/custom-resources": "^1.8.0",

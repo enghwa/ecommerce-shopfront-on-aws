@@ -12,7 +12,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
-    Default: 'http://woof.kopi.io/bookshop.zip'
+    Default: 'http://woof.kopi.io/book5.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
@@ -1497,9 +1497,7 @@ Resources:
             Effect: Allow
             Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
             Principal:
-              AWS: !Sub
-                arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity
-                ${AssetsBucketOriginAccessIdentity}
+              AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront_Origin_Access_Identity_${AssetsBucketOriginAccessIdentity}'
     DependsOn:
       - AssetsBucketOriginAccessIdentity
   AssetsBucketOriginAccessIdentity:

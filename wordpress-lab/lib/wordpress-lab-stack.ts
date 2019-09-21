@@ -1,23 +1,58 @@
 import ec2 = require('@aws-cdk/aws-ec2');
 import ecs = require('@aws-cdk/aws-ecs');
 import ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
+import { Certificate } from '@aws-cdk/aws-certificatemanager';
 // import elbv2 = require("@aws-cdk/aws-elasticloadbalancingv2");
+import route53 = require('@aws-cdk/aws-route53');
+import acm = require('@aws-cdk/aws-certificatemanager');
 import rds = require('@aws-cdk/aws-rds');
 import iam = require('@aws-cdk/aws-iam');
 import cdk = require('@aws-cdk/core');
 import secretsmanager = require('@aws-cdk/aws-secretsmanager');
 import { AwsCustomResource } from "@aws-cdk/custom-resources";
 
-export class WordpressLabStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+export interface WordpressLabProps {
+  hostedZoneID: string,
+  hostedZoneName: string,
+  region: string
+}
 
-    // The code that defines your stack goes here
-    const vpc = new ec2.Vpc(this, 'vpc-wordpress', {
+export class WordpressLabStack extends cdk.Stack {
+
+  constructor(scope: cdk.Construct, id: string, props: WordpressLabProps) {
+    super(scope, id);
+
+    const vpc = new ec2.Vpc(this, 'VPC-ARC309', {
       maxAzs: 2,
       natGateways: 1,
       cidr: '172.31.0.0/16'
     });
+
+    //ACM and DNS
+    const myDomainName = props.hostedZoneName //process.env.MYSUBDOMAIN + ".multi-region.xyz";
+    const HZID = props.hostedZoneID //process.env.HOSTEDZONE as string ;
+    const hostedZone = route53.HostedZone.fromHostedZoneAttributes(this, "hostedZone",{
+      hostedZoneId: HZID,
+      zoneName: myDomainName
+    })
+
+    const validatedCloudFrontCert = new acm.DnsValidatedCertificate(this, 'validatedCloudFrontCert', {
+      hostedZone,
+      domainName: `${myDomainName}`,
+      region: 'us-east-1'
+    });
+
+    const validatedWildCardCert = new acm.DnsValidatedCertificate(this, 'validatedWildCardCertificate', {
+      hostedZone,
+      domainName: `*.${myDomainName}`,
+      region: props.region
+    });
+    const validatedBlogCert = new acm.DnsValidatedCertificate(this, 'validatedBlogCertificate', {
+      hostedZone,
+      domainName: `blog.${myDomainName}`,
+      region: props.region
+    });
+
     // Cluster all the containers will run in
     const cluster = new ecs.Cluster(this, 'ecscluster', { vpc });
 
@@ -74,8 +109,12 @@ export class WordpressLabStack extends cdk.Stack {
         'WORDPRESS_DB_USER': 'root',
         'WORDPRESS_DB_HOST': dbcluster.clusterReadEndpoint.hostname,  //we only want to read, no admin function
         'WORDPRESS_DB_NAME': 'wordpress',
-      }
+      },
+      domainName: "blog." + myDomainName,
+      domainZone: hostedZone,
+      certificate: Certificate.fromCertificateArn(this, 'alb-sslcert', validatedBlogCert.certificateArn)
     })
+
     wordpressSvc.targetGroup.configureHealthCheck({
       port: 'traffic-port',
       path: '/',
@@ -138,6 +177,11 @@ export class WordpressLabStack extends cdk.Stack {
         physicalResourceId: Date.now().toString()
       }
     })
-    loadWordpressDB.node.addDependency(dbcluster) // can only load wordpress DB when dbcluster is created.
+    loadWordpressDB.node.addDependency(dbcluster) // can only load wordpress DB when dbcluster is created., only do this for Primary Region
+
+    // cdk/cfn output
+    new cdk.CfnOutput(this, 'VpcId_'+ props.region , { value: vpc.vpcId });
+    new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_'+ props.region , { value: validatedWildCardCert.certificateArn });
+    
   }
 }
