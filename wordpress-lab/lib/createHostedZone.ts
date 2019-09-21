@@ -14,7 +14,7 @@ export class createHostedZoneStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const zoneNameShort = "firefox8"; //should get from process.env.
+    const zoneNameShort = process.env.MYSUBDOMAIN ; // "firefox8"; //should get from process.env. || genenerate one?
     const zoneName = zoneNameShort + ".multi-region.xyz";
 
     const myHostedZone = new route53.HostedZone(this, "myHostedZone", {
