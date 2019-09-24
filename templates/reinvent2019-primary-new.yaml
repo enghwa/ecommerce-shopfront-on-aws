@@ -1497,7 +1497,9 @@ Resources:
             Effect: Allow
             Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
             Principal:
-              AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront_Origin_Access_Identity_${AssetsBucketOriginAccessIdentity}'
+              CanonicalUser: !GetAtt AssetsBucketOriginAccessIdentity.S3CanonicalUserId
+              # both the below won't work - https://github.com/terraform-providers/terraform-provider-aws/issues/10158
+              # AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront_Origin_Access_Identity_${AssetsBucketOriginAccessIdentity}'
     DependsOn:
       - AssetsBucketOriginAccessIdentity
   AssetsBucketOriginAccessIdentity:
@@ -1529,6 +1531,12 @@ Resources:
           ViewerProtocolPolicy: https-only
           ForwardedValues:
             QueryString: 'false'
+        CustomErrorResponses:   #fix firefox problem.
+          - ErrorCachingMinTTL: 300
+            ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            
   CodeBuildRole:
     Description: Creating service role in IAM for AWS CodeBuild
     Type: 'AWS::IAM::Role'

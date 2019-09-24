@@ -7,6 +7,8 @@ import { createHostedZoneStack } from '../lib/createHostedZone';
 
 const app = new cdk.App();
 
+//check for process.env.MYDOMAIN ?
+
 // create and activate student hosted zone
 const  myhostedZone = new createHostedZoneStack(app, "hostedZone");
 

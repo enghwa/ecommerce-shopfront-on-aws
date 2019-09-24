@@ -57,6 +57,7 @@ export class WordpressLabStack extends cdk.Stack {
     const cluster = new ecs.Cluster(this, 'ecscluster', { vpc });
 
     const secret = new secretsmanager.Secret(this, 'DBSecret', {
+       secretName: "wordpressDBPassword",
       generateSecretString: {
         excludePunctuation: true
       }

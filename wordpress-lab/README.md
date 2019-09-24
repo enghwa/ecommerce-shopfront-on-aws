@@ -48,14 +48,13 @@ check your cloudfront url -> you should see book listing, but there is no blog a
 
 update Blog url to the webasset and it will kick off another codepipeline
 
-Find your code repo in codecommit, 
-edit
-wordpressconfig.ts
-add:
-https://blog.<your subdomain name>.multi-region.xyz
+Find your code repo in codecommit and edit:
+`wordpressconfig.ts`.
+Update:
+`https://blog.<your subdomain name>.multi-region.xyz`
 
 eg:
-assume my SUBDOMAIN i set previously was `team5432`,
+assume my `MYSUBDOMAIN` i set previously was `team5432`,
 ```javascript
 export default {
 
