@@ -7,7 +7,7 @@ Parameters:
     ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
   AssetsBucketName:
     Type: String
-    Description: Name of assets S3 bucket replicated from the secondary region (ex. AssetsBucketName-secondary)
+    Description: Name of assets S3 bucket replicated from the primary region (ex. AssetsBucketName-secondary)
     # AllowedPattern: "^[a-z0-9-]{3,53}$"
     # ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
