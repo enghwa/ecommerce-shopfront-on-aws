@@ -1,5 +1,9 @@
 # Lab 
 
+in the Cloud9
+#git clone https://github.com/enghwa/MultiRegion-Modern-Architecture.git
+using user github id/pwd
+
 make sure you are in `wordpress-lab` directory:
 
 deploy wordpress on fargate, ALB, vpc, ACM, aurora-primary in Primary Region.
@@ -18,7 +22,7 @@ npx cdk@1.8.0 deploy Wordpress-Primary
 ```
 
 ```
-Do you wish to deploy these changes (y/n)?
+Do you wish to deploy these changes (y/n)? -> both "npx cdk deploy" asked this question.
 ```
 Type "Y".
 this will take 20 min.
@@ -44,9 +48,9 @@ ns-889.awsdns-47.net.
 //draft notes.. need screnshots!
 check CodePipeline that the web asset is fully deployed.
 
-check your cloudfront url -> you should see book listing, but there is no blog articles yet.
+check your cloudfront url from the cfn output -> you should see book listing, but there is no blog articles yet.
 
-update Blog url to the webasset and it will kick off another codepipeline
+## update Blog url to the webasset and it will kick off another codepipeline
 
 Find your code repo in codecommit and edit:
 `wordpressconfig.ts`.

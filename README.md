@@ -22,6 +22,8 @@ VPC, Subnet, Security group, routetable (refer to cfn)
 ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
 2nd region VPC, Subnet, Security group, routetable (refer to cfn) 
 
+-> It takes 20mins. Execute this one then presentation?
+
 ### 1. Primary region - CFN
 Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book, bestselleors), s3 (version enable)
 input param (vpc cdk#1)
