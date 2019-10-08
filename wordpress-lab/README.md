@@ -77,9 +77,13 @@ next:
 ## update Cloudfront to your domain name instead of `https://?????????????.cloudfront.net`:
 
 an ACM cert is already created for CloudFront in your region.
-Also, Update Cloudfront CNAME to `$MYSUBDOMAIN.multi-region.xyz` 
+
+Update Cloudfront CNAME to `$MYSUBDOMAIN.multi-region.xyz` (screenshot)
+in Cloudfront, general tab - Alternate Domain Names (CNAMEs) and SSL Certificate
+
 in Route53, create an apex record:
-Alias, Type `A` and point it to the cloudfront domain name, `?????????????.cloudfront.net`.
+Alias 'Yes', Type `A` and point it to the cloudfront domain name, `?????????????.cloudfront.net`. (screenshot)
+
 
 <!-- 
 # Useful commands
