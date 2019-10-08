@@ -16,9 +16,9 @@ Parameters:
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
-  CidrBlock:
+  bookstoreSubnet1:
     Type: String
-    Description: Cidrblock of VPC (ex.172.0.0.0/16)
+    Description: Subnet ID for Elasticache (ex.172.0.0.0/16)
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -30,7 +30,7 @@ Metadata:
           - AssetsBucketName
           - SeedRepository
           - bookstoreVPC
-          - CidrBlock
+          - bookstoreSubnet1
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -73,24 +73,23 @@ Resources:
   #   Properties:
       # CidrBlock: '172.31.0.0/16'
   
-  bookstoreSubnet1:
-    Type: "AWS::EC2::Subnet"
-    Properties:
-      CidrBlock: 
-        Fn::Select:
-          - 0
-          - Fn::Cidr:
-            #  - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
-            - !Ref CidrBlock
-            - 2
-            - 5
-      VpcId:
-        Ref: bookstoreVPC
-      AvailabilityZone:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs:
-              Ref: "AWS::Region"
+  # bookstoreSubnet1:
+  #   Type: "AWS::EC2::Subnet"
+  #   Properties:
+  #     CidrBlock: 
+  #       Fn::Select:
+  #         - 0
+  #         - Fn::Cidr:
+  #            - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
+  #           - 2
+  #           - 5
+  #     VpcId:
+  #       Ref: bookstoreVPC
+  #     AvailabilityZone:
+  #       Fn::Select:
+  #         - 0
+  #         - Fn::GetAZs:
+  #             Ref: "AWS::Region"
 
   # bookstoreSubnet2:
   #   Type: "AWS::EC2::Subnet"
@@ -99,7 +98,7 @@ Resources:
   #       Fn::Select:
   #         - 1
   #         - Fn::Cidr:
-  #           - Fn::GetAtt: [bookstoreVPC, CidrBlock]
+  #           - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
   #           - 3
   #           - 8
   #     VpcId:
@@ -110,23 +109,23 @@ Resources:
   #         - Fn::GetAZs:
   #             Ref: "AWS::Region"  
 
-  # bookstoreSecurityGroup:
-  #   Type: 'AWS::EC2::SecurityGroup'
-  #   Properties:
-  #     GroupName: !Sub '${ProjectName}-SG'
-  #     GroupDescription: Lock cache down to webserver access only
-  #     VpcId: !Ref bookstoreVPC
-
-  bookstoreVPCRouteTable:  
-    Type: AWS::EC2::RouteTable
-    Properties: 
+  bookstoreSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupName: !Sub '${ProjectName}-SG'
+      GroupDescription: Lock cache down to webserver access only
       VpcId: !Ref bookstoreVPC
+
+  # bookstoreVPCRouteTable:  
+  #   Type: AWS::EC2::RouteTable
+  #   Properties: 
+  #     VpcId: !Ref bookstoreVPC
   
-  bookstoreVPCRouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties: 
-      RouteTableId: !Ref bookstoreVPCRouteTable
-      SubnetId: !Ref bookstoreSubnet1
+  # bookstoreVPCRouteTableAssociation:
+  #   Type: AWS::EC2::SubnetRouteTableAssociation
+  #   Properties: 
+  #     RouteTableId: !Ref bookstoreVPCRouteTable
+  #     SubnetId: !Ref bookstoreSubnet1
 
   # bookstoreVPCRouteTableAssociationTwo:
   #   Type: AWS::EC2::SubnetRouteTableAssociation
