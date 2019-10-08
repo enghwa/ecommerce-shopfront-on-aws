@@ -54,7 +54,7 @@ check your cloudfront url from the cfn output -> you should see book listing, bu
 
 ## update Blog url to the webasset and it will kick off another codepipeline
 
-Find your code repo in codecommit and edit: (screenshot)
+Find your code repo in codecommit and edit: (screenshot) under src/
 `wordpressconfig.ts`.
 Update:
 `https://blog.<your subdomain name>.multi-region.xyz`
@@ -69,20 +69,17 @@ export default {
   }
 }
 ```
-
+author and email. -> commit changes 
+you can check the build process in codepipeline.
 once codepipeline fully build again, blog should show up at cloudfront url.
 
 next:
-update Cloudfront to your domain name instead of `https://?????????????.cloudfront.net`:
+## update Cloudfront to your domain name instead of `https://?????????????.cloudfront.net`:
 
-an ACM cert is already created for CloudFront in `us-east-1` region.
+an ACM cert is already created for CloudFront in your region.
 Also, Update Cloudfront CNAME to `$MYSUBDOMAIN.multi-region.xyz` 
 in Route53, create an apex record:
 Alias, Type `A` and point it to the cloudfront domain name, `?????????????.cloudfront.net`.
-
-
-
-
 
 <!-- 
 # Useful commands
