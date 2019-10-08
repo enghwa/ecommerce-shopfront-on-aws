@@ -29,6 +29,9 @@ Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book
 input param (vpc cdk#1)
 route53 hostzone -> call remote api do nsrecord xyz (random number acm) -> origincal acm region1/2 (auto approval)
 
+### 1. Update blog URL and Cloudfront 
+content is in the cdk readme
+
 ### 2. Build multi-region solution - Aurora cross-region read replica(2nd region)
 aws rds create-db-cluster \
   --db-cluster-identifier sample-replica-cluster \
