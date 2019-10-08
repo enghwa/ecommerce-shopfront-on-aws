@@ -94,7 +94,7 @@ $ aws s3api put-bucket-replication \
 
 https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
 
-### 2. Build multi-region solution - DynamoDB (it's complated than console. need to replicate all? one with cli, two with ui)
+### 2. Build multi-region solution - DynamoDB (Q. it's complated than console. need to replicate all? one with cli, two with ui)
 aws dynamodb create-table \
     --table-name teres-Cart \
     --attribute-definitions \
@@ -114,7 +114,10 @@ aws dynamodb create-global-table \
     --region us-west-2
 
 ### 3. Secondary region - CDK
+ACM, Route53 Domain Name and the DNS
 ALB, fargate, input param (VPC cdk#1, aurora read endpoint of #2)
+Q. we will creat the custom domain in api? -> if not how to health check and routing policy in route53?
+
 
 ### 3. Secondary region - CFN
 cognito, apigateway, lambda, cache 
