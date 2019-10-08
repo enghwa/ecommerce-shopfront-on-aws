@@ -38,7 +38,8 @@ in Cloud9, --region
 aws rds create-db-cluster \
   --db-cluster-identifier <sample-replica-cluster> \
   --engine aurora \
-  --replication-source-identifier <source aurora arn> 
+  --replication-source-identifier <source aurora arn> \
+  --region <region2>
 
 aws rds describe-db-clusters --db-cluster-identifier sample-replica-cluster
 
@@ -46,7 +47,8 @@ aws rds create-db-instance \
   --db-instance-identifier test-instance
   --db-cluster-identifier <sample-replica-cluster> \
   --db-instance-class <db.t3.small> \
-  --engine aurora
+  --engine aurora \
+  --region <region2>
 
 The endpoint should be updated in the fargate
 
@@ -92,11 +94,24 @@ $ aws s3api put-bucket-replication \
 
 https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
 
-### 2. Build multi-region solution - DynamoDB
+### 2. Build multi-region solution - DynamoDB (it's complated than console. need to replicate all? one with cli, two with ui)
+aws dynamodb create-table \
+    --table-name teres-Cart \
+    --attribute-definitions \
+        AttributeName=customerId,AttributeType=S \
+        AttributeName=bookId,AttributeType=S \
+    --key-schema \
+        AttributeName=customerId,KeyType=HASH \
+        AttributeName=bookId,KeyType=RANGE \
+    --provisioned-throughput \
+        ReadCapacityUnits=1,WriteCapacityUnits=1 \
+    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+    --region eu-central-1
+
 aws dynamodb create-global-table \
---global-table-name <Books, Orders, Cart> \
---replication-group RegionName=<eu-west-1> RegionName=<ap-southeast-1> \
---region <eu-west-1>
+    --global-table-name teres-Cart \
+    --replication-group RegionName=us-west-2 RegionName=eu-central-1 \
+    --region us-west-2
 
 ### 3. Secondary region - CDK
 ALB, fargate, input param (VPC cdk#1, aurora read endpoint of #2)
