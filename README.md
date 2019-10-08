@@ -22,7 +22,7 @@ VPC, Subnet, Security group, routetable (refer to cfn)
 ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
 2nd region VPC, Subnet, Security group, routetable (refer to cfn) 
 
--> It takes 20mins. Execute this one then presentation?
+-> It takes 20mins. Execute this one then presentation? output aurora arn
 
 ### 1. Primary region - CFN
 Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book, bestselleors), s3 (version enable)
@@ -33,40 +33,62 @@ route53 hostzone -> call remote api do nsrecord xyz (random number acm) -> origi
 content is in the cdk readme
 
 ### 2. Build multi-region solution - Aurora cross-region read replica(2nd region)
+in Cloud9, --region
+
 aws rds create-db-cluster \
-  --db-cluster-identifier sample-replica-cluster \
+  --db-cluster-identifier <sample-replica-cluster> \
   --engine aurora \
-  --replication-source-identifier <source aurora arn> \
+  --replication-source-identifier <source aurora arn> 
+
+aws rds describe-db-clusters --db-cluster-identifier sample-replica-cluster
 
 aws rds create-db-instance \
+  --db-instance-identifier test-instance
   --db-cluster-identifier <sample-replica-cluster> \
-  --db-instance-class <db.r3.large> \
+  --db-instance-class <db.t3.small> \
   --engine aurora
+
+The endpoint should be updated in the fargate
 
 ### 2. Build multi-region solution - S3
 aws s3api create-bucket \
 --bucket <AssetsBucketName-region2> \
---acl private \ 
 --region <us-west-2> \
+--create-bucket-configuration LocationConstraint=<us-west-2>
 
 aws s3api put-bucket-versioning \
 --bucket <AssetsBucketName-region2> \
---versioning-configuration Status=Enabled \
+--versioning-configuration Status=Enabled
 
-aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html
+<!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
 
-$ aws iam create-role \
+<!-- $ aws iam create-role \
 --role-name crrRole \
 --assume-role-policy-document file://s3-role-trust-policy.json 
 
 $ aws iam put-role-policy \
 --role-name crrRole \
 --policy-document file://s3-role-permissions-policy.json \
---policy-name crrRolePolicy \
+--policy-name crrRolePolicy \ -->
+
+{
+  "Role": "<IAM-role-ARN>",
+  "Rules": [
+    {
+      "Status": "Enabled",
+      "Priority": 1,
+      "DeleteMarkerReplication": { "Status": "Disabled" },
+      "Filter" : { "Prefix": ""},
+      "Destination": {
+        "Bucket": "arn:aws:s3:::<bucketname-region2>"
+      }
+    }
+  ]
+}
 
 $ aws s3api put-bucket-replication \
 --replication-configuration file://replication.json \
---bucket source
+--bucket <source>
 
 https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
 

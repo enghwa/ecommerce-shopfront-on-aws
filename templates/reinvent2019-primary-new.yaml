@@ -1849,6 +1849,50 @@ Resources:
       ParameterOne: Parameter to pass into Custom Lambda Function
       DependsOn: UpdateConfigFunction
 
+# ---------- ROLES FOR S3 Relication ---------  
+  S3replicationRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectName}-S3replicationRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - s3.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: replicationRolePolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:GetObjectVersionForReplication'
+                  - 's3:GetObjectVersionAcl'
+                Resource:
+                  - !Join 
+                    - ''
+                    - - !GetAtt AssetsBucket.Arn
+                      - /*
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:ListBucket'
+                  - 's3:GetReplicationConfiguration'
+                Resource: !GetAtt AssetsBucket.Arn
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:ReplicateObject'
+                  - 's3:ReplicateDelete'
+                  - 's3:ReplicateTags'
+                  - 's3:GetObjectVersionTagging'
+                Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
+
 Outputs:
   CodeRepository:
     Description: Code repository for the web application.
@@ -1862,3 +1906,6 @@ Outputs:
     Value: !Sub
       - https://${Domain}
       - { Domain: !GetAtt AssetsCDN.DomainName }
+  S3replicationRole: 
+    Description: The ARN of S3 repliction role
+    Value: !GetAtt S3replicationRole.Arn
