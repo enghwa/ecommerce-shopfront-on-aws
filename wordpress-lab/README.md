@@ -43,7 +43,9 @@ ns-330.awsdns-41.com.
 ns-889.awsdns-47.net.
 ```
 
-## deploy serverless app stack
+Need to write down the vpc id and cidr (cidr should be output too)
+
+## deploy serverless app stack (after 1st cfn) -> It should be moved to after 1st cfn instruction.
 
 //draft notes.. need screnshots!
 check CodePipeline that the web asset is fully deployed.
@@ -52,7 +54,7 @@ check your cloudfront url from the cfn output -> you should see book listing, bu
 
 ## update Blog url to the webasset and it will kick off another codepipeline
 
-Find your code repo in codecommit and edit:
+Find your code repo in codecommit and edit: (screenshot)
 `wordpressconfig.ts`.
 Update:
 `https://blog.<your subdomain name>.multi-region.xyz`

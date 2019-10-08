@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   ProjectName:
-    Description: Name of the project (lowercase and under ten characters)
+    Description: Name of the project (lowercase and under ten characters without number)
     Type: String
     AllowedPattern: "^[a-z]{0,10}$"
     ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
@@ -16,6 +16,21 @@ Parameters:
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
+  CidrBlock:
+    Type: String
+    Description: Cidrblock of VPC (ex.172.0.0.0/16)
+Metadata: 
+  AWS::CloudFormation::Interface: 
+    ParameterGroups: 
+      - 
+        Label: 
+          default: "Configuration"
+        Parameters: 
+          - ProjectName
+          - AssetsBucketName
+          - SeedRepository
+          - bookstoreVPC
+          - CidrBlock
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -56,16 +71,17 @@ Resources:
   # bookstoreVPC:
   #   Type: "AWS::EC2::VPC"
   #   Properties:
-  #     CidrBlock: '172.31.0.0/16'
+      # CidrBlock: '172.31.0.0/16'
   
   bookstoreSubnet1:
     Type: "AWS::EC2::Subnet"
     Properties:
-      CidrBlock:
+      CidrBlock: 
         Fn::Select:
           - 0
           - Fn::Cidr:
-            - Fn::GetAtt: [bookstoreVPC, CidrBlock]
+            #  - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
+            - !Ref CidrBlock
             - 2
             - 5
       VpcId:
