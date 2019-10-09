@@ -1,13 +1,13 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   ProjectName:
-    Description: Name of the project (lowercase and under ten characters without number)
+    Description: The same mame of the project (lowercase and under ten characters without number)
     Type: String
     AllowedPattern: "^[a-z]{0,10}$"
     ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
   AssetsBucketName:
     Type: String
-    Description: Name of assets S3 bucket to create (lowercase, numbers or - only, S3 Buckets are globally unique)
+    Description: The S3 bucket name in the secondary region created by S3 replication
     AllowedPattern: "^[a-z0-9-]{3,53}$"
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
@@ -15,7 +15,7 @@ Parameters:
     Default: 'http://woof.kopi.io/book5.zip'
   bookstoreVPC:
     Type: String
-    Description: VPC ID of Primary Region (ex. vpc-xxx)
+    Description: VPC ID of Secondary Region (ex. vpc-xxx)
   bookstoreSubnet1:
     Type: String
     Description: Subnet ID for Elasticache (ex.172.0.0.0/16)
@@ -60,7 +60,7 @@ Mappings:
       RemoveFromCartCode: functions/RemoveFromCart.zip
       GetBestSellersCode: functions/GetBestSellers.zip
       CheckoutCode: functions/Checkout.zip
-      # UploadBooksCode: functions/UploadBooks.zip
+      UploadBooksCode: functions/UploadBooks.zip
       UpdateBestSellersCode: functions/UpdateBestSellers.zip
       booksData: data/books.json
       UpdateConfigCode: functions/UpdateConfig.zip
@@ -164,7 +164,7 @@ Resources:
   DynamoDbRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-DynamoDbLambda'
+      RoleName: !Sub '${ProjectName}-DynamoDbLambda2'
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -192,7 +192,7 @@ Resources:
                   - 'dynamodb:GetItem'
                   - 'dynamodb:Scan'
                   - 'dynamodb:DeleteItem'
-                Resource: "*"
+                Resource: '*'
                   # - !GetAtt 
                   #   - TBooks
                   #   - Arn
@@ -210,77 +210,77 @@ Resources:
                   #     - /*
 
 # ---------- DYNAMODB TABLES DEFINITIONS ---------
-  TBooks:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      TableName: !Sub '${ProjectName}-Books'
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-        - AttributeName: category
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      GlobalSecondaryIndexes:
-        - IndexName: category-index
-          KeySchema:
-            - AttributeName: category
-              KeyType: HASH
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
-  TOrders:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      TableName: !Sub '${ProjectName}-Orders'
-      AttributeDefinitions:
-        - AttributeName: customerId
-          AttributeType: S
-        - AttributeName: orderId
-          AttributeType: S
-      KeySchema:
-        - AttributeName: customerId
-          KeyType: HASH
-        - AttributeName: orderId
-          KeyType: RANGE
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES  
-  TCart:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      TableName: !Sub '${ProjectName}-Cart'
-      AttributeDefinitions:
-        - AttributeName: customerId
-          AttributeType: S
-        - AttributeName: bookId
-          AttributeType: S
-      KeySchema:
-        - AttributeName: customerId
-          KeyType: HASH
-        - AttributeName: bookId
-          KeyType: RANGE
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES  
+  # TBooks:
+  #   Type: 'AWS::DynamoDB::Table'
+  #   Properties:
+  #     TableName: !Sub '${ProjectName}-Books'
+  #     AttributeDefinitions:
+  #       - AttributeName: id
+  #         AttributeType: S
+  #       - AttributeName: category
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: id
+  #         KeyType: HASH
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
+  #     GlobalSecondaryIndexes:
+  #       - IndexName: category-index
+  #         KeySchema:
+  #           - AttributeName: category
+  #             KeyType: HASH
+  #         Projection:
+  #           ProjectionType: ALL
+  #         ProvisionedThroughput:
+  #           ReadCapacityUnits: 1
+  #           WriteCapacityUnits: 1
+  #     StreamSpecification:
+  #       StreamViewType: NEW_AND_OLD_IMAGES
+  # TOrders:
+  #   Type: 'AWS::DynamoDB::Table'
+  #   Properties:
+  #     TableName: !Sub '${ProjectName}-Orders'
+  #     AttributeDefinitions:
+  #       - AttributeName: customerId
+  #         AttributeType: S
+  #       - AttributeName: orderId
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: customerId
+  #         KeyType: HASH
+  #       - AttributeName: orderId
+  #         KeyType: RANGE
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
+  #     StreamSpecification:
+  #       StreamViewType: NEW_AND_OLD_IMAGES  
+  # TCart:
+  #   Type: 'AWS::DynamoDB::Table'
+  #   Properties:
+  #     TableName: !Sub '${ProjectName}-Cart'
+  #     AttributeDefinitions:
+  #       - AttributeName: customerId
+  #         AttributeType: S
+  #       - AttributeName: bookId
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: customerId
+  #         KeyType: HASH
+  #       - AttributeName: bookId
+  #         KeyType: RANGE
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
+  #     StreamSpecification:
+  #       StreamViewType: NEW_AND_OLD_IMAGES  
 
 # ---------- ROLES FOR ELASTICACHE ---------  
   RedisRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-RedisRole'
+      RoleName: !Sub '${ProjectName}-RedisRole2'
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -319,7 +319,7 @@ Resources:
     DependsOn:
       - RedisRole
       - ElastiCacheCluster
-      - TOrders
+      # - TOrders
     Properties:
       FunctionName: !Sub '${ProjectName}-UpdateBestSellers'
       Description: 'Updates BestSellers as orders are placed'
@@ -351,13 +351,16 @@ Resources:
 
  # ----------  STREAMING TRIGGERS ---------                     
   OrderTableStream:
-    DependsOn: TOrders
+    # DependsOn: TOrders
     Type: 'AWS::Lambda::EventSourceMapping'
     Properties:
       BatchSize: 1
       Enabled: true
       EventSourceArn: !GetAtt 
-        - TOrders
+        - !Join 
+          - ''
+          - - 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/'
+          - - !Sub '${ProjectName}-Orders'
         - StreamArn
       FunctionName: !GetAtt 
         - FunctionUpdateBestSellers
@@ -582,37 +585,37 @@ Resources:
           - Constants
           - S3Keys
           - CheckoutCode
-  # FunctionUploadBooks:
-  #   Type: 'AWS::Lambda::Function'
-  #   Properties:
-  #     FunctionName: !Sub '${ProjectName}-UploadBooks'
-  #     Description: Upload sample data for books
-  #     Handler: index.handler
-  #     Runtime: nodejs8.10
-  #     Role: !GetAtt 
-  #       - DynamoDbRole
-  #       - Arn
-  #     Timeout: 120
-  #     Environment:
-  #       Variables:
-  #         TABLE_NAME: !Sub '${ProjectName}-Books'
-  #         S3_BUCKET: !FindInMap 
-  #                   - S3Buckets
-  #                   - !Ref 'AWS::Region'
-  #                   - Bucket
-  #         FILE_NAME: !FindInMap 
-  #                   - Constants
-  #                   - S3Keys
-  #                   - booksData
-  #     Code:
-  #       S3Bucket: !FindInMap 
-  #         - S3Buckets
-  #         - !Ref 'AWS::Region'
-  #         - Bucket
-  #       S3Key: !FindInMap 
-  #         - Constants
-  #         - S3Keys
-  #         - UploadBooksCode
+  FunctionUploadBooks:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${ProjectName}-UploadBooks'
+      Description: Upload sample data for books
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Role: !GetAtt 
+        - DynamoDbRole
+        - Arn
+      Timeout: 120
+      Environment:
+        Variables:
+          TABLE_NAME: !Sub '${ProjectName}-Books'
+          S3_BUCKET: !FindInMap 
+                    - S3Buckets
+                    - !Ref 'AWS::Region'
+                    - Bucket
+          FILE_NAME: !FindInMap 
+                    - Constants
+                    - S3Keys
+                    - booksData
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - UploadBooksCode
 
 # ---------- LAMBDA FUNCTIONS for ELASTICACHE  ---------          
   FunctionGetBestSellers:
@@ -620,7 +623,7 @@ Resources:
     DependsOn:
       - RedisRole
       - ElastiCacheCluster
-      - TOrders
+      # - TOrders
     Properties:
       FunctionName: !Sub '${ProjectName}-GetBestSellers'
       Description: Get the top 20 best selling books from ElastiCache
@@ -1336,26 +1339,26 @@ Resources:
       StageName: prod
 
 # ---------- COGNITO DEFINITIONS ---------           
-  SNSRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - cognito-idp.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
-      Policies:
-        - PolicyName: CognitoSNSPolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action: 'sns:publish'
-                Resource: '*'
+  # SNSRole:
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - cognito-idp.amazonaws.com
+  #           Action:
+  #             - 'sts:AssumeRole'
+  #     Policies:
+  #       - PolicyName: CognitoSNSPolicy
+  #         PolicyDocument:
+  #           Version: 2012-10-17
+  #           Statement:
+  #             - Effect: Allow
+  #               Action: 'sns:publish'
+  #               Resource: '*'
   UserPool:
     Type: 'AWS::Cognito::UserPool'
     Properties:
@@ -1477,13 +1480,13 @@ Resources:
         unauthenticated: !GetAtt 
           - CognitoUnAuthorizedRole
           - Arn
-  # BooksUploader:
-  #   Type: 'Custom::CustomResource'
-  #   Properties:
-  #     ServiceToken: !GetAtt FunctionUploadBooks.Arn
-  #     ParameterOne: Parameter to pass into Custom Lambda Function
-  #     DependsOn: 
-  #      - FunctionUploadBooks
+  BooksUploader:
+    Type: 'Custom::CustomResource'
+    Properties:
+      ServiceToken: !GetAtt FunctionUploadBooks.Arn
+      ParameterOne: Parameter to pass into Custom Lambda Function
+      DependsOn: 
+       - FunctionUploadBooks
 
 # ------------------------ FRONTEND ------------------------
   AssetsCodeRepository:
@@ -1556,7 +1559,7 @@ Resources:
     Description: Creating service role in IAM for AWS CodeBuild
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-codebuild-role'
+      RoleName: !Sub '${ProjectName}-codebuild-role2'
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -1598,7 +1601,7 @@ Resources:
     Description: Creating service role in IAM for AWS CodePipeline
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub '${ProjectName}-CodePipeline-Role'
+      RoleName: !Sub '${ProjectName}-CodePipeline-Role2'
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -1850,48 +1853,48 @@ Resources:
       DependsOn: UpdateConfigFunction
 
 # ---------- ROLES FOR S3 Relication ---------  
-  S3replicationRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      RoleName: !Sub '${ProjectName}-S3replicationRole'
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - s3.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
-      Path: /
-      Policies:
-        - PolicyName: replicationRolePolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:GetObjectVersionForReplication'
-                  - 's3:GetObjectVersionAcl'
-                Resource:
-                  - !Join 
-                    - ''
-                    - - !GetAtt AssetsBucket.Arn
-                      - /*
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:ListBucket'
-                  - 's3:GetReplicationConfiguration'
-                Resource: !GetAtt AssetsBucket.Arn
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:ReplicateObject'
-                  - 's3:ReplicateDelete'
-                  - 's3:ReplicateTags'
-                  - 's3:GetObjectVersionTagging'
-                Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
+  # S3replicationRole:
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     RoleName: !Sub '${ProjectName}-S3replicationRole'
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - s3.amazonaws.com
+  #           Action:
+  #             - 'sts:AssumeRole'
+  #     Path: /
+  #     Policies:
+  #       - PolicyName: replicationRolePolicy
+  #         PolicyDocument:
+  #           Version: 2012-10-17
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - 's3:GetObjectVersionForReplication'
+  #                 - 's3:GetObjectVersionAcl'
+  #               Resource:
+  #                 - !Join 
+  #                   - ''
+  #                   - - !GetAtt AssetsBucket.Arn
+  #                     - /*
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - 's3:ListBucket'
+  #                 - 's3:GetReplicationConfiguration'
+  #               Resource: !GetAtt AssetsBucket.Arn
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - 's3:ReplicateObject'
+  #                 - 's3:ReplicateDelete'
+  #                 - 's3:ReplicateTags'
+  #                 - 's3:GetObjectVersionTagging'
+  #               Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
 
 Outputs:
   CodeRepository:
@@ -1906,6 +1909,6 @@ Outputs:
     Value: !Sub
       - https://${Domain}
       - { Domain: !GetAtt AssetsCDN.DomainName }
-  S3replicationRole: 
-    Description: The ARN of S3 repliction role
-    Value: !GetAtt S3replicationRole.Arn
+  # S3replicationRole: 
+  #   Description: The ARN of S3 repliction role
+  #   Value: !GetAtt S3replicationRole.Arn

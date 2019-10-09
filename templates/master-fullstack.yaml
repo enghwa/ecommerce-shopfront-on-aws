@@ -1,10 +1,488 @@
 AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  AWS::CloudFormation::Designer:
+    07b29683-0ea5-44bf-a439-fcb89713fd09:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 240
+        'y': 150
+      z: 1
+      embeds: []
+    e1a45038-ec76-464d-91b5-6b31bc325fa7:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 160
+        'y': 100
+      z: 1
+      embeds: []
+    57fb3162-6a2d-4651-a9c8-7404e82181e8:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 240
+        'y': 40
+      z: 1
+      embeds: []
+    9de25578-c943-42f5-9ec7-7a5258c7771a:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 310
+        'y': 100
+      z: 1
+      embeds: []
+    9c3f4191-a370-4344-a5b1-626228919c45:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -180
+        'y': 240
+      z: 1
+      embeds: []
+    e64608f0-5134-4c91-8f3c-4d03408c8236:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 0
+        'y': 230
+      z: 1
+      embeds: []
+    92605ac3-2103-491b-8593-c1ed98181425:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -100
+        'y': 240
+      z: 1
+      embeds: []
+    8e306d11-6d48-49e0-8f69-760139c83447:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 460
+        'y': 220
+      z: 1
+      embeds: []
+    1ae22cac-5803-4077-a6fe-1a3ca1aedfc2:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 580
+        'y': 240
+      z: 1
+      embeds: []
+    f873825f-3037-47b0-90b4-fca6924fb4e9:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 500
+        'y': 420
+      z: 1
+      embeds: []
+    06a821b7-638e-471c-ab50-51710b73767c:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 240
+        'y': 270
+      z: 1
+      embeds: []
+      isassociatedwith:
+        - f873825f-3037-47b0-90b4-fca6924fb4e9
+    3e7a32d4-9e4d-4ecc-89b2-77203c5d926b:
+      size:
+        width: 1250
+        height: 600
+      position:
+        x: -200
+        'y': 510
+      z: 1
+      embeds:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - 03db03b0-3367-4eb8-bfa1-82df7efc4df4
+        - 278dda65-02c9-49fa-a19c-3dd7afd25683
+    03db03b0-3367-4eb8-bfa1-82df7efc4df4:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 460
+        'y': 1000
+      z: 2
+      parent: 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+      embeds: []
+      iscontainedinside:
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+    9747c416-4f2e-45b1-bc9d-16335256f1db:
+      size:
+        width: 500
+        height: 330
+      position:
+        x: -170
+        'y': 570
+      z: 2
+      parent: 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+      embeds:
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+        - 97efc723-a637-41c7-b712-3af9363a1702
+        - a6392891-b014-4ea9-93a2-831f602268aa
+        - 49458e1d-a6a5-4c44-96b5-f1e3f6c694a8
+        - 3023c794-550d-4066-8a59-c139f4f54616
+        - 6a4462a7-45d0-4bd9-a08a-03cd5621e0ce
+      iscontainedinside:
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+    a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b:
+      size:
+        width: 180
+        height: 120
+      position:
+        x: -140
+        'y': 690
+      z: 3
+      parent: 9747c416-4f2e-45b1-bc9d-16335256f1db
+      embeds:
+        - 0e6ce8f6-0271-439e-afcf-4e4d23c1edc3
+        - acebdfda-9b64-45f8-a888-3d1251bba41a
+      iscontainedinside:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+    cecab4d7-120d-48b2-99d9-1152b429cebc:
+      size:
+        width: 180
+        height: 180
+      position:
+        x: 380
+        'y': 610
+      z: 2
+      parent: 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+      embeds:
+        - e97bf15c-b88b-48b7-b6d8-bffcaa87b24f
+        - 454289ef-fb5c-4a1f-941d-4016ebc9cf24
+        - 9007f88f-407a-4ab7-9ebb-ce6fa13b223e
+      iscontainedinside:
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+    e0ffbcc7-5f62-43ac-b377-47ec80a5a71e:
+      size:
+        width: 390
+        height: 190
+      position:
+        x: 630
+        'y': 590
+      z: 2
+      parent: 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+      embeds:
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+        - f0f16a94-104a-431f-8c87-930f56274955
+        - 5a740957-6b64-4ddd-bd1d-3027df7fc6d5
+      iscontainedinside:
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+    25b4ecc5-9d47-49cb-b5c4-d03574eee62e:
+      size:
+        width: 220
+        height: 120
+      position:
+        x: 630
+        'y': 610
+      z: 3
+      parent: e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+      embeds:
+        - c31e25ac-e338-4d21-9e4b-881a16e0a494
+        - a311ee38-d902-4856-9f09-1d00d1bc8600
+      iscontainedinside:
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+    0e6ce8f6-0271-439e-afcf-4e4d23c1edc3:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -120
+        'y': 730
+      z: 4
+      parent: a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+      embeds: []
+      iscontainedinside:
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+    97efc723-a637-41c7-b712-3af9363a1702:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 30
+        'y': 820
+      z: 3
+      parent: 9747c416-4f2e-45b1-bc9d-16335256f1db
+      embeds: []
+      iscontainedinside:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+    e97bf15c-b88b-48b7-b6d8-bffcaa87b24f:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 440
+        'y': 710
+      z: 3
+      parent: cecab4d7-120d-48b2-99d9-1152b429cebc
+      embeds: []
+      iscontainedinside:
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+    c31e25ac-e338-4d21-9e4b-881a16e0a494:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 640
+        'y': 650
+      z: 4
+      parent: 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+      embeds: []
+      iscontainedinside:
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+    f0f16a94-104a-431f-8c87-930f56274955:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 860
+        'y': 640
+      z: 3
+      parent: e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+      embeds: []
+      iscontainedinside:
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+    454289ef-fb5c-4a1f-941d-4016ebc9cf24:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 400
+        'y': 630
+      z: 3
+      parent: cecab4d7-120d-48b2-99d9-1152b429cebc
+      embeds: []
+      iscontainedinside:
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    a6392891-b014-4ea9-93a2-831f602268aa:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -160
+        'y': 830
+      z: 3
+      parent: 9747c416-4f2e-45b1-bc9d-16335256f1db
+      embeds: []
+      iscontainedinside:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    49458e1d-a6a5-4c44-96b5-f1e3f6c694a8:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 240
+        'y': 740
+      z: 3
+      parent: 9747c416-4f2e-45b1-bc9d-16335256f1db
+      embeds: []
+      iscontainedinside:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    3023c794-550d-4066-8a59-c139f4f54616:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 160
+        'y': 740
+      z: 3
+      parent: 9747c416-4f2e-45b1-bc9d-16335256f1db
+      embeds: []
+      iscontainedinside:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    acebdfda-9b64-45f8-a888-3d1251bba41a:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -40
+        'y': 730
+      z: 4
+      parent: a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+      embeds: []
+      iscontainedinside:
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+        - a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    6a4462a7-45d0-4bd9-a08a-03cd5621e0ce:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 80
+        'y': 740
+      z: 3
+      parent: 9747c416-4f2e-45b1-bc9d-16335256f1db
+      embeds: []
+      iscontainedinside:
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+        - 9747c416-4f2e-45b1-bc9d-16335256f1db
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    5a740957-6b64-4ddd-bd1d-3027df7fc6d5:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 940
+        'y': 640
+      z: 3
+      parent: e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+      embeds: []
+      isassociatedwith:
+        - 03db03b0-3367-4eb8-bfa1-82df7efc4df4
+      iscontainedinside:
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+        - e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    a311ee38-d902-4856-9f09-1d00d1bc8600:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 750
+        'y': 650
+      z: 4
+      parent: 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+      embeds: []
+      iscontainedinside:
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+        - 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    9007f88f-407a-4ab7-9ebb-ce6fa13b223e:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 490
+        'y': 630
+      z: 3
+      parent: cecab4d7-120d-48b2-99d9-1152b429cebc
+      embeds: []
+      iscontainedinside:
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+        - cecab4d7-120d-48b2-99d9-1152b429cebc
+      dependson:
+        - 06a821b7-638e-471c-ab50-51710b73767c
+    278dda65-02c9-49fa-a19c-3dd7afd25683:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 340
+        'y': 990
+      z: 2
+      parent: 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+      embeds: []
+      iscontainedinside:
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+        - 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+      dependson:
+        - 5a740957-6b64-4ddd-bd1d-3027df7fc6d5
+        - f0f16a94-104a-431f-8c87-930f56274955
+        - a311ee38-d902-4856-9f09-1d00d1bc8600
+        - c31e25ac-e338-4d21-9e4b-881a16e0a494
+        - 9007f88f-407a-4ab7-9ebb-ce6fa13b223e
+        - 454289ef-fb5c-4a1f-941d-4016ebc9cf24
+        - e97bf15c-b88b-48b7-b6d8-bffcaa87b24f
+        - 3023c794-550d-4066-8a59-c139f4f54616
+        - 6a4462a7-45d0-4bd9-a08a-03cd5621e0ce
+        - 49458e1d-a6a5-4c44-96b5-f1e3f6c694a8
+        - a6392891-b014-4ea9-93a2-831f602268aa
+        - 97efc723-a637-41c7-b712-3af9363a1702
+        - acebdfda-9b64-45f8-a888-3d1251bba41a
+        - 0e6ce8f6-0271-439e-afcf-4e4d23c1edc3     
 Parameters:
   ProjectName:
-    Description: Name of the project (lowercase and under ten characters without number)
+    Description: Name of the project (lowercase and under ten characters)
     Type: String
     AllowedPattern: "^[a-z]{0,10}$"
-    ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
+    ConstraintDescription: Must be lowercase and under ten characters
   AssetsBucketName:
     Type: String
     Description: Name of assets S3 bucket to create (lowercase, numbers or - only, S3 Buckets are globally unique)
@@ -12,25 +490,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
-    Default: 'http://woof.kopi.io/book5.zip'
-  bookstoreVPC:
-    Type: String
-    Description: VPC ID of Primary Region (ex. vpc-xxx)
-  bookstoreSubnet1:
-    Type: String
-    Description: Subnet ID for Elasticache (ex.172.0.0.0/16)
-Metadata: 
-  AWS::CloudFormation::Interface: 
-    ParameterGroups: 
-      - 
-        Label: 
-          default: "Configuration"
-        Parameters: 
-          - ProjectName
-          - AssetsBucketName
-          - SeedRepository
-          - bookstoreVPC
-          - bookstoreSubnet1
+    Default: 'https://s3.amazonaws.com/aws-bookstore-demo/bookstore-webapp.zip'
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -38,15 +498,19 @@ Mappings:
   S3Buckets:
     us-east-1:
       Bucket: aws-bookstore-demo
+      NeptuneDataBucket: bookstore-neptune
       SeederFunctionBucket: fsd-aws-wildrydes-us-east-1
     us-west-2:
       Bucket: aws-bookstore-demo-us-west-2
+      NeptuneDataBucket: bookstore-neptune-us-west-2
       SeederFunctionBucket: fsd-aws-wildrydes-us-west-2
     eu-central-1:
       Bucket: aws-bookstore-demo-eu-central-1
+      NeptuneDataBucket: bookstore-neptune-eu-central-1
       SeederFunctionBucket: fsd-aws-wildrydes-eu-central-1
     eu-west-1:
       Bucket: aws-bookstore-demo-eu-west-1
+      NeptuneDataBucket: bookstore-neptune-eu-west-1
       SeederFunctionBucket: fsd-aws-wildrydes-eu-west-1
   Constants:
     S3Keys:
@@ -60,54 +524,62 @@ Mappings:
       RemoveFromCartCode: functions/RemoveFromCart.zip
       GetBestSellersCode: functions/GetBestSellers.zip
       CheckoutCode: functions/Checkout.zip
-      # UploadBooksCode: functions/UploadBooks.zip
+      UploadBooksCode: functions/UploadBooks.zip
+      GetRecommendationsCode: functions/GetRecommendations.zip
+      GetRecommendationsByBookCode: functions/GetRecommendationsByBook.zip
+      SearchCode: functions/Search.zip
+      UpdateSearchCode: functions/UpdateSearchCluster.zip
       UpdateBestSellersCode: functions/UpdateBestSellers.zip
+      NeptuneLoaderCode: functions/NeptuneLoader.zip
+      NeptuneIAMCode: functions/NeptuneIAM.zip
+      bookstoreNeptuneS3DataPath: /data/
       booksData: data/books.json
+      CreateESRoleCode: functions/CreateESRole.zip
       UpdateConfigCode: functions/UpdateConfig.zip
       SeederFunctionCode: aws-serverless-codecommit-seeder.zip
 Resources:
 # ---------- VPC - SUBNET - SECURITY GROUPS  ---------
 
-  # bookstoreVPC:
-  #   Type: "AWS::EC2::VPC"
-  #   Properties:
-      # CidrBlock: '172.31.0.0/16'
+  bookstoreVPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: '172.31.0.0/16'
   
-  # bookstoreSubnet1:
-  #   Type: "AWS::EC2::Subnet"
-  #   Properties:
-  #     CidrBlock: 
-  #       Fn::Select:
-  #         - 0
-  #         - Fn::Cidr:
-  #            - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
-  #           - 2
-  #           - 5
-  #     VpcId:
-  #       Ref: bookstoreVPC
-  #     AvailabilityZone:
-  #       Fn::Select:
-  #         - 0
-  #         - Fn::GetAZs:
-  #             Ref: "AWS::Region"
+  bookstoreSubnet1:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock:
+        Fn::Select:
+          - 0
+          - Fn::Cidr:
+            - Fn::GetAtt: [bookstoreVPC, CidrBlock]
+            - 3
+            - 8
+      VpcId:
+        Ref: bookstoreVPC
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs:
+              Ref: "AWS::Region"
 
-  # bookstoreSubnet2:
-  #   Type: "AWS::EC2::Subnet"
-  #   Properties:
-  #     CidrBlock:
-  #       Fn::Select:
-  #         - 1
-  #         - Fn::Cidr:
-  #           - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
-  #           - 3
-  #           - 8
-  #     VpcId:
-  #       Ref: bookstoreVPC
-  #     AvailabilityZone:
-  #       Fn::Select:
-  #         - 1
-  #         - Fn::GetAZs:
-  #             Ref: "AWS::Region"  
+  bookstoreSubnet2:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock:
+        Fn::Select:
+          - 1
+          - Fn::Cidr:
+            - Fn::GetAtt: [bookstoreVPC, CidrBlock]
+            - 3
+            - 8
+      VpcId:
+        Ref: bookstoreVPC
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs:
+              Ref: "AWS::Region"  
 
   bookstoreSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -116,22 +588,43 @@ Resources:
       GroupDescription: Lock cache down to webserver access only
       VpcId: !Ref bookstoreVPC
 
-  # bookstoreVPCRouteTable:  
-  #   Type: AWS::EC2::RouteTable
-  #   Properties: 
-  #     VpcId: !Ref bookstoreVPC
+  bookstoreVPCRouteTable:  
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      VpcId: !Ref bookstoreVPC
   
-  # bookstoreVPCRouteTableAssociation:
-  #   Type: AWS::EC2::SubnetRouteTableAssociation
-  #   Properties: 
-  #     RouteTableId: !Ref bookstoreVPCRouteTable
-  #     SubnetId: !Ref bookstoreSubnet1
+  bookstoreVPCRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      RouteTableId: !Ref bookstoreVPCRouteTable
+      SubnetId: !Ref bookstoreSubnet1
 
-  # bookstoreVPCRouteTableAssociationTwo:
-  #   Type: AWS::EC2::SubnetRouteTableAssociation
-  #   Properties: 
-  #     RouteTableId: !Ref bookstoreVPCRouteTable
-  #     SubnetId: !Ref bookstoreSubnet2    
+  bookstoreVPCRouteTableAssociationTwo:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      RouteTableId: !Ref bookstoreVPCRouteTable
+      SubnetId: !Ref bookstoreSubnet2    
+    
+  bookstoreNeptuneSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Security group for Neptune DB within book store app."
+      SecurityGroupIngress:
+        -
+          CidrIp: "0.0.0.0/0"
+          FromPort: 8182
+          ToPort: 8182
+          IpProtocol: tcp
+      VpcId:
+        Ref: bookstoreVPC
+
+  bookstoreNeptuneSubnetGroup:
+    Type: "AWS::Neptune::DBSubnetGroup"
+    Properties:
+      DBSubnetGroupDescription: "Subnet group for Neptune DB within book store app."
+      SubnetIds:
+        - !Ref bookstoreSubnet1
+        - !Ref bookstoreSubnet2
 
   redisLambdaSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
@@ -159,6 +652,311 @@ Resources:
       Description: Subnets for ElastiCache
       SubnetIds:
         - Ref: bookstoreSubnet1        
+  
+  # ---------- NEPTUNE CLUSTER DEFINITION ---------
+
+  bookstoreNeptuneCluster:
+    Type: "AWS::Neptune::DBCluster"
+    Properties:
+      IamAuthEnabled : false
+      DBSubnetGroupName:
+        Ref: bookstoreNeptuneSubnetGroup
+      VpcSecurityGroupIds: [ !GetAtt bookstoreNeptuneSecurityGroup.GroupId ]
+  bookstoreNeptuneDB:
+    Type: "AWS::Neptune::DBInstance"
+    Properties:
+      DBClusterIdentifier: !Ref bookstoreNeptuneCluster
+      DBInstanceClass: "db.r4.large"
+
+# ---------- IAM ROLE ATTACH FOR S3 BULK LOAD ------------
+
+  bookstoreNeptuneLoaderS3ReadPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - s3:Get*
+          - s3:List*
+          Effect: Allow
+          Resource: "*"
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneLoaderS3ReadPolicy
+      Roles:
+      - Ref: bookstoreNeptuneLoaderS3ReadRole
+  bookstoreNeptuneLoaderS3ReadRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - rds.amazonaws.com
+        Version: '2012-10-17'
+      Path: /
+
+  # ---------- CUSTOM CLOUDFORMATION RESOURCE FOR ATTACHING S3 READ ROLE TO NEPTUNE CLUSTER ---------
+
+  bookstoreNeptuneIAMAttach:
+    DependsOn: 
+      - bookstoreNeptuneIAMAttachLambdaRoleCloudWatchStream
+      - bookstoreNeptuneIAMAttachLambdaRoleCloudWatchGroup
+      - bookstoreNeptuneIAMAttachLambdaRoleEC2
+      - bookstoreNeptuneIAMAttachLambdaRoleRDS
+      - bookstoreNeptuneIAMAttachLambdaRole
+      - bookstoreNeptuneIAMAttachLambda
+      - bookstoreNeptuneLoaderS3ReadPolicy
+      - bookstoreNeptuneLoaderS3ReadRole
+    Type: Custom::NeptuneIAMAttach
+    Properties: 
+      ServiceToken:
+        Fn::GetAtt: [ bookstoreNeptuneIAMAttachLambda, Arn ]
+      NeptuneDB: !Ref bookstoreNeptuneCluster
+      IAMRole: 
+        Fn::GetAtt: [ bookstoreNeptuneLoaderS3ReadRole, Arn ]
+      Region: !Ref 'AWS::Region'
+  bookstoreNeptuneIAMAttachLambdaRoleCloudWatchStream:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Effect: Allow
+          Resource: !Join [ "", [ "arn:aws:logs:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId" , ":log-group:/aws/lambda/",  !Ref bookstoreNeptuneIAMAttachLambda, ":*" ]]
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneIAMAttachLambdaRoleCloudWatchStream
+      Roles:
+      - Ref: bookstoreNeptuneIAMAttachLambdaRole
+  bookstoreNeptuneIAMAttachLambdaRoleCloudWatchGroup:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - logs:CreateLogGroup
+          Effect: Allow
+          Resource: !Join [ "", [ "arn:aws:logs:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId" , ":*" ]]
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneIAMAttachLambdaRoleCloudWatchGroup
+      Roles:
+      - Ref: bookstoreNeptuneIAMAttachLambdaRole
+  bookstoreNeptuneIAMAttachLambdaRoleEC2:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - ec2:CreateNetworkInterface
+          - ec2:DescribeNetworkInterfaces
+          - ec2:DeleteNetworkInterface
+          - ec2:DetachNetworkInterface
+          Effect: Allow
+          Resource: "*"
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneIAMAttachLambdaRoleEC2
+      Roles:
+      - Ref: bookstoreNeptuneIAMAttachLambdaRole
+  bookstoreNeptuneIAMAttachLambdaRoleRDS:
+    DependsOn: bookstoreNeptuneDB
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - 
+            Action:
+              - rds:AddRoleToDBCluster
+              - rds:DescribeDBClusters
+            Effect: Allow
+            Resource:
+              - "*"
+          - 
+            Action:
+              - iam:PassRole
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt: [ bookstoreNeptuneLoaderS3ReadRole, Arn ]
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneIAMAttachLambdaRoleRDS
+      Roles:
+      - Ref: bookstoreNeptuneIAMAttachLambdaRole
+  bookstoreNeptuneIAMAttachLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+        Version: '2012-10-17'
+      Path: /
+  bookstoreNeptuneIAMAttachLambda:
+    Type: AWS::Lambda::Function
+    DependsOn: bookstoreNeptuneDB
+    Properties:
+      Code:
+        S3Bucket: !FindInMap 
+                    - S3Buckets
+                    - !Ref 'AWS::Region'
+                    - Bucket
+        S3Key: !FindInMap 
+                 - Constants
+                 - S3Keys
+                 - NeptuneIAMCode
+      Description: 'Lambda function to add an IAM policy to a Neptune cluster to allow for bulk load.'
+      Handler: lambda_function.lambda_handler
+      MemorySize: 128
+      Role:
+        Fn::GetAtt: [ bookstoreNeptuneIAMAttachLambdaRole, Arn ]
+      Runtime: python3.6
+      Timeout: 30
+
+
+# ---------- VPC ENDPOINT FOR NEPTUNE BULK LOADER ACCESS TO S3 ---------
+
+  S3Endpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action:
+              - 's3:Get*'
+              - 's3:PutObject'
+              - 's3:List*'
+            Resource:
+              - '*'
+      RouteTableIds:
+        - !Ref bookstoreVPCRouteTable
+      ServiceName: !Join [ "" , [ "com.amazonaws.", !Ref "AWS::Region", ".s3"]]
+      VpcId: !Ref bookstoreVPC
+
+# ---------- CUSTOM RESOURCE TO INITIATE NEPTUNE BULK LOAD PROCESS ---------
+  bookstoreNeptuneLoader: 
+    DependsOn:
+      - bookstoreNeptuneLoaderLambdaRoleCloudWatchStream
+      - bookstoreNeptuneLoaderLambdaRoleCloudWatchGroup
+      - bookstoreNeptuneLoaderLambdaRoleEC2
+      - bookstoreNeptuneLoaderLambdaRole      
+      - bookstoreNeptuneLoaderLambda
+      - bookstoreNeptuneLoaderS3ReadPolicy
+      - bookstoreNeptuneLoaderS3ReadRole
+      - S3Endpoint
+    Type: "Custom::NeptuneLoader"
+    Properties: 
+      ServiceToken:
+        Fn::GetAtt: [ bookstoreNeptuneLoaderLambda, Arn]
+
+  bookstoreNeptuneLoaderLambdaRoleCloudWatchStream:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Effect: Allow
+          Resource: !Join [ "", [ "arn:aws:logs:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId" , ":log-group:/aws/lambda/",  !Ref bookstoreNeptuneLoaderLambda, ":*" ]]
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneLoaderLambdaRoleCloudWatchStream
+      Roles:
+      - Ref: bookstoreNeptuneLoaderLambdaRole
+  bookstoreNeptuneLoaderLambdaRoleCloudWatchGroup:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - logs:CreateLogGroup
+          Effect: Allow
+          Resource: !Join [ "", [ "arn:aws:logs:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId" , ":*" ]]
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneLoaderLambdaRoleCloudWatchGroup
+      Roles:
+      - Ref: bookstoreNeptuneLoaderLambdaRole
+  bookstoreNeptuneLoaderLambdaRoleEC2:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+        - Action:
+          - ec2:CreateNetworkInterface
+          - ec2:DescribeNetworkInterfaces
+          - ec2:DeleteNetworkInterface
+          - ec2:DetachNetworkInterface          
+          Effect: Allow
+          Resource: "*"
+        Version: '2012-10-17'
+      PolicyName: bookstoreNeptuneLoaderLambdaRoleEC2
+      Roles:
+      - Ref: bookstoreNeptuneLoaderLambdaRole
+  bookstoreNeptuneLoaderLambda:
+    Type: AWS::Lambda::Function
+    DependsOn: bookstoreNeptuneDB
+    Properties:
+      Code:
+        S3Bucket: !FindInMap 
+                    - S3Buckets
+                    - !Ref 'AWS::Region'
+                    - Bucket
+        S3Key: !FindInMap 
+                 - Constants
+                 - S3Keys
+                 - NeptuneLoaderCode
+      Description: 'Lambda function to load data into Neptune instance.'
+      Environment:
+        Variables:
+          neptunedb:
+            Fn::GetAtt: [ bookstoreNeptuneCluster, Endpoint ] 
+          neptuneloads3path: !Join
+                              - ''
+                              - - 's3://'
+                                - !FindInMap
+                                  - S3Buckets
+                                  - !Ref 'AWS::Region'
+                                  - NeptuneDataBucket
+                                - !FindInMap
+                                  - Constants
+                                  - S3Keys
+                                  - bookstoreNeptuneS3DataPath
+          region: 
+            Ref: "AWS::Region"
+          s3loadiamrole: 
+            Fn::GetAtt: [ bookstoreNeptuneLoaderS3ReadRole, Arn]
+      Handler: lambda_function.lambda_handler
+      MemorySize: 128
+      Role:
+        Fn::GetAtt: [ bookstoreNeptuneLoaderLambdaRole, Arn ]
+      Runtime: python3.6
+      Timeout: 180
+      VpcConfig:
+        SecurityGroupIds:
+          - Ref: bookstoreNeptuneSecurityGroup
+        SubnetIds:
+          - Ref: bookstoreSubnet1
+          - Ref: bookstoreSubnet2
+  bookstoreNeptuneLoaderLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess'
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+        Version: '2012-10-17'
+      Path: /
 
 # ---------- ROLES FOR DYNAMODB ---------
   DynamoDbRole:
@@ -192,7 +990,7 @@ Resources:
                   - 'dynamodb:GetItem'
                   - 'dynamodb:Scan'
                   - 'dynamodb:DeleteItem'
-                Resource: 
+                Resource:
                   - !GetAtt 
                     - TBooks
                     - Arn
@@ -208,6 +1006,38 @@ Resources:
                         - TBooks
                         - Arn
                       - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 07b29683-0ea5-44bf-a439-fcb89713fd09
+
+# ---------- ROLES FOR NEPTUNE ---------        
+  RecommendationsLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectName}-RecommendationsLambdaRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: RecommendationsLambdaRoleEC2
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - 'ec2:CreateNetworkInterface'
+                  - 'ec2:DescribeNetworkInterfaces'
+                  - 'ec2:DeleteNetworkInterface'
+                  - 'ec2:DetachNetworkInterface'
+                Effect: Allow
+                Resource: '*'
+            Version: 2012-10-17
 
 # ---------- DYNAMODB TABLES DEFINITIONS ---------
   TBooks:
@@ -237,6 +1067,9 @@ Resources:
             WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 9de25578-c943-42f5-9ec7-7a5258c7771a
   TOrders:
     Type: 'AWS::DynamoDB::Table'
     Properties:
@@ -256,6 +1089,9 @@ Resources:
         WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES  
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 57fb3162-6a2d-4651-a9c8-7404e82181e8
   TCart:
     Type: 'AWS::DynamoDB::Table'
     Properties:
@@ -273,8 +1109,114 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES  
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e1a45038-ec76-464d-91b5-6b31bc325fa7
+# ---------- ELASTICSEARCH ROLES DEFINITIONS ---------        
+  ESSearchRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectName}-ESSearchRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole'
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-lambda-policy'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'es:ESHttpPost'
+                  - 'es:ESHttpGet'
+                Resource: !Join 
+                  - ''
+                  - - 'arn:aws:es:'
+                    - !Ref 'AWS::Region'
+                    - ':'
+                    - !Ref 'AWS::AccountId'
+                    - ':'
+                    - domain/
+                    - !Ref ElasticsearchDomain
+                    - /*
+              - Effect: Allow
+                Action:
+                  - 's3:ListBucket'
+                  - 's3:GetObject'
+                Resource: !Join 
+                  - ''
+                  - - 'arn:aws:s3:::'
+                    - !FindInMap 
+                      - S3Buckets
+                      - !Ref 'AWS::Region'
+                      - Bucket
+                    - /*
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:DescribeStream'
+                  - 'dynamodb:GetRecords'
+                  - 'dynamodb:GetShardIterator'
+                  - 'dynamodb:ListStreams'
+                Resource:
+                  - !GetAtt 
+                    - TBooks
+                    - Arn
+                  - !Join 
+                    - ''
+                    - - !GetAtt 
+                        - TBooks
+                        - Arn
+                      - /stream/*
+  ElasticsearchDomain:
+    Type: 'AWS::Elasticsearch::Domain'
+    DependsOn:
+      - ESRoleCreator
+    Properties:
+      DomainName: !Sub '${ProjectName}-domain'
+      ElasticsearchVersion: 6.2
+      ElasticsearchClusterConfig:
+        DedicatedMasterEnabled: 'false'
+        InstanceCount: '1'
+        ZoneAwarenessEnabled: 'false'
+        InstanceType: t2.small.elasticsearch
+      VPCOptions:
+        SubnetIds:
+          - Ref: bookstoreSubnet1
+      EBSOptions:
+        EBSEnabled: true
+        Iops: 0
+        VolumeSize: 10
+        VolumeType: gp2
+      AccessPolicies:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: '*'
+            Action:
+              - 'es:*'
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:es:'
+                - !Ref 'AWS::Region'
+                - ':'
+                - !Ref 'AWS::AccountId'
+                - ':'
+                - domain/
+                - !Sub '${ProjectName}-domain'
+                - /*
+      AdvancedOptions:
+        rest.action.multi.allow_explicit_index: true
 
 # ---------- ROLES FOR ELASTICACHE ---------  
   RedisRole:
@@ -314,6 +1256,41 @@ Resources:
           - 'GroupId'
         
 # ---------- LAMBDA STREAMING FUNCTIONS ---------      
+  UpdateSearchCluster:
+    Type: 'AWS::Lambda::Function'
+    DependsOn:
+      - ESSearchRole
+      - ElasticsearchDomain
+      - TBooks
+    Properties:
+      FunctionName: !Sub '${ProjectName}-UpdateSearchCluster'
+      Description: 'Update Elasticsearch cluster as books are added'
+      Handler: index.handler
+      Role: !GetAtt 
+        - ESSearchRole
+        - Arn
+      Runtime: python2.7
+      Timeout: '60'
+      VpcConfig:
+        SecurityGroupIds:
+          - Fn::GetAtt: [bookstoreVPC, DefaultSecurityGroup]
+        SubnetIds:
+          - Ref: bookstoreSubnet1
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - UpdateSearchCode
+      Environment:
+        Variables:
+          ESENDPOINT: !GetAtt 
+            - ElasticsearchDomain
+            - DomainEndpoint
+          REGION: !Ref 'AWS::Region'
   FunctionUpdateBestSellers:
     Type: 'AWS::Lambda::Function'
     DependsOn:
@@ -350,6 +1327,19 @@ Resources:
             - RedisEndpoint.Address 
 
  # ----------  STREAMING TRIGGERS ---------                     
+  DataTableStream:
+    DependsOn: TBooks
+    Type: 'AWS::Lambda::EventSourceMapping'
+    Properties:
+      BatchSize: 1
+      Enabled: true
+      EventSourceArn: !GetAtt 
+        - TBooks
+        - StreamArn
+      FunctionName: !GetAtt 
+        - UpdateSearchCluster
+        - Arn
+      StartingPosition: TRIM_HORIZON
   OrderTableStream:
     DependsOn: TOrders
     Type: 'AWS::Lambda::EventSourceMapping'
@@ -389,6 +1379,9 @@ Resources:
           - Constants
           - S3Keys
           - ListOrdersCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: f873825f-3037-47b0-90b4-fca6924fb4e9
   FunctionGetBook:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -413,6 +1406,9 @@ Resources:
           - Constants
           - S3Keys
           - GetBookCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 1ae22cac-5803-4077-a6fe-1a3ca1aedfc2
   FunctionListBooks:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -437,6 +1433,9 @@ Resources:
           - Constants
           - S3Keys
           - ListBooksCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 8e306d11-6d48-49e0-8f69-760139c83447
   FunctionUpdateCart:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -461,6 +1460,9 @@ Resources:
           - Constants
           - S3Keys
           - UpdateCartCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 92605ac3-2103-491b-8593-c1ed98181425
   FunctionGetCartItem:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -485,6 +1487,9 @@ Resources:
           - Constants
           - S3Keys
           - GetCartItemCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e64608f0-5134-4c91-8f3c-4d03408c8236
   FunctionListItemsInCart:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -509,6 +1514,9 @@ Resources:
           - Constants
           - S3Keys
           - ListItemsInCartCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e64608f0-5134-4c91-8f3c-4d03408c8236
   FunctionAddToCart:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -533,6 +1541,9 @@ Resources:
           - Constants
           - S3Keys
           - AddToCartCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e64608f0-5134-4c91-8f3c-4d03408c8236
   FunctionRemoveFromCart:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -557,6 +1568,9 @@ Resources:
           - Constants
           - S3Keys
           - RemoveFromCartCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e64608f0-5134-4c91-8f3c-4d03408c8236
   FunctionCheckout:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -582,39 +1596,149 @@ Resources:
           - Constants
           - S3Keys
           - CheckoutCode
-  # FunctionUploadBooks:
-  #   Type: 'AWS::Lambda::Function'
-  #   Properties:
-  #     FunctionName: !Sub '${ProjectName}-UploadBooks'
-  #     Description: Upload sample data for books
-  #     Handler: index.handler
-  #     Runtime: nodejs8.10
-  #     Role: !GetAtt 
-  #       - DynamoDbRole
-  #       - Arn
-  #     Timeout: 120
-  #     Environment:
-  #       Variables:
-  #         TABLE_NAME: !Sub '${ProjectName}-Books'
-  #         S3_BUCKET: !FindInMap 
-  #                   - S3Buckets
-  #                   - !Ref 'AWS::Region'
-  #                   - Bucket
-  #         FILE_NAME: !FindInMap 
-  #                   - Constants
-  #                   - S3Keys
-  #                   - booksData
-  #     Code:
-  #       S3Bucket: !FindInMap 
-  #         - S3Buckets
-  #         - !Ref 'AWS::Region'
-  #         - Bucket
-  #       S3Key: !FindInMap 
-  #         - Constants
-  #         - S3Keys
-  #         - UploadBooksCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 9c3f4191-a370-4344-a5b1-626228919c45
+  FunctionUploadBooks:
+    DependsOn: DataTableStream
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${ProjectName}-UploadBooks'
+      Description: Upload sample data for books
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Role: !GetAtt 
+        - DynamoDbRole
+        - Arn
+      Timeout: 120
+      Environment:
+        Variables:
+          TABLE_NAME: !Sub '${ProjectName}-Books'
+          S3_BUCKET: !FindInMap 
+                    - S3Buckets
+                    - !Ref 'AWS::Region'
+                    - Bucket
+          FILE_NAME: !FindInMap 
+                    - Constants
+                    - S3Keys
+                    - booksData
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - UploadBooksCode
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 9c3f4191-a370-4344-a5b1-626228919c47
 
-# ---------- LAMBDA FUNCTIONS for ELASTICACHE  ---------          
+# ---------- LAMBDA FUNCTIONS for NEPTUNE ---------  
+
+  FunctionGetRecommendations:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${ProjectName}-GetRecommendations'
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - GetRecommendationsCode
+      Description: Get the top 5 product recommendations from Neptune
+      Environment:
+        Variables:
+          neptunedb: !GetAtt bookstoreNeptuneCluster.Endpoint
+      Handler: index.handler
+      MemorySize: 256
+      Role:
+        'Fn::GetAtt':
+          - RecommendationsLambdaRole
+          - Arn
+      Runtime: python3.6
+      Timeout: 30
+      VpcConfig:
+        SecurityGroupIds:
+          - Ref: bookstoreNeptuneSecurityGroup
+        SubnetIds:
+          - Ref: bookstoreSubnet1
+          - Ref: bookstoreSubnet2
+
+  FunctionGetRecommendationsByBook:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${ProjectName}-GetRecommendationsByBook'
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - GetRecommendationsByBookCode
+      Description: Get friends who purchased this book
+      Environment:
+        Variables:
+          neptunedb: !GetAtt bookstoreNeptuneCluster.Endpoint 
+      Handler: index.handler
+      MemorySize: 256
+      Role:
+        'Fn::GetAtt':
+          - RecommendationsLambdaRole
+          - Arn
+      Runtime: python3.6
+      Timeout: 30
+      VpcConfig:
+        SecurityGroupIds:
+          - Ref: bookstoreNeptuneSecurityGroup
+        SubnetIds:
+          - Ref: bookstoreSubnet1
+          - Ref: bookstoreSubnet2
+        
+# ---------- LAMBDA FUNCTIONS for ELASTICSEARCH and ELASTICACHE  ---------          
+  FunctionSearch:
+    Type: 'AWS::Lambda::Function'
+    DependsOn:
+      - ESSearchRole
+      - ElasticsearchDomain
+      - TBooks
+    Properties:
+      FunctionName: !Sub '${ProjectName}-Search'
+      Description: Search for books across book names, authors, and categories
+      Handler: index.handler
+      MemorySize: 256
+      Role: !GetAtt 
+        - ESSearchRole
+        - Arn
+      Runtime: python2.7
+      Timeout: '60'
+      VpcConfig:
+        SecurityGroupIds:
+          - Fn::GetAtt: [bookstoreVPC, DefaultSecurityGroup]
+       #   - Ref: bookstoreSecurityGroup
+        SubnetIds:
+          - Ref: bookstoreSubnet1
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - SearchCode
+      Environment:
+        Variables:
+          ESENDPOINT: !GetAtt 
+            - ElasticsearchDomain
+            - DomainEndpoint
+          REGION: !Ref 'AWS::Region'
   FunctionGetBestSellers:
     Type: 'AWS::Lambda::Function'
     DependsOn:
@@ -667,6 +1791,39 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
+  FunctionGetRecommendationsPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref FunctionGetRecommendations
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Join 
+        - ''
+        - - 'arn:aws:execute-api:'
+          - !Ref 'AWS::Region'
+          - ':'
+          - !Ref 'AWS::AccountId'
+          - ':'
+          - !Ref AppApi
+          - /*
+  FunctionGetRecommendationsByBookPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref FunctionGetRecommendationsByBook
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Join 
+        - ''
+        - - 'arn:aws:execute-api:'
+          - !Ref 'AWS::Region'
+          - ':'
+          - !Ref 'AWS::AccountId'
+          - ':'
+          - !Ref AppApi
+          - /* 
   FunctionGetBookPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -682,6 +1839,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionListBooksPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -697,6 +1857,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionUpdateCartPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -712,6 +1875,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionGetCartItemPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -727,6 +1893,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionListItemsInCartPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -742,6 +1911,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionAddToCartPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -757,6 +1929,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionRemoveFromCartPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -772,6 +1947,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionCheckoutPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -787,6 +1965,27 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
+  FunctionSearchPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref FunctionSearch
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Join 
+        - ''
+        - - 'arn:aws:execute-api:'
+          - !Ref 'AWS::Region'
+          - ':'
+          - !Ref 'AWS::AccountId'
+          - ':'
+          - !Ref AppApi
+          - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c
   FunctionGetBestSellersPermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -802,6 +2001,9 @@ Resources:
           - ':'
           - !Ref AppApi
           - /*
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 06a821b7-638e-471c-ab50-51710b73767c  
 
  # ---------- API GATEWAY ---------         
   AppApi:
@@ -810,12 +2012,129 @@ Resources:
       Name: !Sub '${ProjectName}-Bookstore'
       Description: API used for Bookstore requests
       FailOnWarnings: true
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 3e7a32d4-9e4d-4ecc-89b2-77203c5d926b
+  RecomendationsApiRequestGET:
+    DependsOn:
+      - FunctionGetRecommendations
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      AuthorizationType: AWS_IAM
+      HttpMethod: GET
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Join 
+          - ''
+          - - 'arn:aws:apigateway:'
+            - !Ref 'AWS::Region'
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt 
+              - FunctionGetRecommendations
+              - Arn
+            - /invocations
+        IntegrationResponses:
+          - StatusCode: 200
+      ResourceId: !Ref RecommendationsApiResource
+      RestApiId: !Ref AppApi
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty
+  RecomendationsApiRequestOPTIONS:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      ResourceId: !Ref RecommendationsApiResource
+      RestApiId: !Ref AppApi
+      AuthorizationType: None
+      HttpMethod: OPTIONS
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: >-
+                'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+              method.response.header.Access-Control-Allow-Methods: '''GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            ResponseTemplates:
+              application/json: ''
+            StatusCode: '200'
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+      MethodResponses:
+        - ResponseModels:
+            application/json: Empty
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+          StatusCode: '200'
+  RecomendationsByBookApiRequestGET:
+    DependsOn:
+      - FunctionGetRecommendationsByBook
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      AuthorizationType: AWS_IAM
+      HttpMethod: GET
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Join 
+          - ''
+          - - 'arn:aws:apigateway:'
+            - !Ref 'AWS::Region'
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt 
+              - FunctionGetRecommendationsByBook
+              - Arn
+            - /invocations
+        IntegrationResponses:
+          - StatusCode: 200
+      ResourceId: !Ref RecommendationsByBookApiResource
+      RequestParameters:
+        method.request.path.bookId: false
+      RestApiId: !Ref AppApi
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty
+  RecomendationsByBookApiRequestOPTIONS:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      ResourceId: !Ref RecommendationsByBookApiResource
+      RestApiId: !Ref AppApi
+      AuthorizationType: None
+      HttpMethod: OPTIONS
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: >-
+                'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+              method.response.header.Access-Control-Allow-Methods: '''GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            ResponseTemplates:
+              application/json: ''
+            StatusCode: '200'
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+      MethodResponses:
+        - ResponseModels:
+            application/json: Empty
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+          StatusCode: '200'        
   BooksApiRequestGET:
     DependsOn:
       - FunctionListOrdersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: NONE
+      AuthorizationType: AWS_IAM
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -839,6 +2158,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 5a740957-6b64-4ddd-bd1d-3027df7fc6d5
   BooksApiRequestOPTIONS:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -868,11 +2190,14 @@ Resources:
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
           StatusCode: '200'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: f0f16a94-104a-431f-8c87-930f56274955
   BookItemApiRequestGET:
     DependsOn: FunctionGetBookPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: NONE
+      AuthorizationType: AWS_IAM
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -898,6 +2223,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a311ee38-d902-4856-9f09-1d00d1bc8600
   BookItemApiRequestOPTIONS:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -927,6 +2255,9 @@ Resources:
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
           StatusCode: '200'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: c31e25ac-e338-4d21-9e4b-881a16e0a494
   OrdersApiRequestGET:
     DependsOn: FunctionListOrdersPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -953,6 +2284,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 9007f88f-407a-4ab7-9ebb-ce6fa13b223e
   OrdersApiRequestPOST:
     DependsOn: FunctionCheckoutPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -979,6 +2313,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 454289ef-fb5c-4a1f-941d-4016ebc9cf24
   OrdersApiRequestOPTIONS:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -1008,6 +2345,9 @@ Resources:
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
           StatusCode: '200'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e97bf15c-b88b-48b7-b6d8-bffcaa87b24f
   CartApiRequestGET:
     DependsOn: FunctionListItemsInCartPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -1034,6 +2374,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 3023c794-550d-4066-8a59-c139f4f54616
   CartApiRequestPOST:
     DependsOn: FunctionAddToCartPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -1060,6 +2403,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 49458e1d-a6a5-4c44-96b5-f1e3f6c694a8
   CartApiRequestPUT:
     DependsOn: FunctionUpdateCartPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -1086,6 +2432,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 6a4462a7-45d0-4bd9-a08a-03cd5621e0ce
   CartApiRequestDELETE:
     DependsOn: FunctionRemoveFromCartPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -1114,6 +2463,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a6392891-b014-4ea9-93a2-831f602268aa
   CartApiRequestOPTIONS:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -1143,6 +2495,9 @@ Resources:
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
           StatusCode: '200'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 97efc723-a637-41c7-b712-3af9363a1702
   CartItemApiRequestGET:
     DependsOn: FunctionGetCartItemPermissions
     Type: 'AWS::ApiGateway::Method'
@@ -1171,6 +2526,9 @@ Resources:
         - StatusCode: 200
           ResponseModels:
             application/json: Empty
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: acebdfda-9b64-45f8-a888-3d1251bba41a
   CartItemApiRequestOPTIONS:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -1200,11 +2558,71 @@ Resources:
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
           StatusCode: '200'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 0e6ce8f6-0271-439e-afcf-4e4d23c1edc3
+  SearchApiRequestGET:
+    DependsOn: FunctionSearchPermissions
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      AuthorizationType: AWS_IAM
+      HttpMethod: GET
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Join 
+          - ''
+          - - 'arn:aws:apigateway:'
+            - !Ref 'AWS::Region'
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt 
+              - FunctionSearch
+              - Arn
+            - /invocations
+        IntegrationResponses:
+          - StatusCode: 200
+      RequestParameters:
+        method.request.querystring.q: false
+      ResourceId: !Ref SearchApiResource
+      RestApiId: !Ref AppApi
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty
+  SearchApiRequestOPTIONS:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      ResourceId: !Ref SearchApiResource
+      RestApiId: !Ref AppApi
+      AuthorizationType: None
+      HttpMethod: OPTIONS
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: >-
+                'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+              method.response.header.Access-Control-Allow-Methods: '''GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            ResponseTemplates:
+              application/json: ''
+            StatusCode: '200'
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+      MethodResponses:
+        - ResponseModels:
+            application/json: Empty
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+          StatusCode: '200'
   BestsellersApiRequestGET:
     DependsOn: FunctionGetBestSellersPermissions
     Type: 'AWS::ApiGateway::Method'
     Properties:
-      AuthorizationType: NONE
+      AuthorizationType: AWS_IAM
       HttpMethod: GET
       Integration:
         Type: AWS_PROXY
@@ -1254,7 +2672,22 @@ Resources:
             method.response.header.Access-Control-Allow-Headers: true
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
-          StatusCode: '200'      
+          StatusCode: '200'
+          
+  RecommendationsApiResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref AppApi
+      ParentId: !GetAtt 
+        - AppApi
+        - RootResourceId
+      PathPart: recommendations
+  RecommendationsByBookApiResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref AppApi
+      ParentId: !Ref RecommendationsApiResource
+      PathPart: '{bookId}'    
   BooksApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -1263,12 +2696,18 @@ Resources:
         - AppApi
         - RootResourceId
       PathPart: books
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e0ffbcc7-5f62-43ac-b377-47ec80a5a71e
   BookItemApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
       RestApiId: !Ref AppApi
       ParentId: !Ref BooksApiResource
       PathPart: '{id}'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 25b4ecc5-9d47-49cb-b5c4-d03574eee62e
   OrdersApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -1277,6 +2716,9 @@ Resources:
         - AppApi
         - RootResourceId
       PathPart: orders
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: cecab4d7-120d-48b2-99d9-1152b429cebc
   CartApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -1285,12 +2727,26 @@ Resources:
         - AppApi
         - RootResourceId
       PathPart: cart
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 9747c416-4f2e-45b1-bc9d-16335256f1db
   CartItemApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
       RestApiId: !Ref AppApi
       ParentId: !Ref CartApiResource
       PathPart: '{bookId}'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a79e1eec-10b0-4593-9ea4-9c6b82c0ec8b
+  SearchApiResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref AppApi
+      ParentId: !GetAtt 
+        - AppApi
+        - RootResourceId
+      PathPart: search
   BestsellersApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -1299,6 +2755,7 @@ Resources:
         - AppApi
         - RootResourceId
       PathPart: bestsellers 
+
   ApiAuthorizer:
     Type: 'AWS::ApiGateway::Authorizer'
     Properties:
@@ -1311,6 +2768,9 @@ Resources:
           - Arn
       RestApiId: !Ref AppApi
       Type: COGNITO_USER_POOLS
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 03db03b0-3367-4eb8-bfa1-82df7efc4df4
   APIDeployment:
     DependsOn:
       - BooksApiRequestGET
@@ -1327,6 +2787,12 @@ Resources:
       - CartApiRequestOPTIONS
       - CartItemApiRequestGET
       - CartItemApiRequestOPTIONS
+      - RecomendationsApiRequestGET
+      - RecomendationsApiRequestOPTIONS
+      - RecomendationsByBookApiRequestGET
+      - RecomendationsByBookApiRequestOPTIONS
+      - SearchApiRequestGET
+      - SearchApiRequestOPTIONS
       - BestsellersApiRequestGET
       - BestsellersApiRequestOPTIONS
     Type: 'AWS::ApiGateway::Deployment'
@@ -1334,6 +2800,9 @@ Resources:
       Description: Prod deployment for API
       RestApiId: !Ref AppApi
       StageName: prod
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 278dda65-02c9-49fa-a19c-3dd7afd25683
 
 # ---------- COGNITO DEFINITIONS ---------           
   SNSRole:
@@ -1477,13 +2946,15 @@ Resources:
         unauthenticated: !GetAtt 
           - CognitoUnAuthorizedRole
           - Arn
-  # BooksUploader:
-  #   Type: 'Custom::CustomResource'
-  #   Properties:
-  #     ServiceToken: !GetAtt FunctionUploadBooks.Arn
-  #     ParameterOne: Parameter to pass into Custom Lambda Function
-  #     DependsOn: 
-  #      - FunctionUploadBooks
+  BooksUploader:
+    Type: 'Custom::CustomResource'
+    Properties:
+      ServiceToken: !GetAtt FunctionUploadBooks.Arn
+      ParameterOne: Parameter to pass into Custom Lambda Function
+      DependsOn: 
+       - FunctionUploadBooks
+       - UpdateSearchCluster
+       - ElasticsearchDomain
 
 # ------------------------ FRONTEND ------------------------
   AssetsCodeRepository:
@@ -1491,6 +2962,9 @@ Resources:
     Properties:
       RepositoryDescription: Code repository for web application
       RepositoryName: !Sub '${ProjectName}-WebAssets'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a2e798f0-374b-4297-b68f-ce7766170a6d
   AssetsBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
@@ -1498,10 +2972,11 @@ Resources:
       AccessControl: Private
       MetricsConfigurations:
         - Id: EntireBucket
-      VersioningConfiguration: 
-        Status: Enabled
       WebsiteConfiguration:
         IndexDocument: index.html
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a141b7c9-9999-40e3-8702-f1cf283573ef
   AssetsBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -1512,16 +2987,22 @@ Resources:
             Effect: Allow
             Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
             Principal:
-              CanonicalUser: !GetAtt AssetsBucketOriginAccessIdentity.S3CanonicalUserId
-              # both the below won't work - https://github.com/terraform-providers/terraform-provider-aws/issues/10158
-              # AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront_Origin_Access_Identity_${AssetsBucketOriginAccessIdentity}'
+              AWS: !Sub
+                arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity
+                ${AssetsBucketOriginAccessIdentity}
     DependsOn:
       - AssetsBucketOriginAccessIdentity
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: c177c7a0-df73-4587-90aa-de6b7c3a53b2
   AssetsBucketOriginAccessIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Sub 'OriginAccessIdentity for ${AssetsBucketName}'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: f391801b-d255-40b5-be40-725ad2e93a22
   AssetsCDN:
     Type: 'AWS::CloudFront::Distribution'
     DependsOn:
@@ -1546,12 +3027,9 @@ Resources:
           ViewerProtocolPolicy: https-only
           ForwardedValues:
             QueryString: 'false'
-        CustomErrorResponses:   #fix firefox problem.
-          - ErrorCachingMinTTL: 300
-            ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
-            
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 16b95097-f526-4bf7-b997-ce2f6187ef4d
   CodeBuildRole:
     Description: Creating service role in IAM for AWS CodeBuild
     Type: 'AWS::IAM::Role'
@@ -1594,6 +3072,9 @@ Resources:
                 Resource: '*'
                 Effect: Allow
       Path: /
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 3aa76bbe-43cb-455a-9e85-48663b8ba66e
   CodePipelineRole:
     Description: Creating service role in IAM for AWS CodePipeline
     Type: 'AWS::IAM::Role'
@@ -1643,11 +3124,17 @@ Resources:
                   - Arn
                 Effect: Allow
       Path: /
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: c7b2d059-8720-4407-a75f-9b5f50c503d1
   PipelineArtifactsBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: !Sub '${AssetsBucketName}-pipeline'
       AccessControl: Private
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: bbbc886f-d307-45dc-a6e3-63353f40a4f4
   CodeBuildProject:
     DependsOn:
       - PipelineArtifactsBucket
@@ -1688,6 +3175,7 @@ Resources:
                 - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://${AssetsBucket}/
                 - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${AssetsBucket}/
                 - aws cloudfront create-invalidation --distribution-id ${AssetsCDN} --paths /index.html /service-worker.js
+
           artifacts:
             files:
               - '**/*'
@@ -1696,6 +3184,9 @@ Resources:
         - Key: app-name
           Value: !Ref ProjectName
       TimeoutInMinutes: 5
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a83e893f-d993-4a92-9c51-b00425960a96
   AssetsCodePipeline:
     Type: 'AWS::CodePipeline::Pipeline'
     Properties:
@@ -1736,6 +3227,9 @@ Resources:
               Configuration:
                 ProjectName: !Sub '${ProjectName}-build'
               RunOrder: 1
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: bd7060e4-3e26-442c-9c4e-141ca61a9590
     DependsOn:
       - PipelineArtifactsBucket
   SeederFunction:
@@ -1759,8 +3253,64 @@ Resources:
       Runtime: java8
       Timeout: 900
     Type: 'AWS::Lambda::Function'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 6b5081a3-db00-41db-a607-c9d5f98cf394
     DependsOn:
       - AssetsCodeRepository
+  CreateESRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectName}-CreateESRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: CreateRolePolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'iam:CreateServiceLinkedRole'
+                Resource: 'arn:aws:iam::*:role/aws-service-role/es.amazonaws.com/AWSServiceRoleForAmazonElasticsearchService'
+  CreateESRoleFunction:
+    Properties:
+      Code:
+        S3Bucket: !FindInMap
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap
+          - Constants
+          - S3Keys
+          - CreateESRoleCode
+      Description: Create Elasticsearch role
+      Handler: index.handler
+      Role:
+        'Fn::GetAtt':
+          - CreateESRole
+          - Arn
+      Runtime: nodejs8.10
+      Timeout: 300
+    Type: 'AWS::Lambda::Function'
+  ESRoleCreator:
+    Type: 'Custom::CustomResource'
+    Properties:
+      ServiceToken: !GetAtt CreateESRoleFunction.Arn
+      ParameterOne: Parameter to pass into Custom Lambda Function
+      DependsOn: CreateESRoleFunction
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 63b08124-fccb-4874-ab13-ce6cfe6ce885
   UpdateConfigFunction:
     Properties:
       Code:
@@ -1790,6 +3340,9 @@ Resources:
           APP_CLIENT_ID: !Ref UserPoolClient
           IDENTITY_POOL_ID: !Ref IdentityPool
     Type: 'AWS::Lambda::Function'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 00cdcc4b-3885-4a51-bdad-776ac697419c
     DependsOn:
       - AssetsCodeRepository
       - SeederFunction
@@ -1832,6 +3385,9 @@ Resources:
             Version: 2012-10-17
           PolicyName: LogsPolicy
     Type: 'AWS::IAM::Role'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: a10d77af-fa97-40ee-a6f0-5d9988792aeb
   RepositorySeeder:
     Properties:
       ServiceToken:
@@ -1842,57 +3398,18 @@ Resources:
       targetRepositoryName: !Sub '${ProjectName}-WebAssets'
       targetRepositoryRegion: '${AWS::Region}'
     Type: 'Custom::RepositorySeeder'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 688ea29a-9fa9-40c9-b5a8-85e863cc8a4c
   RepositoryUpdater:
     Type: 'Custom::CustomResource'
     Properties:
       ServiceToken: !GetAtt UpdateConfigFunction.Arn
       ParameterOne: Parameter to pass into Custom Lambda Function
       DependsOn: UpdateConfigFunction
-
-# ---------- ROLES FOR S3 Relication ---------  
-  S3replicationRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      RoleName: !Sub '${ProjectName}-S3replicationRole'
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - s3.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
-      Path: /
-      Policies:
-        - PolicyName: replicationRolePolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:GetObjectVersionForReplication'
-                  - 's3:GetObjectVersionAcl'
-                Resource:
-                  - !Join 
-                    - ''
-                    - - !GetAtt AssetsBucket.Arn
-                      - /*
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:ListBucket'
-                  - 's3:GetReplicationConfiguration'
-                Resource: !GetAtt AssetsBucket.Arn
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:ReplicateObject'
-                  - 's3:ReplicateDelete'
-                  - 's3:ReplicateTags'
-                  - 's3:GetObjectVersionTagging'
-                Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
-
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 63b08124-fccb-4874-ab13-ce6cfe6ce885
 Outputs:
   CodeRepository:
     Description: Code repository for the web application.
@@ -1906,6 +3423,3 @@ Outputs:
     Value: !Sub
       - https://${Domain}
       - { Domain: !GetAtt AssetsCDN.DomainName }
-  S3replicationRole: 
-    Description: The ARN of S3 repliction role
-    Value: !GetAtt S3replicationRole.Arn

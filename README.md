@@ -94,7 +94,7 @@ $ aws s3api put-bucket-replication \
 
 https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
 
-### 2. Build multi-region solution - DynamoDB (Q. it's complated than console. need to replicate all? one with cli, two with ui)
+### 2. Build multi-region solution - DynamoDB (Q. it's complated cli than console. one with cli, two with ui)
 aws dynamodb create-table \
     --table-name teres-Cart \
     --attribute-definitions \
