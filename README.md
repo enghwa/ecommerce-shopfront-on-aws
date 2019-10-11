@@ -100,15 +100,6 @@ Follow the instruction [here to launch a AWS Cloud9 IDE](0_Prerequisities/README
 
 # Backup
 
-### Modules 
-0. Create AWS Cloud9 Environment
-1. Build a Primary region Bookstore: CDK / CFN
-2. Build multi-region solution: Aurora, S3, DynamoDB
-3. Build a Seconary region Bookstore: CDK / CFN
-4. Congifure Active-Active: Route53, ACM, DNS Health Check
-5. Test failover
-6. Cleaning Up
-
 ### 1. Primary region - CDK
 VPC, Subnet, Security group, routetable (refer to cfn)
 ALB, Fargate, Aurora (with custom parameter group, cluster, writer, read)
@@ -121,89 +112,8 @@ Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book
 input param (vpc cdk#1)
 route53 hostzone -> call remote api do nsrecord xyz (random number acm) -> origincal acm region1/2 (auto approval)
 
-### 1. Update blog URL and Cloudfront 
-content is in the cdk readme
-
 ### 2. Build multi-region solution - Aurora cross-region read replica(2nd region)
 in Cloud9, --region
-
-aws rds create-db-cluster \
-  --db-cluster-identifier <sample-replica-cluster> \
-  --engine aurora \
-  --replication-source-identifier <source aurora arn> \
-  --region <region2>
-
-aws rds describe-db-clusters --db-cluster-identifier sample-replica-cluster
-
-aws rds create-db-instance \
-  --db-instance-identifier test-instance
-  --db-cluster-identifier <sample-replica-cluster> \
-  --db-instance-class <db.t3.small> \
-  --engine aurora \
-  --region <region2>
-
-The endpoint should be updated in the fargate
-
-### 2. Build multi-region solution - S3
-aws s3api create-bucket \
---bucket <AssetsBucketName-region2> \
---region <us-west-2> \
---create-bucket-configuration LocationConstraint=<us-west-2>
-
-aws s3api put-bucket-versioning \
---bucket <AssetsBucketName-region2> \
---versioning-configuration Status=Enabled
-
-<!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
-
-<!-- $ aws iam create-role \
---role-name crrRole \
---assume-role-policy-document file://s3-role-trust-policy.json 
-
-$ aws iam put-role-policy \
---role-name crrRole \
---policy-document file://s3-role-permissions-policy.json \
---policy-name crrRolePolicy \ -->
-
-{
-  "Role": "<IAM-role-ARN>",
-  "Rules": [
-    {
-      "Status": "Enabled",
-      "Priority": 1,
-      "DeleteMarkerReplication": { "Status": "Disabled" },
-      "Filter" : { "Prefix": ""},
-      "Destination": {
-        "Bucket": "arn:aws:s3:::<bucketname-region2>"
-      }
-    }
-  ]
-}
-
-$ aws s3api put-bucket-replication \
---replication-configuration file://replication.json \
---bucket <source>
-
-https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
-
-### 2. Build multi-region solution - DynamoDB (Q. it's complated cli than console. one with cli, two with ui)
-aws dynamodb create-table \
-    --table-name teres-Cart \
-    --attribute-definitions \
-        AttributeName=customerId,AttributeType=S \
-        AttributeName=bookId,AttributeType=S \
-    --key-schema \
-        AttributeName=customerId,KeyType=HASH \
-        AttributeName=bookId,KeyType=RANGE \
-    --provisioned-throughput \
-        ReadCapacityUnits=1,WriteCapacityUnits=1 \
-    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
-    --region eu-central-1
-
-aws dynamodb create-global-table \
-    --global-table-name teres-Cart \
-    --replication-group RegionName=us-west-2 RegionName=eu-central-1 \
-    --region us-west-2
 
 ### 3. Secondary region - CDK
 ACM, Route53 Domain Name and the DNS
@@ -219,6 +129,9 @@ aws lambda create-event-source-mapping --function-name teres-UpdateBestSellers -
 
 cli - origin group
 
+### Update blog URL and Cloudfront 
+content is in the cdk readme
+
 ### 5. Failover
 1. Delete Fargate Service
 2. API gateway: books get disable
@@ -231,10 +144,10 @@ we need to acm auto approval
 
 ### Todo
 1. second region creation in the first cdk
+4. cdk out value pretty
+5. first cdk additional output aurora mysql cluster arn
 2. acm health check
 3. Global accelerator
-4. cdk out value pretty
-
 
 
 

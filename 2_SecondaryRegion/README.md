@@ -1,11 +1,107 @@
-# Building a UI layer 
+# Building a second bookstore in the secondary region
 
+We completed build the first bookstore in the primary region in the previous section. In this section, we will replicate S3 bucket for static contects, Aurora MySQL for the blog content, and DynamoDB tables for the books/order/cart data from the primary region to the secondary region.
+
+#### Enable Aurora MySQL Read replica in Singapore region
+
+This Aurora MySQL Read replica helps you have redundancy plan when you have issue in the primary database in the primary region. The replica in Singapore region can be promoted as the primary database. 
+
+Follow the steps to enable the read replica of Aurora in Singapore region using the AWS CLI. 
+
+aws rds create-db-cluster \
+  --db-cluster-identifier <sample-replica-cluster> \
+  --engine aurora \
+  --replication-source-identifier <source aurora cluster arn> \
+  --region <region2>
+
+aws rds create-db-cluster \
+  --db-cluster-identifier arc309-replica-cluster \
+  --engine aurora \
+  --replication-source-identifier arn:aws:rds:eu-west-1:376715876263:cluster:wordpress-primary-wordpressdbclusterbda8ec52-1tketnnhp1rq9 \
+  --region ap-southeast-1
+
+aws rds describe-db-clusters --db-cluster-identifier <sample-replica-cluster> --region <region2>
+
+aws rds describe-db-clusters --db-cluster-identifier arc309-replica-cluster --region ap-southeast-1
+
+aws rds create-db-instance \
+  --db-instance-identifier <sample-instance> \ 
+  --db-cluster-identifier <sample-replica-cluster> \
+  --db-instance-class <db.t3.small> \
+  --engine aurora \
+  --region <region2>
+
+  aws rds create-db-instance \
+  --db-instance-identifier arc309-instance \
+  --db-cluster-identifier arc309-replica-cluster \
+  --db-instance-class db.t3.small \
+  --engine aurora \
+  --region ap-southeast-1
+
+It takes for a while, you can procced the next step first
+
+### 2. Build multi-region solution - S3
+aws s3api create-bucket \
+--bucket <AssetsBucketName-region2> \
+--region <us-west-2> \
+--create-bucket-configuration LocationConstraint=<us-west-2>
+
+aws s3api put-bucket-versioning \
+--bucket <AssetsBucketName-region2> \
+--versioning-configuration Status=Enabled
+
+<!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
+
+<!-- $ aws iam create-role \
+--role-name crrRole \
+--assume-role-policy-document file://s3-role-trust-policy.json 
+
+$ aws iam put-role-policy \
+--role-name crrRole \
+--policy-document file://s3-role-permissions-policy.json \
+--policy-name crrRolePolicy \ -->
+
+{
+  "Role": "<IAM-role-ARN>",
+  "Rules": [
+    {
+      "Status": "Enabled",
+      "Priority": 1,
+      "DeleteMarkerReplication": { "Status": "Disabled" },
+      "Filter" : { "Prefix": ""},
+      "Destination": {
+        "Bucket": "arn:aws:s3:::<bucketname-region2>"
+      }
+    }
+  ]
+}
+
+$ aws s3api put-bucket-replication \
+--replication-configuration file://replication.json \
+--bucket <source>
+
+https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
+
+### 2. Build multi-region solution - DynamoDB (Q. it's complated cli than console. one with cli, two with ui)
+aws dynamodb create-table \
+    --table-name teres-Cart \
+    --attribute-definitions \
+        AttributeName=customerId,AttributeType=S \
+        AttributeName=bookId,AttributeType=S \
+    --key-schema \
+        AttributeName=customerId,KeyType=HASH \
+        AttributeName=bookId,KeyType=RANGE \
+    --provisioned-throughput \
+        ReadCapacityUnits=1,WriteCapacityUnits=1 \
+    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+    --region eu-central-1
+
+aws dynamodb create-global-table \
+    --global-table-name teres-Cart \
+    --replication-group RegionName=us-west-2 RegionName=eu-central-1 \
+    --region us-west-2
 
 #### Enable DynamoDB Global Table using CLI
-
-**IMPORTANT** DyanmoDB Global Tables doesn't support the CloudFormation yet, we need to create a
-global table using the console or AWS CLI (To create a global table using the console, you can refer 
-to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step instructions'). 
 
 Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
 Singapore regions using the AWS CLI. 
@@ -213,3 +309,11 @@ Congratulations! You have successfully deployed a user interface for our users
 on S3. In the next module you will learn how to configure active/active using Route53.
 
 Module 3: [Configure Active-Active Route53](../3_Route53/README.md)
+
+
+Second CDK
+The endpoint should be updated in the Fargate to point the replica in Singapore region. 
+
+aws rds describe-db-instances \ 
+--db-instance-identifier <sample-instance> \
+--region <region2> | grep Endpoint
