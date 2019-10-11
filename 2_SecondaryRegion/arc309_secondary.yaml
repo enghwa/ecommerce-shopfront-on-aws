@@ -53,10 +53,10 @@ Mappings:
     #   SeederFunctionBucket: fsd-aws-wildrydes-eu-central-1
     ap-southeast-1:
       Bucket: arc309-bookstore-ap-southeast-1
-      SeederFunctionBucket: fsd-aws-wildrydes-ap-southeast-1
+      SeederFunctionBucket: arc309-aws-wildrydes-ap-southeast-1
     eu-west-1:
       Bucket: arc309-bookstore-eu-west-1
-      SeederFunctionBucket: fsd-aws-wildrydes-eu-west-1
+      SeederFunctionBucket: arc309-aws-wildrydes-eu-west-1
   Constants:
     S3Keys:
       ListOrdersCode: functions/ListOrders.zip
