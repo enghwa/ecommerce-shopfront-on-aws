@@ -210,7 +210,7 @@ Download the 'arc309_secondayr.yaml' file from S3???(https://github.com/enghwa/M
 Go to the CloudFormation console in Singapore 
 (screenshot)
 Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
-Stack name (ex. arc309-jay) and Parameters
+Stack name (ex. arc309-jay2) and Parameters
           - ProjectName: 10 characters with lowercase (no number) (ex.bookjay)
           - AssetsBucketName: S3 bucket name with lowercase (ex.bookjay-s3)
           - SeedRepository: Web file (use default)
