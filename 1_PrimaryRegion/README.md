@@ -94,6 +94,10 @@ and check you are in the respective regions (EU Ireland or Asia Pacific. You sho
 Once your stack has successfully completed, navigate to the Outputs tab of your stack
 where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)
 
+https://d1zltjarei3438.cloudfront.net/
+
+FYI. This bookstore doesn't have blog yet. It will be shown after you complete buiding the secondary region.
+
 ## Completion
 
 Congratulations you have configured the bookstore in the primary region. In the next module you will replicate your data to the secondary region and build the same bookstore in the secondary region for the high availability. 

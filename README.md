@@ -230,7 +230,7 @@ how to automate route53 registation
 we need to acm auto approval
 
 ### Todo
-1. second region cdk
+1. second region creation in the first cdk
 2. acm health check
 3. Global accelerator
 4. cdk out value pretty
