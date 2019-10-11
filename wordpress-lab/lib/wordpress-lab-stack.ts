@@ -96,6 +96,7 @@ export class WordpressLabStack extends cdk.Stack {
         vpc
       }
     })
+    
 
     const wordpressSvc = new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'wordpress-svc', {
       cluster: cluster,
@@ -182,8 +183,8 @@ export class WordpressLabStack extends cdk.Stack {
     loadWordpressDB.node.addDependency(dbcluster) // can only load wordpress DB when dbcluster is created., only do this for Primary Region
 
     // cdk/cfn output
-    new cdk.CfnOutput(this, 'VpcId_'+ props.region , { value: vpc.vpcId });
-    new cdk.CfnOutput(this, 'private subnet for Elasticache', { value: vpc.selectSubnets({subnetType: SubnetType.PRIVATE}).subnetIds[0] });
+    new cdk.CfnOutput(this, 'Primary Region VpcId_'+ props.region , { value: vpc.vpcId });
+    new cdk.CfnOutput(this, 'Primary Region private subnet for Elasticache (bookstoreSubnet1)', { value: vpc.selectSubnets({subnetType: SubnetType.PRIVATE}).subnetIds[0] });
     new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_'+ props.region , { value: validatedWildCardCert.certificateArn });
     
   }
