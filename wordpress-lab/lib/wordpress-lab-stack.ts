@@ -10,6 +10,7 @@ import iam = require('@aws-cdk/aws-iam');
 import cdk = require('@aws-cdk/core');
 import secretsmanager = require('@aws-cdk/aws-secretsmanager');
 import { AwsCustomResource } from "@aws-cdk/custom-resources";
+import { SubnetType } from '@aws-cdk/aws-ec2';
 
 export interface WordpressLabProps {
   hostedZoneID: string,
@@ -182,6 +183,7 @@ export class WordpressLabStack extends cdk.Stack {
 
     // cdk/cfn output
     new cdk.CfnOutput(this, 'VpcId_'+ props.region , { value: vpc.vpcId });
+    new cdk.CfnOutput(this, 'private subnet for Elasticache', { value: vpc.selectSubnets({subnetType: SubnetType.PRIVATE}).subnetIds[0] });
     new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_'+ props.region , { value: validatedWildCardCert.certificateArn });
     
   }
