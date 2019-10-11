@@ -218,16 +218,17 @@ Go to the CloudFormation console in Singapore
 (screenshot)
 Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
 Stack name (ex. arc309-jay2) and Parameters
-          - ProjectName: 10 characters with lowercase (no number) (ex.bookjay)
-          - AssetsBucketName: S3 bucket name with lowercase (ex.bookjay-s3)
+          - ProjectName: the same project name (ex.bookjay)
+          - AssetsBucketName: S3 bucket name replicated from Ireland (ex.bookjay-s3-region2)
           - SeedRepository: Web file (use default)
-          - bookstoreVPC: VPC id (output of cdk)
-          - bookstoreSubnet1: Subnet id for Elasticace (output of cdk)
+          - bookstoreVPC: VPC id in Singapore (output of second cdk ex. vpc-4360ec26)
+          - bookstoreSubnet1: Subnet id for Elasticache (output of second cdk ex. subnet-ab9ed9dd)
+          - OrderTableStreamARN: Stream ARN of Order table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookjay-Orders/stream/2019-10-11T08:20:56.998)
 Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
 
 This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
 and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
-and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-1`. (screenshot)
+and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-2`. (screenshot)
 
 Once your stack has successfully completed, navigate to the Outputs tab of your stack
 where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)

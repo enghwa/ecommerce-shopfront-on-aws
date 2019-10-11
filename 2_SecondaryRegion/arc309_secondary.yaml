@@ -20,9 +20,6 @@ Parameters:
   bookstoreSubnet1:
     Type: String
     Description: Subnet ID for Elasticache (ex. subnet-0c1bdeabbd1e7cf19)
-  AssetsCDN:
-    Type: String
-    Description: Distribution ID for CloudFront (ex. E3U4TRNOZ1LJ7F)
   OrderTableStreamARN:
     Type: String
     Description: DynamoDB Stream ARN

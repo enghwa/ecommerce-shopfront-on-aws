@@ -84,7 +84,7 @@ Stack name (ex. arc309-jay) and Parameters
           - AssetsBucketName: S3 bucket name with lowercase (ex.bookjay-s3)
           - SeedRepository: Web file (use default)
           - bookstoreVPC: VPC id (output of cdk)
-          - bookstoreSubnet1: Subnet id for Elasticace (output of cdk)
+          - bookstoreSubnet1: Subnet id for Elasticache (output of cdk)
 Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
 
 This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
