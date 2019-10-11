@@ -116,12 +116,18 @@ aws dynamodb create-global-table \
 ### 3. Secondary region - CDK
 ACM, Route53 Domain Name and the DNS
 ALB, fargate, input param (VPC cdk#1, aurora read endpoint of #2)
-Q. we will creat the custom domain in api? -> if not how to health check and routing policy in route53?
+
 
 
 ### 3. Secondary region - CFN
 cognito, apigateway, lambda, cache 
 input param (vpc cdk#1, s3 #2, dynamodb #2)
+cli - lambada trigger UpdateBestSellers
+
+aws lambda create-event-source-mapping --function-name teres-UpdateBestSellers --batch-size 1 --starting-position LATEST \
+--event-source-arn arn:aws:dynamodb:eu-central-1:376715876263:table/teres-Orders/stream/2019-10-08T17:06:59.789
+
+cli - origin group
 
 ### 5. Failover
 1. Delete Fargate Service
@@ -136,4 +142,3 @@ we need to acm auto approval
 ### Todo
 1. second region cdk
 2. acm health check
-3. cloudfront s3 group

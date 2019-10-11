@@ -39,6 +39,7 @@ Metadata:
           - bookstoreVPC
           - bookstoreSubnet1
           - AssetsCDN
+          - OrderTableStreamARN
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -1585,6 +1586,7 @@ Resources:
                   # - !Join 
                   #   - ''
                   #   - - !GetAtt AssetsBucket.Arn
+                  #   - - /*
                   - !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
                   - !Join 
                     - ''
