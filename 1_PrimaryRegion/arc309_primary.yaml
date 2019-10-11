@@ -23,8 +23,6 @@ Metadata:
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
       - 
-        Label: 
-          default: "Configuration"
         Parameters: 
           - ProjectName
           - AssetsBucketName

@@ -35,7 +35,8 @@ this will take 20 min.
 
 ### Your book blog is completed
 
-Now, you book blog is built. Please verify with ....
+Now, you book blog is built. Please verify with following
+"https://blog.<MYSUBDOMAIN>.multi-region.xyz/"
 
 You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
 
@@ -71,72 +72,20 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 
 ![Developer Tools Diagram](assets/readmeImages/DeveloperTools.png)
 
-<summary><strong>CLI step-by-step instructions </strong></summary>
+<summary><strong>Step-by-step instructions </strong></summary>
 
-Navigate to the `1_PrimaryRegion` folder within your local Git repository and you will see 'arc309_primary.yaml' file.
-Execute this command to enter the correct subdirectory:
+Go to the Github and download the 'arc309_primary.yaml' file (https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml)
 
-    cd /home/ec2-user/environment/MultiRegion-Serverless-Workshop/1_API
-
-*Ireland*
-
-    aws cloudformation package \
-    --region eu-west-1 \
-    --template-file wild-rydes-api.yaml \
-    --output-template-file wild-rydes-api-output.yaml \
-    --s3-bucket [Ireland bucket_name_you_created_above]
-
-<!--
-**IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
-on Module 1. You will come back in Module 3 and then deploy the same components
-to Singapore. We are providing the commands for both regions here for your
-convenience.
--->
-
-*Singapore* 
-
-    aws cloudformation package \
-    --region ap-southeast-1 \
-    --template-file wild-rydes-api.yaml \
-    --output-template-file wild-rydes-api-output-ap-southeast-1.yaml \
-    --s3-bucket [Singapore bucket_name_you_created_above]
-
-
-<!-- If all went well, you should get a success message and instructions to deploy your new template. -->
-If all went well, there will be 2 cloudformation templates generated: `wild-rydes-api-output-ap-southeast-1.yaml` for Singapore and `wild-rydes-api-output.yaml` for Ireland. follow the instruction below to deploy the cloudformation template.
-
-## 3. Deploy a stack of resources
-
-Let's spin up the resources needed to run our code and expose it as an API using the 2 cloudformation templates.
-
-#### High-level instructions
-
-You can now take the newly generated Cloudformation templates (`wild-rydes-api-output.yaml` for Ireland and `wild-rydes-api-output-ap-southeast-1.yaml` for Singapore) and use them to create resources in AWS.
-Go ahead and run the following CLI command:
-
-*Ireland*
-
-    aws cloudformation deploy \
-    --region eu-west-1 \
-    --template-file wild-rydes-api-output.yaml \
-    --stack-name wild-rydes-api \
-    --capabilities CAPABILITY_IAM
-
-<!--
-**IMPORTANT** DO NOT deploy any resources to Singapore during your initial pass
-on Module 1. You will come back in Module 3 and then deploy the same components
-to Singapore. We are providing the commands for both regions here for your
-convenience.
--->
-
-*Singapore* 
-
-    aws cloudformation deploy \
-    --region ap-southeast-1 \
-    --template-file wild-rydes-api-output-ap-southeast-1.yaml \
-    --stack-name wild-rydes-api \
-    --capabilities CAPABILITY_IAM
-
+Go to the CloudFormation console in Ireland 
+(screenshot)
+Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
+Stack name (ex. arc309-jay) and Parameters
+          - ProjectName: 10 characters with lowercase (no number) (ex.bookjay)
+          - AssetsBucketName: S3 bucket name with lowercase (ex.bookjay-s3)
+          - SeedRepository: Web file (use default)
+          - bookstoreVPC: VPC id (output of cdk)
+          - bookstoreSubnet1: Subnet id for Elasticace (output of cdk)
+Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
 
 This command may take a few minutes to run. In this time you can hop over to the AWS console
 and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
@@ -156,31 +105,6 @@ roles to allow our functions to speak to DynamoDB.
 Now, you can confirm that your API is working by copying your `API URL` and appending `/ticket`
 to it before navigating to it into your browser. It should return the following:
 
-For example: 
-
-    https://XXXXXX.execute-api.eu-west-1.amazonaws.com/prod/ticket
-    https://XXXXXX.execute-api.ap-southeast-1.amazonaws.com/prod/ticket
-
- It should return the following:
-
-    {"Items":[],"Count":0,"ScannedCount":0}
-
-You can also run the health check by copying your `API URL` and appending `/health`
-to it before navigating to it into your browser.
-
-For example:
-
-    https://XXXXX.execute-api.eu-west-1.amazonaws.com/prod/health
-    https://XXXXX.execute-api.ap-southeast-1.amazonaws.com/prod/health
-
- It should return the following (for Ireland):
-
-    {
-        "region":"eu-west-1",
-        "message":"Successful response reading from DynamoDB table."
-    }
-
-Make note of the API Endpoint URL - you will need this in Module 2_UI.
 
 #### Enable DynamoDB Global Table using CLI
 
