@@ -65,12 +65,10 @@ architecture. You will expand sections for detailed command or console instructi
 
 ### Region Selection (***Update**)
 
-You can chosse the primary and secondary region from the following four regions for this workshop. 
+You can chosse the primary and secondary region with the following two regions for this workshop. 
 Please remember these and check before creating resources to ensure you are in the correct region:
 * Region 1: `eu-west-1` (Ireland)
 * Region 2: `ap-southeast-1` (Singapore)
-* Region 3: `eu-west-1` (Ireland)
-* Region 4: `ap-southeast-1` (Singapore)
 
 ### Modules 
 0. [Prepare prerequisites](0_Prerequisities/README.md)
