@@ -132,3 +132,8 @@ Low priority: Cloudfront s3 origin group
 
 how to automate route53 registation
 we need to acm auto approval
+
+### Todo
+1. second region cdk
+2. acm health check
+3. cloudfront s3 group

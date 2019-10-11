@@ -19,7 +19,13 @@ Parameters:
     Description: VPC ID of Secondary Region (ex. vpc-xxx)
   bookstoreSubnet1:
     Type: String
-    Description: Subnet ID for Elasticache (ex.172.0.0.0/16)
+    Description: Subnet ID for Elasticache (ex. subnet-0c1bdeabbd1e7cf19)
+  AssetsCDN:
+    Type: String
+    Description: Distribution ID for CloudFront (ex. E3U4TRNOZ1LJ7F)
+  OrderTableStreamARN:
+    Type: String
+    Description: DynamoDB Stream ARN
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -32,6 +38,7 @@ Metadata:
           - SeedRepository
           - bookstoreVPC
           - bookstoreSubnet1
+          - AssetsCDN
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
@@ -357,9 +364,9 @@ Resources:
     Properties:
       BatchSize: 1
       Enabled: true
-      EventSourceArn: !GetAtt 
-        - TOrders
-        - StreamArn
+      EventSourceArn: !Sub '${OrderTableStreamARN}'
+        # - TOrders
+        # - StreamArn
       FunctionName: !GetAtt 
         - FunctionUpdateBestSellers
         - Arn
@@ -1492,17 +1499,17 @@ Resources:
     Properties:
       RepositoryDescription: Code repository for web application
       RepositoryName: !Sub '${ProjectName}-WebAssets'
-  AssetsBucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Ref AssetsBucketName
-      AccessControl: Private
-      MetricsConfigurations:
-        - Id: EntireBucket
-      VersioningConfiguration: 
-        Status: Enabled
-      WebsiteConfiguration:
-        IndexDocument: index.html
+  # AssetsBucket:
+  #   Type: 'AWS::S3::Bucket'
+  #   Properties:
+  #     BucketName: !Ref AssetsBucketName
+  #     AccessControl: Private
+  #     MetricsConfigurations:
+  #       - Id: EntireBucket
+  #     VersioningConfiguration: 
+  #       Status: Enabled
+  #     WebsiteConfiguration:
+  #       IndexDocument: index.html
   AssetsBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -1523,35 +1530,35 @@ Resources:
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Sub 'OriginAccessIdentity for ${AssetsBucketName}'
-  AssetsCDN:
-    Type: 'AWS::CloudFront::Distribution'
-    DependsOn:
-      - AssetsBucketOriginAccessIdentity
-    Properties:
-      DistributionConfig:
-        Enabled: true
-        Comment: !Sub 'CDN for ${AssetsBucketName}'
-        DefaultRootObject: index.html
-        Origins:
-          - DomainName: !Join
-              - ''
-              - - !Sub '${AssetsBucketName}.s3'
-                - !If [IADRegion, '', !Sub '-${AWS::Region}']
-                - '.amazonaws.com'
-            Id: S3
-            S3OriginConfig:
-              OriginAccessIdentity: !Sub >-
-                origin-access-identity/cloudfront/${AssetsBucketOriginAccessIdentity}
-        DefaultCacheBehavior:
-          TargetOriginId: S3
-          ViewerProtocolPolicy: https-only
-          ForwardedValues:
-            QueryString: 'false'
-        CustomErrorResponses:   #fix firefox problem.
-          - ErrorCachingMinTTL: 300
-            ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+  # AssetsCDN:
+  #   Type: 'AWS::CloudFront::Distribution'
+  #   DependsOn:
+  #     - AssetsBucketOriginAccessIdentity
+  #   Properties:
+  #     DistributionConfig:
+  #       Enabled: true
+  #       Comment: !Sub 'CDN for ${AssetsBucketName}'
+  #       DefaultRootObject: index.html
+  #       Origins:
+  #         - DomainName: !Join
+  #             - ''
+  #             - - !Sub '${AssetsBucketName}.s3'
+  #               - !If [IADRegion, '', !Sub '-${AWS::Region}']
+  #               - '.amazonaws.com'
+  #           Id: S3
+  #           S3OriginConfig:
+  #             OriginAccessIdentity: !Sub >-
+  #               origin-access-identity/cloudfront/${AssetsBucketOriginAccessIdentity}
+  #       DefaultCacheBehavior:
+  #         TargetOriginId: S3
+  #         ViewerProtocolPolicy: https-only
+  #         ForwardedValues:
+  #           QueryString: 'false'
+  #       CustomErrorResponses:   #fix firefox problem.
+  #         - ErrorCachingMinTTL: 300
+  #           ErrorCode: 403
+  #           ResponseCode: 200
+  #           ResponsePagePath: /index.html
             
   CodeBuildRole:
     Description: Creating service role in IAM for AWS CodeBuild
@@ -1574,11 +1581,11 @@ Resources:
                   - 's3:GetObject'
                   - 's3:GetObjectVersion'
                   - 's3:GetBucketVersioning'
-                Resource:
-                  - !Join 
-                    - ''
-                    - - !GetAtt AssetsBucket.Arn
-                      - /*
+                Resource: 
+                  # - !Join 
+                  #   - ''
+                  #   - - !GetAtt AssetsBucket.Arn
+                  - !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
                   - !Join 
                     - ''
                     - - !GetAtt PipelineArtifactsBucket.Arn
@@ -1684,10 +1691,10 @@ Resources:
                 - npm run build
             post_build:
               commands:
-                - echo Uploading to AssetsBucket 
+                - echo Uploading to AssetsBucketName 
                 - aws s3 cp --recursive ./build s3://${AssetsBucketName}/ 
-                - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://${AssetsBucket}/
-                - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${AssetsBucket}/
+                - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://${AssetsBucketName}/
+                - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${AssetsBucketName}/
                 - aws cloudfront create-invalidation --distribution-id ${AssetsCDN} --paths /index.html /service-worker.js
           artifacts:
             files:
@@ -1900,13 +1907,13 @@ Outputs:
     Export:
       Name: !Sub '${ProjectName}CodeRepository'
     Value: !GetAtt AssetsCodeRepository.Name
-  WebApplication:
-    Description: The URL for the web application
-    Export:
-      Name: !Sub '${ProjectName}WebApp'
-    Value: !Sub
-      - https://${Domain}
-      - { Domain: !GetAtt AssetsCDN.DomainName }
+  # WebApplication:
+  #   Description: The URL for the web application
+  #   Export:
+  #     Name: !Sub '${ProjectName}WebApp'
+  #   Value: !Sub
+  #     - https://${Domain}
+  #     - { Domain: !GetAtt AssetsCDN.DomainName }
   # S3replicationRole: 
   #   Description: The ARN of S3 repliction role
   #   Value: !GetAtt S3replicationRole.Arn
