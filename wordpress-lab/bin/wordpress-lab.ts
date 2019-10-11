@@ -3,20 +3,35 @@ import 'source-map-support/register';
 import cdk = require('@aws-cdk/core');
 import { WordpressLabStack } from '../lib/wordpress-lab-stack';
 import { createHostedZoneStack } from '../lib/createHostedZone';
+import {wordpressRegion2} from '../lib/wordpressRegion2';
 
 
 const app = new cdk.App();
 
-//check for process.env.MYDOMAIN ?
-
+//check for process.env.MYSUBDOMAIN ?
+if (!process.env.MYSUBDOMAIN){
+  console.error("please define MYSUBDOMAIN!! \nRUN: \n")
+  console.error('\x1b[32m%s\x1b[33m%s\x1b[0m', "export MYSUBDOMAIN=","<enter an unique 8-character  subdomain name for yourself, eg: team5432> \n")
+  console.error("We will then automatically register team5432.multi-region.xyz for you.")
+  process.exit(1)
+}
 // create and activate student hosted zone
 const  myhostedZone = new createHostedZoneStack(app, "hostedZone");
 
 new WordpressLabStack(app, 'Wordpress-Primary', {
   hostedZoneID: myhostedZone.hostedZoneID,
   hostedZoneName: myhostedZone.hostedZoneName,
-  region: 'us-west-2'
+  // region: 'us-west-2' //eu-west-1
+  region: 'eu-west-1'
 });
+
+
+new wordpressRegion2 (app, 'Wordpress-Secondary',{
+  hostedZoneID: myhostedZone.hostedZoneID,
+  hostedZoneName: myhostedZone.hostedZoneName,
+  region: 'ap-southeast-1'
+})
+
 
 //get hostedZone
 // new createHostedZoneStack(app, "hostedZone", {
