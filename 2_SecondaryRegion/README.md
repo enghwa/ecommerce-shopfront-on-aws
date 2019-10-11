@@ -1,5 +1,37 @@
 # Building a UI layer 
 
+
+#### Enable DynamoDB Global Table using CLI
+
+**IMPORTANT** DyanmoDB Global Tables doesn't support the CloudFormation yet, we need to create a
+global table using the console or AWS CLI (To create a global table using the console, you can refer 
+to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step instructions'). 
+
+Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
+Singapore regions using the AWS CLI. 
+
+<!--
+*Enable Streaming on DynamoDB*
+_Ireland_
+
+    aws dynamodb update-table --table-name SXRTickets \
+    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+    --region eu-west-1 
+
+_Singapore_
+
+    aws dynamodb update-table --table-name SXRTickets \
+    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+    --region ap-southeast-1
+-->
+
+*Enable DynamoDB Global Table between Ireland and Singapore*
+
+    aws dynamodb create-global-table \
+    --global-table-name SXRTickets \
+    --replication-group RegionName=eu-west-1 RegionName=ap-southeast-1 \
+    --region eu-west-1
+
 Now that we have a working API, let's deploy a UI that can expose this
 functionality to our users.  Note that we will only deploy this UI in our *Primary*
 region (Ireland).  We don't attempt to address failing over a full web application in this

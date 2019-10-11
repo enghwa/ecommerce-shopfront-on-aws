@@ -87,60 +87,15 @@ Stack name (ex. arc309-jay) and Parameters
           - bookstoreSubnet1: Subnet id for Elasticace (output of cdk)
 Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
 
-This command may take a few minutes to run. In this time you can hop over to the AWS console
+This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
 and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
-and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed as `wild-rydes-api`. 
+and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-1`. (screenshot)
 
 Once your stack has successfully completed, navigate to the Outputs tab of your stack
-where you will find an `API URL`. Take note of this URL as we will need it later to configure
-the website UI in the next module.
-
-You can also take a look at some of the other resources created by this template. Under
-the Resources section of the Cloudformation stack you can click on the Lambda functions
-and the API Gateway. Note how the gateway was configured with the `GET` method calling
-our `TicketGetFunction` Lambda function and the `POST` method calling our `TicketPostFunction`
-Lambda function. You can also see that an empty DynamoDB table was set up as well as IAM
-roles to allow our functions to speak to DynamoDB.
-
-Now, you can confirm that your API is working by copying your `API URL` and appending `/ticket`
-to it before navigating to it into your browser. It should return the following:
-
-
-#### Enable DynamoDB Global Table using CLI
-
-**IMPORTANT** DyanmoDB Global Tables doesn't support the CloudFormation yet, we need to create a
-global table using the console or AWS CLI (To create a global table using the console, you can refer 
-to the '2. Create the DynamoDB Global Table' section under 'Console step-by-step instructions'). 
-
-Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
-Singapore regions using the AWS CLI. 
-
-<!--
-*Enable Streaming on DynamoDB*
-_Ireland_
-
-    aws dynamodb update-table --table-name SXRTickets \
-    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
-    --region eu-west-1 
-
-_Singapore_
-
-    aws dynamodb update-table --table-name SXRTickets \
-    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
-    --region ap-southeast-1
--->
-
-*Enable DynamoDB Global Table between Ireland and Singapore*
-
-    aws dynamodb create-global-table \
-    --global-table-name SXRTickets \
-    --replication-group RegionName=eu-west-1 RegionName=ap-southeast-1 \
-    --region eu-west-1
+where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)
 
 ## Completion
 
-Congratulations you have configured the backend components required by the
-ticketing application. In the next module you will deploy a frontend that uses
-these components.
+Congratulations you have configured the bookstore in the primary region. In the next module you will replicate your data to the secondary region and build the same bookstore in the secondary region for the high availability. 
 
-Module 2: [Build a UI layer](../2_UI/README.md)
+Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md)
