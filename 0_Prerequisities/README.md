@@ -51,55 +51,12 @@ Do you wish to deploy these changes (y/n)? -> both "npx cdk@1.8.0 deploy" comman
 Type "Y".
 this will take 20 min.
 
-### Validate your domain name
+### Your book blog is completed
 
-```
-dig +short NS $MYSUBDOMAIN.multi-region.xyz
+Now, you book blog is built. Please verify with ....
 
-```
+You need the VPC id and Subnet ID for the next section. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
 
-Expected output: a list of 4 NS servers. Yours will not be the same as below but as long as there are 4, it means your Route53 has authority to the subdomain `$MYSUBDOMAIN.multi-region.xyz`.
-
-```
-ns-1202.awsdns-22.org.
-ns-1868.awsdns-41.co.uk.
-ns-330.awsdns-41.com.
-ns-889.awsdns-47.net.
-```
-
-Need to write down the vpc id and cidr (cidr should be output too)
-
-
-```bash
-nvm install 8.9.1
-
-nvm alias default v8.9.1
-
-```
-
-verify that you have the right `node` and `npm` :
-
-```bash
-enghwa:~/environment $ npm -v
-5.5.1
-
-enghwa:~/environment $ node -v
-v8.9.1
-
-enghwa:~/environment $ nvm ls
-        v6.14.4  
-->       v8.9.1  
-         system  
-default -> v8.9.1
-node -> stable (-> v8.9.1) (default)
-stable -> 8.9 (-> v8.9.1) (default)
-iojs -> N/A (default)
-lts/* -> lts/argon (-> N/A)
-lts/argon -> v4.9.1 (-> N/A)
-lts/boron -> v6.14.4
-lts/carbon -> v8.12.0 (-> N/A)
-
-```
 ## Completion
 [Go back](../README.md) or
 Start the lab: [Build a BookStore in Primayr Region](../1_PrimaryRegion/README.md)
