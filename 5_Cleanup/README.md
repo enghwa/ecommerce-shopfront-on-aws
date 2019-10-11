@@ -1,3 +1,6 @@
+Delete S3 bucket. if not cfn deletion is failed.
+
+
 # Cleaning Up after the Workshop
 
 Here are high level instructions on cleaning up after you have completed the

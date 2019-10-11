@@ -1892,11 +1892,11 @@ Resources:
                 Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
 
 Outputs:
-  CodeRepository:
-    Description: Code repository for the web application.
-    Export:
-      Name: !Sub '${ProjectName}CodeRepository'
-    Value: !GetAtt AssetsCodeRepository.Name
+  # CodeRepository:
+  #   Description: Code repository for the web application.
+  #   Export:
+  #     Name: !Sub '${ProjectName}CodeRepository'
+  #   Value: !GetAtt AssetsCodeRepository.Name
   WebApplication:
     Description: The URL for the web application
     Export:

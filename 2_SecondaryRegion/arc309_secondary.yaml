@@ -1495,11 +1495,11 @@ Resources:
        - FunctionUploadBooks
 
 # ------------------------ FRONTEND ------------------------
-  AssetsCodeRepository:
-    Type: 'AWS::CodeCommit::Repository'
-    Properties:
-      RepositoryDescription: Code repository for web application
-      RepositoryName: !Sub '${ProjectName}-WebAssets'
+  # AssetsCodeRepository:
+  #   Type: 'AWS::CodeCommit::Repository'
+  #   Properties:
+  #     RepositoryDescription: Code repository for web application
+  #     RepositoryName: !Sub '${ProjectName}-WebAssets'
   # AssetsBucket:
   #   Type: 'AWS::S3::Bucket'
   #   Properties:
@@ -1559,356 +1559,310 @@ Resources:
   #         - ErrorCachingMinTTL: 300
   #           ErrorCode: 403
   #           ResponseCode: 200
-  #           ResponsePagePath: /index.html
-            
-  CodeBuildRole:
-    Description: Creating service role in IAM for AWS CodeBuild
-    Type: 'AWS::IAM::Role'
-    Properties:
-      RoleName: !Sub '${ProjectName}-codebuild-role2'
-      AssumeRolePolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - codebuild.amazonaws.com
-            Action: 'sts:AssumeRole'
-      Policies:
-        - PolicyName: codebuild-policy
-          PolicyDocument:
-            Statement:
-              - Action:
-                  - 's3:PutObject'
-                  - 's3:GetObject'
-                  - 's3:GetObjectVersion'
-                  - 's3:GetBucketVersioning'
-                Resource: 
-                  # - !Join 
-                  #   - ''
-                  #   - - !GetAtt AssetsBucket.Arn
-                  #   - - /*
-                  - !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
-                  - !Join 
-                    - ''
-                    - - !GetAtt PipelineArtifactsBucket.Arn
-                      - /*
-                Effect: Allow
-        - PolicyName: codebuild-logs
-          PolicyDocument:
-            Statement:
-              - Action:
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-                  - 'logs:CreateLogGroup'
-                  - 'cloudfront:CreateInvalidation'
-                Resource: '*'
-                Effect: Allow
-      Path: /
-  CodePipelineRole:
-    Description: Creating service role in IAM for AWS CodePipeline
-    Type: 'AWS::IAM::Role'
-    Properties:
-      RoleName: !Sub '${ProjectName}-CodePipeline-Role2'
-      AssumeRolePolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - codepipeline.amazonaws.com
-            Action: 'sts:AssumeRole'
-      Policies:
-        - PolicyName: codecommit-for-codepipeline
-          PolicyDocument:
-            Statement:
-              - Action:
-                  - 'codecommit:GetBranch'
-                  - 'codecommit:GetCommit'
-                  - 'codecommit:UploadArchive'
-                  - 'codecommit:GetUploadArchiveStatus'
-                  - 'codecommit:CancelUploadArchive'
-                Resource: !GetAtt AssetsCodeRepository.Arn
-                Effect: Allow
-        - PolicyName: artifacts-for-pipeline
-          PolicyDocument:
-            Statement:
-              - Action:
-                  - 's3:PutObject'
-                  - 's3:GetObject'
-                Resource:
-                  'Fn::Join':
-                    - ''
-                    - - 'Fn::GetAtt':
-                        - PipelineArtifactsBucket
-                        - Arn
-                      - /*
-                Effect: Allow
-        - PolicyName: codebuild-for-pipeline
-          PolicyDocument:
-            Statement:
-              - Action:
-                  - 'codebuild:BatchGetBuilds'
-                  - 'codebuild:StartBuild'
-                Resource: !GetAtt 
-                  - CodeBuildProject
-                  - Arn
-                Effect: Allow
-      Path: /
-  PipelineArtifactsBucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Sub '${AssetsBucketName}-pipeline'
-      AccessControl: Private
-  CodeBuildProject:
-    DependsOn:
-      - PipelineArtifactsBucket
-    Description: Creating AWS CodeBuild project
-    Type: 'AWS::CodeBuild::Project'
-    Properties:
-      Artifacts:
-        Type: CODEPIPELINE
-      Description: !Sub 'Building stage for ${ProjectName}.'
-      Environment:
-        ComputeType: BUILD_GENERAL1_SMALL
-        EnvironmentVariables:
-          - Name: S3_BUCKET
-            Value: !Ref PipelineArtifactsBucket
-        Image: 'aws/codebuild/standard:2.0'
-        Type: LINUX_CONTAINER
-      Name: !Sub '${ProjectName}-build'
-      ServiceRole: !Ref CodeBuildRole
-      Source:
-        Type: CODEPIPELINE
-        BuildSpec: !Sub |
-          version: 0.2
-          phases:
-            install:
-              runtime-versions:
-                nodejs: 8
-            pre_build:
-              commands:
-                - echo Installing NPM dependencies...
-                - npm install
-            build:
-              commands:
-                - npm run build
-            post_build:
-              commands:
-                - echo Uploading to AssetsBucketName 
-                - aws s3 cp --recursive ./build s3://${AssetsBucketName}/ 
-                - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://${AssetsBucketName}/
-                - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${AssetsBucketName}/
-                - aws cloudfront create-invalidation --distribution-id ${AssetsCDN} --paths /index.html /service-worker.js
-          artifacts:
-            files:
-              - '**/*'
-            base-directory: build        
-      Tags:
-        - Key: app-name
-          Value: !Ref ProjectName
-      TimeoutInMinutes: 5
-  AssetsCodePipeline:
-    Type: 'AWS::CodePipeline::Pipeline'
-    Properties:
-      Name: !Sub '${ProjectName}-Assets-Pipeline'
-      RoleArn: !GetAtt 
-        - CodePipelineRole
-        - Arn
-      ArtifactStore:
-        Location: !Sub '${AssetsBucketName}-pipeline'
-        Type: S3
-      Stages:
-        - Name: Source
-          Actions:
-            - Name: Source
-              InputArtifacts: []
-              ActionTypeId:
-                Version: '1'
-                Category: Source
-                Owner: AWS
-                Provider: CodeCommit
-              Configuration:
-                BranchName: master
-                RepositoryName: !Sub '${ProjectName}-WebAssets'
-              OutputArtifacts:
-                - Name: !Sub '${ProjectName}-SourceArtifact'
-        - Name: Build
-          Actions:
-            - Name: build-and-deploy
-              InputArtifacts:
-                - Name: !Sub '${ProjectName}-SourceArtifact'
-              ActionTypeId:
-                Category: Build
-                Owner: AWS
-                Version: '1'
-                Provider: CodeBuild
-              OutputArtifacts:
-                - Name: !Sub '${ProjectName}-BuildArtifact'
-              Configuration:
-                ProjectName: !Sub '${ProjectName}-build'
-              RunOrder: 1
-    DependsOn:
-      - PipelineArtifactsBucket
-  SeederFunction:
-    Properties:
-      Code:
-        S3Bucket: !FindInMap
-          - S3Buckets
-          - !Ref 'AWS::Region'
-          - SeederFunctionBucket
-        S3Key: !FindInMap
-         - Constants
-         - S3Keys
-         - SeederFunctionCode
-      Description: CodeCommit repository seeder
-      Handler: seeder.SeedRepositoryHandler
-      MemorySize: 3008
-      Role:
-        'Fn::GetAtt':
-          - SeederRole
-          - Arn
-      Runtime: java8
-      Timeout: 900
-    Type: 'AWS::Lambda::Function'
-    DependsOn:
-      - AssetsCodeRepository
-  UpdateConfigFunction:
-    Properties:
-      Code:
-        S3Bucket: !FindInMap
-          - S3Buckets
-          - !Ref 'AWS::Region'
-          - Bucket
-        S3Key: !FindInMap
-          - Constants
-          - S3Keys
-          - UpdateConfigCode
-      Description: Update config for CodeCommit repository
-      Handler: index.handler
-      Role:
-        'Fn::GetAtt':
-          - SeederRole
-          - Arn
-      Runtime: nodejs8.10
-      Timeout: 300
-      Environment:
-        Variables:
-          API_URL: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/prod'
-          BRANCH_NAME: master
-          REGION: !Ref 'AWS::Region'
-          REPOSITORY_NAME: !Sub '${ProjectName}-WebAssets'
-          USER_POOL_ID: !Ref UserPool
-          APP_CLIENT_ID: !Ref UserPoolClient
-          IDENTITY_POOL_ID: !Ref IdentityPool
-    Type: 'AWS::Lambda::Function'
-    DependsOn:
-      - AssetsCodeRepository
-      - SeederFunction
-      - RepositorySeeder
-      - AppApi
-      - UserPool
-      - UserPoolClient
-      - IdentityPool
-  SeederRole:
-    Properties:
-      AssumeRolePolicyDocument:
-        Statement:
-          - Action:
-              - 'sts:AssumeRole'
-            Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-        Version: 2012-10-17
-      ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
-      Policies:
-        - PolicyDocument:
-            Statement:
-              - Action:
-                  - 'codecommit:GetRepository'
-                  - 'codecommit:GitPush'
-                  - 'codecommit:GetBranch'
-                  - 'codecommit:PutFile'
-                Effect: Allow
-                Resource: !GetAtt AssetsCodeRepository.Arn
-            Version: 2012-10-17
-          PolicyName: SeederRolePolicy
-        - PolicyDocument:
-            Statement:
-              - Action:
-                  - 'logs:*'
-                Effect: Allow
-                Resource: 'arn:aws:logs:*:*:*'
-            Version: 2012-10-17
-          PolicyName: LogsPolicy
-    Type: 'AWS::IAM::Role'
-  RepositorySeeder:
-    Properties:
-      ServiceToken:
-        'Fn::GetAtt':
-          - SeederFunction
-          - Arn
-      sourceUrl: !Ref SeedRepository
-      targetRepositoryName: !Sub '${ProjectName}-WebAssets'
-      targetRepositoryRegion: '${AWS::Region}'
-    Type: 'Custom::RepositorySeeder'
-  RepositoryUpdater:
-    Type: 'Custom::CustomResource'
-    Properties:
-      ServiceToken: !GetAtt UpdateConfigFunction.Arn
-      ParameterOne: Parameter to pass into Custom Lambda Function
-      DependsOn: UpdateConfigFunction
-
-# ---------- ROLES FOR S3 Relication ---------  
-  # S3replicationRole:
+  #           ResponsePagePath: /index.html   
+  # CodeBuildRole:
+  #   Description: Creating service role in IAM for AWS CodeBuild
   #   Type: 'AWS::IAM::Role'
   #   Properties:
-  #     RoleName: !Sub '${ProjectName}-S3replicationRole'
+  #     RoleName: !Sub '${ProjectName}-codebuild-role'
   #     AssumeRolePolicyDocument:
-  #       Version: 2012-10-17
   #       Statement:
   #         - Effect: Allow
   #           Principal:
   #             Service:
-  #               - s3.amazonaws.com
-  #           Action:
-  #             - 'sts:AssumeRole'
-  #     Path: /
+  #               - codebuild.amazonaws.com
+  #           Action: 'sts:AssumeRole'
   #     Policies:
-  #       - PolicyName: replicationRolePolicy
+  #       - PolicyName: codebuild-policy
   #         PolicyDocument:
-  #           Version: 2012-10-17
   #           Statement:
-  #             - Effect: Allow
-  #               Action:
-  #                 - 's3:GetObjectVersionForReplication'
-  #                 - 's3:GetObjectVersionAcl'
-  #               Resource:
+  #             - Action:
+  #                 - 's3:PutObject'
+  #                 - 's3:GetObject'
+  #                 - 's3:GetObjectVersion'
+  #                 - 's3:GetBucketVersioning'
+  #               Resource: 
   #                 - !Join 
   #                   - ''
   #                   - - !GetAtt AssetsBucket.Arn
+  #                   - - /*
+  #                 - !Join 
+  #                   - ''
+  #                   - - !GetAtt PipelineArtifactsBucket.Arn
   #                     - /*
+  #               Effect: Allow
+  #       - PolicyName: codebuild-logs
+  #         PolicyDocument:
   #           Statement:
-  #             - Effect: Allow
-  #               Action:
-  #                 - 's3:ListBucket'
-  #                 - 's3:GetReplicationConfiguration'
-  #               Resource: !GetAtt AssetsBucket.Arn
+  #             - Action:
+  #                 - 'logs:CreateLogStream'
+  #                 - 'logs:PutLogEvents'
+  #                 - 'logs:CreateLogGroup'
+  #                 - 'cloudfront:CreateInvalidation'
+  #               Resource: '*'
+  #               Effect: Allow
+  #     Path: /
+  # CodePipelineRole:
+  #   Description: Creating service role in IAM for AWS CodePipeline
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     RoleName: !Sub '${ProjectName}-CodePipeline-Role'
+  #     AssumeRolePolicyDocument:
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - codepipeline.amazonaws.com
+  #           Action: 'sts:AssumeRole'
+  #     Policies:
+  #       - PolicyName: codecommit-for-codepipeline
+  #         PolicyDocument:
   #           Statement:
-  #             - Effect: Allow
-  #               Action:
-  #                 - 's3:ReplicateObject'
-  #                 - 's3:ReplicateDelete'
-  #                 - 's3:ReplicateTags'
-  #                 - 's3:GetObjectVersionTagging'
-  #               Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
+  #             - Action:
+  #                 - 'codecommit:GetBranch'
+  #                 - 'codecommit:GetCommit'
+  #                 - 'codecommit:UploadArchive'
+  #                 - 'codecommit:GetUploadArchiveStatus'
+  #                 - 'codecommit:CancelUploadArchive'
+  #               Resource: !GetAtt AssetsCodeRepository.Arn
+  #               Effect: Allow
+  #       - PolicyName: artifacts-for-pipeline
+  #         PolicyDocument:
+  #           Statement:
+  #             - Action:
+  #                 - 's3:PutObject'
+  #                 - 's3:GetObject'
+  #               Resource:
+  #                 'Fn::Join':
+  #                   - ''
+  #                   - - 'Fn::GetAtt':
+  #                       - PipelineArtifactsBucket
+  #                       - Arn
+  #                     - /*
+  #               Effect: Allow
+  #       - PolicyName: codebuild-for-pipeline
+  #         PolicyDocument:
+  #           Statement:
+  #             - Action:
+  #                 - 'codebuild:BatchGetBuilds'
+  #                 - 'codebuild:StartBuild'
+  #               Resource: !GetAtt 
+  #                 - CodeBuildProject
+  #                 - Arn
+  #               Effect: Allow
+  #     Path: /
+  # PipelineArtifactsBucket:
+  #   Type: 'AWS::S3::Bucket'
+  #   Properties:
+  #     BucketName: !Sub '${AssetsBucketName}-pipeline'
+  #     AccessControl: Private
+  # CodeBuildProject:
+  #   DependsOn:
+  #     - PipelineArtifactsBucket
+  #   Description: Creating AWS CodeBuild project
+  #   Type: 'AWS::CodeBuild::Project'
+  #   Properties:
+  #     Artifacts:
+  #       Type: CODEPIPELINE
+  #     Description: !Sub 'Building stage for ${ProjectName}.'
+  #     Environment:
+  #       ComputeType: BUILD_GENERAL1_SMALL
+  #       EnvironmentVariables:
+  #         - Name: S3_BUCKET
+  #           Value: !Ref PipelineArtifactsBucket
+  #       Image: 'aws/codebuild/standard:2.0'
+  #       Type: LINUX_CONTAINER
+  #     Name: !Sub '${ProjectName}-build'
+  #     ServiceRole: !Ref CodeBuildRole
+  #     Source:
+  #       Type: CODEPIPELINE
+  #       BuildSpec: !Sub |
+  #         version: 0.2
+  #         phases:
+  #           install:
+  #             runtime-versions:
+  #               nodejs: 8
+  #           pre_build:
+  #             commands:
+  #               - echo Installing NPM dependencies...
+  #               - npm install
+  #           build:
+  #             commands:
+  #               - npm run build
+  #           post_build:
+  #             commands:
+  #               - echo Uploading to AssetsBucketName 
+  #               - aws s3 cp --recursive ./build s3://${AssetsBucketName}/ 
+  #               - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://${AssetsBucket}/
+  #               - aws s3 cp --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${AssetsBucket}/
+  #               - aws cloudfront create-invalidation --distribution-id ${AssetsCDN} --paths /index.html /service-worker.js
+  #         artifacts:
+  #           files:
+  #             - '**/*'
+  #           base-directory: build        
+  #     Tags:
+  #       - Key: app-name
+  #         Value: !Ref ProjectName
+  #     TimeoutInMinutes: 5
+  # AssetsCodePipeline:
+  #   Type: 'AWS::CodePipeline::Pipeline'
+  #   Properties:
+  #     Name: !Sub '${ProjectName}-Assets-Pipeline'
+  #     RoleArn: !GetAtt 
+  #       - CodePipelineRole
+  #       - Arn
+  #     ArtifactStore:
+  #       Location: !Sub '${AssetsBucketName}-pipeline'
+  #       Type: S3
+  #     Stages:
+  #       - Name: Source
+  #         Actions:
+  #           - Name: Source
+  #             InputArtifacts: []
+  #             ActionTypeId:
+  #               Version: '1'
+  #               Category: Source
+  #               Owner: AWS
+  #               Provider: CodeCommit
+  #             Configuration:
+  #               BranchName: master
+  #               RepositoryName: !Sub '${ProjectName}-WebAssets'
+  #             OutputArtifacts:
+  #               - Name: !Sub '${ProjectName}-SourceArtifact'
+  #       - Name: Build
+  #         Actions:
+  #           - Name: build-and-deploy
+  #             InputArtifacts:
+  #               - Name: !Sub '${ProjectName}-SourceArtifact'
+  #             ActionTypeId:
+  #               Category: Build
+  #               Owner: AWS
+  #               Version: '1'
+  #               Provider: CodeBuild
+  #             OutputArtifacts:
+  #               - Name: !Sub '${ProjectName}-BuildArtifact'
+  #             Configuration:
+  #               ProjectName: !Sub '${ProjectName}-build'
+  #             RunOrder: 1
+  #   DependsOn:
+  #     - PipelineArtifactsBucket
+  # SeederFunction:
+  #   Properties:
+  #     Code:
+  #       S3Bucket: !FindInMap
+  #         - S3Buckets
+  #         - !Ref 'AWS::Region'
+  #         - SeederFunctionBucket
+  #       S3Key: !FindInMap
+  #        - Constants
+  #        - S3Keys
+  #        - SeederFunctionCode
+  #     Description: CodeCommit repository seeder
+  #     Handler: seeder.SeedRepositoryHandler
+  #     MemorySize: 3008
+  #     Role:
+  #       'Fn::GetAtt':
+  #         - SeederRole
+  #         - Arn
+  #     Runtime: java8
+  #     Timeout: 900
+  #   Type: 'AWS::Lambda::Function'
+  #   DependsOn:
+  #     - AssetsCodeRepository
+  # UpdateConfigFunction:
+  #   Properties:
+  #     Code:
+  #       S3Bucket: !FindInMap
+  #         - S3Buckets
+  #         - !Ref 'AWS::Region'
+  #         - Bucket
+  #       S3Key: !FindInMap
+  #         - Constants
+  #         - S3Keys
+  #         - UpdateConfigCode
+  #     Description: Update config for CodeCommit repository
+  #     Handler: index.handler
+  #     Role:
+  #       'Fn::GetAtt':
+  #         - SeederRole
+  #         - Arn
+  #     Runtime: nodejs8.10
+  #     Timeout: 300
+  #     Environment:
+  #       Variables:
+  #         API_URL: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/prod'
+  #         BRANCH_NAME: master
+  #         REGION: !Ref 'AWS::Region'
+  #         REPOSITORY_NAME: !Sub '${ProjectName}-WebAssets'
+  #         USER_POOL_ID: !Ref UserPool
+  #         APP_CLIENT_ID: !Ref UserPoolClient
+  #         IDENTITY_POOL_ID: !Ref IdentityPool
+  #   Type: 'AWS::Lambda::Function'
+  #   DependsOn:
+  #     - AssetsCodeRepository
+  #     - SeederFunction
+  #     - RepositorySeeder
+  #     - AppApi
+  #     - UserPool
+  #     - UserPoolClient
+  #     - IdentityPool
+  # SeederRole:
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Statement:
+  #         - Action:
+  #             - 'sts:AssumeRole'
+  #           Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - lambda.amazonaws.com
+  #       Version: 2012-10-17
+  #     ManagedPolicyArns:
+  #       - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+  #     Policies:
+  #       - PolicyDocument:
+  #           Statement:
+  #             - Action:
+  #                 - 'codecommit:GetRepository'
+  #                 - 'codecommit:GitPush'
+  #                 - 'codecommit:GetBranch'
+  #                 - 'codecommit:PutFile'
+  #               Effect: Allow
+  #               Resource: !GetAtt AssetsCodeRepository.Arn
+  #           Version: 2012-10-17
+  #         PolicyName: SeederRolePolicy
+  #       - PolicyDocument:
+  #           Statement:
+  #             - Action:
+  #                 - 'logs:*'
+  #               Effect: Allow
+  #               Resource: 'arn:aws:logs:*:*:*'
+  #           Version: 2012-10-17
+  #         PolicyName: LogsPolicy
+  #   Type: 'AWS::IAM::Role'
+  # RepositorySeeder:
+  #   Properties:
+  #     ServiceToken:
+  #       'Fn::GetAtt':
+  #         - SeederFunction
+  #         - Arn
+  #     sourceUrl: !Ref SeedRepository
+  #     targetRepositoryName: !Sub '${ProjectName}-WebAssets'
+  #     targetRepositoryRegion: '${AWS::Region}'
+  #   Type: 'Custom::RepositorySeeder'
+  # RepositoryUpdater:
+  #   Type: 'Custom::CustomResource'
+  #   Properties:
+  #     ServiceToken: !GetAtt UpdateConfigFunction.Arn
+  #     ParameterOne: Parameter to pass into Custom Lambda Function
+  #     DependsOn: UpdateConfigFunction
 
 Outputs:
-  CodeRepository:
-    Description: Code repository for the web application.
-    Export:
-      Name: !Sub '${ProjectName}CodeRepository'
-    Value: !GetAtt AssetsCodeRepository.Name
+  # CodeRepository:
+  #   Description: Code repository for the web application.
+  #   Export:
+  #     Name: !Sub '${ProjectName}CodeRepository'
+  #   Value: !GetAtt AssetsCodeRepository.Name
   # WebApplication:
   #   Description: The URL for the web application
   #   Export:
@@ -1919,3 +1873,7 @@ Outputs:
   # S3replicationRole: 
   #   Description: The ARN of S3 repliction role
   #   Value: !GetAtt S3replicationRole.Arn
+  ElastiCache:
+    Description: ElastiCacheCluster
+    Value: ElastiCacheCluster
+  

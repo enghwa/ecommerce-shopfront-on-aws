@@ -102,4 +102,6 @@ FYI. This bookstore doesn't have blog yet. It will be shown after you complete b
 
 Congratulations you have configured the bookstore in the primary region. In the next module you will replicate your data to the secondary region and build the same bookstore in the secondary region for the high availability. 
 
+You need to write down the S3 Replication Role ARN to use it in the next step.
+
 Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md)
