@@ -28,16 +28,13 @@ const myhostedZone = new createHostedZoneStack(app, "hostedZone");
 const x= new WordpressLabStack(app, 'Wordpress-Primary', {
   hostedZoneID: myhostedZone.hostedZoneID,
   hostedZoneName: myhostedZone.hostedZoneName,
-  region: 'us-west-2' //eu-west-1
-  // region: 'eu-west-1
+  region: process.env.AWS_DEFAULT_REGION || 'eu-west-1',
 });
 
-
-// const appR2 = new cdk.App();
 new wordpressRegion2(app, 'Wordpress-Secondary', {
   hostedZoneID: process.env.hostedZoneID || '',
   hostedZoneName: process.env.hostedZoneName || '',
-  region: 'ap-southeast-1',
+  region: process.env.AWS_DEFAULT_REGION || 'ap-southeast-1',
   env: envAP
 })
 

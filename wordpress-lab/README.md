@@ -10,9 +10,9 @@ deploy wordpress on fargate, ALB, vpc, ACM, aurora-primary in Primary Region.
 
 ```bash
 //nvm ....
-//need to export AWS_DEFAULT_REGION = "primary region" , eg: `us-west-2`, 
+//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
 
-export AWS_DEFAULT_REGION=us-west-2
+export AWS_DEFAULT_REGION=eu-west-1
 export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
 cd MultiRegion-Modern-Architecture/wordpress-lab
 npm install
