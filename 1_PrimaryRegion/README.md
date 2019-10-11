@@ -1,6 +1,6 @@
 # Building the Bookstore in your Primary Region
 
-## Building your book blog
+## Building your book blog in your Primary Region
 
 In this module, you will deploy Bookstore application in Irelad region. This components include followings:
 1. S3 - Web statci content
