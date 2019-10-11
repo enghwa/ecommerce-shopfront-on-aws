@@ -122,7 +122,7 @@ Follow the steps to create a global table (SXRTickets) consisting of replica tab
 Singapore regions using the AWS CLI. 
 
 aws dynamodb create-table \
-    --table-name teres-Cart \
+    --table-name <Cart table name> \
     --attribute-definitions \
         AttributeName=customerId,AttributeType=S \
         AttributeName=bookId,AttributeType=S \
@@ -132,12 +132,12 @@ aws dynamodb create-table \
     --provisioned-throughput \
         ReadCapacityUnits=1,WriteCapacityUnits=1 \
     --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
-    --region eu-central-1
+    --region <region2>
 
 aws dynamodb create-global-table \
-    --global-table-name teres-Cart \
-    --replication-group RegionName=us-west-2 RegionName=eu-central-1 \
-    --region us-west-2
+    --global-table-name <Cart table name>  \
+    --replication-group RegionName=<region1> RegionName=<region2> \
+    --region <region2>
 
 
 
