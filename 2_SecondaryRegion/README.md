@@ -8,12 +8,15 @@ This Aurora MySQL Read replica helps you have redundancy plan when you have issu
 
 Follow the steps to enable the read replica of Aurora in Singapore region using the AWS CLI. 
 
+```bash
 aws rds create-db-cluster \
   --db-cluster-identifier <sample-replica-cluster> \
   --engine aurora \
   --replication-source-identifier <source aurora cluster arn> \
   --db-subnet-group-name <value> \
   --region <region2>
+
+```
 
 aws rds create-db-cluster \
   --db-cluster-identifier arc309-replica-cluster \
