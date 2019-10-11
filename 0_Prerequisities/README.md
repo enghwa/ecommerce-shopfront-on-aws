@@ -16,15 +16,13 @@ AWS Cloud9 is free, you only pay for the underlying EC2 instance. Select your EC
 Click "Create environment" and AWS Cloud9 will start! It would typically take 30-60s to create your AWS Cloud9 environment.
 ![Create AWS Cloud9](../images/00-c9-04.png)
 
-## Install node and npm 
-
 ![Create AWS Cloud9](../images/00-c9-05.png)
 
 Once AWS Cloud9 is up and running, execute the following commands in the command shell of Cloud9 to clone the lab files to your Cloud9.
 
 ## Clone the workshop project
 ```bash
-git clone https://github.com/enghwa/MultiRegion-Serverless-Workshop.git
+git clone https://github.com/enghwa/MultiRegion-Modern-Architecture.git
 
 ```
 
