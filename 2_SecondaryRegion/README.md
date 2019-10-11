@@ -1,5 +1,40 @@
 # Building a second bookstore in the secondary region
 
+## Building your book blog in your Primary Region
+
+In this module, you will deploy Bookstore application in Irelad region. This components include followings:
+1. S3 - Web statci content
+2. API Gateway and Cognito - App layer with authentication
+3. DynamoDB - Books, Order, Cart table
+4. Lambda - multiple functions
+
+You will also create the IAM polices and roles required by these components.
+
+Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+
+Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
+
+```bash
+export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
+export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
+export AWS_DEFAULT_REGION=ap-southeast-1
+npx cdk@1.8.0 deploy Wordpress-Secondary
+
+```
+
+```
+Do you wish to deploy these changes (y/n)? -> both "npx cdk deploy" asked this question.
+```
+Type "Y".
+this will take 20 min.
+
+### Your book blog is completed
+
+Now, you book blog is built. Please verify with following
+"https://blog.<MYSUBDOMAIN>.multi-region.xyz/"
+
+You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
+
 We completed build the first bookstore in the primary region in the previous section. In this section, we will replicate S3 bucket for static contects, Aurora MySQL for the blog content, and DynamoDB tables for the books/order/cart data from the primary region to the secondary region.
 
 #### Enable Aurora MySQL Read replica in Singapore region
@@ -226,18 +261,15 @@ Stack name (ex. arc309-jay2) and Parameters
           - OrderTableStreamARN: Stream ARN of Order table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookjay-Orders/stream/2019-10-11T08:20:56.998)
 Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
 
-This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
+This CloudFormation template may take around 10mins. In this time you can hop over to the AWS console
 and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
 and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-2`. (screenshot)
 
-Once your stack has successfully completed, navigate to the Outputs tab of your stack
-where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)
+Once your stack has successfully completed, type the previous Cloudfront URL in your broswer and your can check your bookstore. (screenshot)
 
 https://d1zltjarei3438.cloudfront.net/
 
 FYI. This bookstore doesn't have blog yet. It will be shown after you complete buiding the secondary region.
-
-
 
 ## Completion
 
