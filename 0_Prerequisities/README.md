@@ -1,6 +1,6 @@
 # AWS Cloud9 - Cloud IDE
 
-Login to AWS Console, select *eu-west-1 Region* and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. 
+Login to AWS Console, go to *Ireland(eu-west-1) Region* and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. 
 
 https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1 
 
@@ -20,7 +20,55 @@ Click "Create environment" and AWS Cloud9 will start! It would typically take 30
 
 ![Create AWS Cloud9](../images/00-c9-05.png)
 
-Once AWS Cloud9 is up and running, execute these 2 commands in the command shell of Cloud9. This is required for our AngularJS front end.
+Once AWS Cloud9 is up and running, execute the following commands in the command shell of Cloud9 to clone the lab files to your Cloud9.
+
+## Clone the workshop project
+```bash
+git clone https://github.com/enghwa/MultiRegion-Serverless-Workshop.git
+
+```
+
+Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+
+Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
+
+```bash
+//nvm ....
+//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
+
+export AWS_DEFAULT_REGION=eu-west-1
+export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
+npm install
+npx cdk bootstrap
+npx cdk@1.8.0 deploy hostedZone
+npx cdk@1.8.0 deploy Wordpress-Primary
+
+```
+
+```
+Do you wish to deploy these changes (y/n)? -> both "npx cdk@1.8.0 deploy" commands asked this question.
+```
+Type "Y".
+this will take 20 min.
+
+### Validate your domain name
+
+```
+dig +short NS $MYSUBDOMAIN.multi-region.xyz
+
+```
+
+Expected output: a list of 4 NS servers. Yours will not be the same as below but as long as there are 4, it means your Route53 has authority to the subdomain `$MYSUBDOMAIN.multi-region.xyz`.
+
+```
+ns-1202.awsdns-22.org.
+ns-1868.awsdns-41.co.uk.
+ns-330.awsdns-41.com.
+ns-889.awsdns-47.net.
+```
+
+Need to write down the vpc id and cidr (cidr should be output too)
+
 
 ```bash
 nvm install 8.9.1
@@ -52,13 +100,6 @@ lts/boron -> v6.14.4
 lts/carbon -> v8.12.0 (-> N/A)
 
 ```
-
-## Clone the workshop project
-```bash
-git clone https://github.com/enghwa/MultiRegion-Serverless-Workshop.git
-
-```
-
 ## Completion
 [Go back](../README.md) or
-Start the lab: [Build an API layer](../1_API/README.md)
+Start the lab: [Build a BookStore in Primayr Region](../1_PrimaryRegion/README.md)
