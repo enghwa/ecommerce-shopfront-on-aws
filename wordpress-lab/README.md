@@ -14,10 +14,20 @@ deploy wordpress on fargate, ALB, vpc, ACM, aurora-primary in Primary Region.
 
 export AWS_DEFAULT_REGION=us-west-2
 export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
+cd MultiRegion-Modern-Architecture/wordpress-lab
 npm install
-npx cdk bootstrap
+npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy hostedZone
 npx cdk@1.8.0 deploy Wordpress-Primary
+```
+
+Create Secondary Region resources:
+
+```bash
+export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
+export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
+export AWS_DEFAULT_REGION=ap-southeast-1
+npx cdk@1.8.0 deploy Wordpress-Secondary
 
 ```
 
