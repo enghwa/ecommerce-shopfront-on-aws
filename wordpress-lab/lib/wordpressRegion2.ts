@@ -97,6 +97,12 @@ export class wordpressRegion2 extends cdk.Stack {
       subnetIds: vpc.selectSubnets({subnetType: SubnetType.PRIVATE}).subnetIds
     });
 
+    const dbsecuritygroup = new ec2.SecurityGroup(this, 'wordpress-dbsg', {
+      vpc: vpc,
+      description: "wordpress database security group",
+      securityGroupName: "wordpressDB-SG"
+    })
+    dbsecuritygroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3306), "Allow inbound to db")
 
     const wordpressSvc = new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'wordpress-svc', {
       cluster: cluster,
@@ -136,6 +142,8 @@ export class wordpressRegion2 extends cdk.Stack {
     new cdk.CfnOutput(this, 'Secondary Region private subnet for Elasticache', { value: vpc.selectSubnets({subnetType: SubnetType.PRIVATE}).subnetIds[0] });
     new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_'+ props.region , { value: validatedWildCardCert.certificateArn });
     new cdk.CfnOutput(this, 'WordpressDB SubnetGroup Name' , { value: dbSubnetGroup.dbSubnetGroupName || ""});
+    new cdk.CfnOutput(this, 'WordpressDB securityGroup Name' , { value: dbsecuritygroup.securityGroupName});
+    
     
   }
 } 

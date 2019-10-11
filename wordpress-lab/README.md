@@ -95,6 +95,24 @@ in Route53, create an apex record:
 Alias 'Yes', Type `A` and point it to the cloudfront domain name, `?????????????.cloudfront.net`. (screenshot)
 
 
+## make Secondary Region Wordpress work
+make sure rds replication is setup properly in Singapore Region..
+get the endpoint.
+
+// below need a few screenshots to show
+
+
+1. update AWS Secret Manager in Singapore:
+go to Primary Region -> AWS Secretmanager -> wordpressDBPassword-> Retrieve secret value -> Copy the value
+go to Secondary Region (Singapore) -> AWS Secretmanager -> wordpressDBPassword-> Retrieve secret value -> Edit and update it to the value from Primary Region
+
+2. update ECS task
+
+1. Go Secondary Region (Singapore) -> ECS TASK DEF -> WordpressSecondarywordpresssvcTaskDe??? -> click on the task def -> click "Create new revision -> scroll down-> click "web" ->side menu pops up -> update "WORDPRESS_DB_HOST" -> change from "changme" to the RDS endpoint -> click "update" button
+2. update ECS Service to this new task definition
+
+
+
 <!-- 
 # Useful commands
 

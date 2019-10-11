@@ -16,10 +16,10 @@ if (!process.env.MYSUBDOMAIN) {
   process.exit(1)
 }
 
-
 // const envEU  = {region: 'eu-west-1' };
 const envEU  = {region: 'us-west-2' };
 const envAP = {region: 'ap-southeast-1' };
+
 // create and activate student hosted zone
 const myhostedZone = new createHostedZoneStack(app, "hostedZone");
 
