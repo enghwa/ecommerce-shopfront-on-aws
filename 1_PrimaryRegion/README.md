@@ -1,16 +1,47 @@
-# Building the Wild Rydes Backend Components Layer
+# Building the Bookstore in your Primary Region
 
-In this module, you will deploy backend application components to 2 AWS Regions (Ireland and Singapore). These
-backend components include 3 AWS Lambda functions, 2 API Gateway Endpoints and
-DynamoDB Global Table per Region. You will also create the IAM polices and roles required by
-these components.
+In this module, you will deploy Bookstore application in Irelad region. This components include followings:
+1. S3 - Web statci content
+2. API Gateway and Cognito - App layer with authentication
+3. DynamoDB - Books, Order, Cart table
+4. Lambda - multiple functions
 
-There are two ways to complete this module, *Console step-by-step
-instructions* and *CLI step-by-step instruction* for both Ireland and Singapore regions.
-<!-- For learning purposes, we recommend that workshop participants step through the *Console step-by-step
-instructions* while deploying the primary Ireland region, and then for time reasons,
-use the provided CloudFormation instructions to quickly set up the second Singapore
-region during module 3. --> 
+You will also create the IAM polices and roles required by these components.
+
+**Frontend**
+
+Build artifacts are stored in a S3 bucket where web application assets are maintained (like book cover photos, web graphics, etc.). Amazon CloudFront caches the frontend content from S3, presenting the application to the user via a CloudFront distribution.  The frontend interacts with Amazon Cognito and Amazon API Gateway only.  Amazon Cognito is used for all authentication requests, whereas API Gateway (and Lambda) is used for all API calls interacting across DynamoDB, ElasticSearch, ElastiCache, and Neptune. 
+
+**Backend**
+
+The core of the backend infrastructure consists of Amazon Cognito, Amazon DynamoDB, AWS Lambda, and Amazon API Gateway. The application leverages Amazon Cognito for user authentication, and Amazon DynamoDB to store all of the data for books, orders, and the checkout cart. As books and orders are added, Amazon DynamoDB Streams push updates to AWS Lambda functions that update the Amazon Elasticsearch cluster and Amazon ElasticCache for Redis cluster.  Amazon Elasticsearch powers search functionality for books, and Amazon Neptune stores information on a user's social graph and book purchases to power recommendations. Amazon ElasticCache for Redis powers the books leaderboard. 
+
+### AWS Lambda
+
+AWS Lambda is used in a few different places to run the application, as shown in the architecture diagram.  The important Lambda functions that are deployed as part of the template are shown below, and available in the [functions](/functions) folder.  In the cases where the response fields are blank, the application will return a statusCode 200 or 500 for success or failure, respectively.
+
+### Amazon ElastiCache for Redis
+
+Amazon ElastiCache for Redis is used to provide the best sellers/leaderboard functionality.  In other words, the books that are the most ordered will be shown dynamically at the top of the best sellers list. 
+
+For the purposes of creating the leaderboard, the AWS Bookstore Demo App utilized [ZINCRBY](https://redis.io/commands/zincrby), which *“Increments the score of member in the sorted set stored at key byincrement. If member does not exist in the sorted set, it is added with increment as its score (as if its previous score was 0.0). If key does not exist, a new sorted set with the specified member as its sole member is created.”*
+
+The information to populate the leaderboard is provided from DynamoDB via DynamoDB Streams.  Whenever an order is placed (and subsequently created in the **Orders** table), this is streamed to Lambda, which updates the cache in ElastiCache for Redis.  The Lambda function used to pass this information is **UpdateBestSellers**. 
+
+### Amazon CloudFront and Amazon S3
+
+Amazon CloudFront hosts the web application frontend that users interface with.  This includes web assets like pages and images.  For demo purposes, CloudFormation pulls these resources from S3.
+
+**Developer Tools**
+
+The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web application using AWS CodeBuild. After successfully building, CodeBuild copies the build artifacts into a S3 bucket where the web application assets are maintained (like book cover photos, web graphics, etc.). Along with uploading to Amazon S3, CodeBuild invalidates the cache so users always see the latest experience when accessing the storefront through the Amazon CloudFront distribution.  AWS CodeCommit. AWS CodePipeline, and AWS CodeBuild are used in the deployment and update processes only, not while the application is in a steady-state of use.
+
+![Developer Tools Diagram](assets/readmeImages/DeveloperTools.png)
+
+
+
+
+
 
 Both sets of instructions are provided below – simply expand your preferred path.
 
