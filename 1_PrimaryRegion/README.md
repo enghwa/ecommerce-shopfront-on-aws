@@ -74,7 +74,7 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 
 <summary><strong>Step-by-step instructions </strong></summary>
 
-Go to the Github and download the 'arc309_primary.yaml' file (https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml)
+Download the 'arc309_primary.yaml' file from S3???(https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml)
 
 Go to the CloudFormation console in Ireland 
 (screenshot)

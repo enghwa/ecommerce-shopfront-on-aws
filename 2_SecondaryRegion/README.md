@@ -172,7 +172,64 @@ aws dynamodb create-global-table \
 
 Now, you completed the replication across two regions. It's time to build the Web/App layer in Singapore. 
 
-## 1. Create the AWS Cognito Identity Pool, S3 bucket and Cloudfront distribution
+## CDK for the secondary region
+
+Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+
+Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
+
+```bash
+//nvm ....
+//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
+
+export AWS_DEFAULT_REGION=eu-west-1
+export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
+npm install
+npx cdk@1.8.0 bootstrap
+npx cdk@1.8.0 deploy hostedZone
+npx cdk@1.8.0 deploy Wordpress-Primary
+
+```
+
+```
+Do you wish to deploy these changes (y/n)? -> both "npx cdk@1.8.0 deploy" commands asked this question.
+```
+Type "Y".
+this will take 20 min.
+
+### Your book blog is completed
+
+## CFN for the Singapore region
+
+Let's build App layer in Singapore
+
+<summary><strong>Step-by-step instructions </strong></summary>
+
+Download the 'arc309_secondayr.yaml' file from S3???(https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_SecondaryRegion/arc309_secondary.yaml)
+
+Go to the CloudFormation console in Singapore 
+(screenshot)
+Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
+Stack name (ex. arc309-jay) and Parameters
+          - ProjectName: 10 characters with lowercase (no number) (ex.bookjay)
+          - AssetsBucketName: S3 bucket name with lowercase (ex.bookjay-s3)
+          - SeedRepository: Web file (use default)
+          - bookstoreVPC: VPC id (output of cdk)
+          - bookstoreSubnet1: Subnet id for Elasticace (output of cdk)
+Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
+
+This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
+and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
+and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-1`. (screenshot)
+
+Once your stack has successfully completed, navigate to the Outputs tab of your stack
+where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)
+
+https://d1zltjarei3438.cloudfront.net/
+
+FYI. This bookstore doesn't have blog yet. It will be shown after you complete buiding the secondary region.
+
+
 
 ## Completion
 
