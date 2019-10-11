@@ -1907,12 +1907,3 @@ Outputs:
   S3replicationRole: 
     Description: The ARN of S3 repliction role
     Value: !GetAtt S3replicationRole.Arn
-  BooksTable: 
-    Description: The books table in DynamoDB
-    Value: !GetAtt TBooks.Arn
-  OrderTable: 
-    Description: The books table in DynamoDB
-    Value: !GetAtt TOrders.Arn
-  CartTable: 
-    Description: The books table in DynamoDB
-    Value: !GetAtt Tcart.Arn
