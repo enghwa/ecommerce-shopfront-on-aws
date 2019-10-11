@@ -28,35 +28,6 @@ git clone https://github.com/enghwa/MultiRegion-Serverless-Workshop.git
 
 ```
 
-Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
-
-Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
-
-```bash
-//nvm ....
-//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
-
-export AWS_DEFAULT_REGION=eu-west-1
-export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
-npm install
-npx cdk bootstrap
-npx cdk@1.8.0 deploy hostedZone
-npx cdk@1.8.0 deploy Wordpress-Primary
-
-```
-
-```
-Do you wish to deploy these changes (y/n)? -> both "npx cdk@1.8.0 deploy" commands asked this question.
-```
-Type "Y".
-this will take 20 min.
-
-### Your book blog is completed
-
-Now, you book blog is built. Please verify with ....
-
-You need the VPC id and Subnet ID for the next section. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
-
 ## Completion
 [Go back](../README.md) or
-Start the lab: [Build a BookStore in Primayr Region](../1_PrimaryRegion/README.md)
+Start the lab: [Build a BookStore in Primary Region](../1_PrimaryRegion/README.md)

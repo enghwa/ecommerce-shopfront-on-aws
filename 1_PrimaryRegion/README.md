@@ -1,5 +1,7 @@
 # Building the Bookstore in your Primary Region
 
+## Building your book blog
+
 In this module, you will deploy Bookstore application in Irelad region. This components include followings:
 1. S3 - Web statci content
 2. API Gateway and Cognito - App layer with authentication
@@ -7,6 +9,37 @@ In this module, you will deploy Bookstore application in Irelad region. This com
 4. Lambda - multiple functions
 
 You will also create the IAM polices and roles required by these components.
+
+Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+
+Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
+
+```bash
+//nvm ....
+//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
+
+export AWS_DEFAULT_REGION=eu-west-1
+export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
+npm install
+npx cdk bootstrap
+npx cdk@1.8.0 deploy hostedZone
+npx cdk@1.8.0 deploy Wordpress-Primary
+
+```
+
+```
+Do you wish to deploy these changes (y/n)? -> both "npx cdk@1.8.0 deploy" commands asked this question.
+```
+Type "Y".
+this will take 20 min.
+
+### Your book blog is completed
+
+Now, you book blog is built. Please verify with ....
+
+You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
+
+## Building the bookstore
 
 **Frontend**
 
@@ -40,52 +73,7 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 
 <summary><strong>CLI step-by-step instructions </strong></summary>
 
-
-Navigate to the `1_API` folder within your local Git repository and take a look at the
-files within. You will see several files - here are descriptions of each:
-
-* `wild-rydes-api.yaml` – This is a CloudFormation template (using SAM syntax) that
-  describes the infrastructure needed to for the API and how each component should be configured.
-* `tickets-get.js` – This is the Node.js code required by our Lambda function needed
-  to retrieve tickets from DynamoDB
-* `tickets-post.js` – This is the Node.js code required by our second Lambda function
-  to create new tickets in DynamoDB
-* `health-check.js` - Lambda function for checking the status of our application health
-
-
-There is no modification necessary to this application code so we can go ahead and
-deploy it to AWS. Since it comes with a CloudFormation template, we can use this to
-upload our code and create all of the necessary AWS resources for us rather than doing
-this manually using the console which would take much longer. 
-<!--We recommend deploying the
-primary region using the Console step-by-step instructions and then deploying the failover
-region using the CloudFormation template. 
---> 
-Feel free to open the template and take a look at the resources it is creating and how they are defined.
-
-## 1. Create an S3 bucket to store the app code
-
-We'll first need a bucket to store our AWS Lambda source code in AWS.
-
-#### High-level Instructions
-
-Go ahead and create a bucket for each region using the CLI. S3 bucket names must be
-globally unique so choose a name for your bucket using something unique to you such as
-your name e.g. `wildrydes-firstname-lastname`.
-
-Let's create 2 buckets using the CLI with the following command:
-
-*Ireland Bucket* (choose a unique bucket name)
-     
-     aws s3 mb s3://multiregion-<firstnamelastname>-ireland --region eu-west-1
-
-*Singapore Bucket*
-     
-     aws s3 mb s3://multiregion-<firstnamelastname>-singapore --region ap-southeast-1
-
-## 2. Package up the API code and push to S3
-
-Because this is a [Serverless Application Model Template](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html), we must first package it. This process will upload the source code to our S3 bucket and generate a new template referencing the code in S3 where it can be used by AWS Lambda.
+Navigate to the `1_PrimaryRegion` folder within your local Git repository and you will see 'arc309_primary.yaml' file.
 
 #### High-level instructions
 
