@@ -38,16 +38,31 @@ aws rds create-db-instance \
   --engine aurora \
   --region ap-southeast-1
 
-It takes for a while, you can procced the next step first
+It takes for a while, you can procced the next step first.
 
-### 2. Build multi-region solution - S3
+### 2. Enable S3 replication
+
+This S3 replication will replicate the statice contents from Irelad region to Singapore whenever there is update. 
+Follow the steps to enable the S3 replication using the AWS CLI. 
+
 aws s3api create-bucket \
 --bucket <AssetsBucketName-region2> \
---region <us-west-2> \
---create-bucket-configuration LocationConstraint=<us-west-2>
+--region <region2> \
+--create-bucket-configuration LocationConstraint=<region2>
+
+aws s3api create-bucket \
+--bucket bookjay-s3-region2 \
+--region ap-southeast-1 \
+--create-bucket-configuration LocationConstraint=ap-southeast-1
+
+S3 replication requires the versioning.
 
 aws s3api put-bucket-versioning \
 --bucket <AssetsBucketName-region2> \
+--versioning-configuration Status=Enabled
+
+aws s3api put-bucket-versioning \
+--bucket bookjay-s3-region2 \
 --versioning-configuration Status=Enabled
 
 <!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
@@ -60,6 +75,21 @@ $ aws iam put-role-policy \
 --role-name crrRole \
 --policy-document file://s3-role-permissions-policy.json \
 --policy-name crrRolePolicy \ -->
+
+Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the local directory on your Cloud9. 
+
+You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack in Ireland or execute following command in the Cloud9.
+
+aws iam get-role --role-name <projectname-S3replicationRole>
+aws iam get-role --role-name bookjay-S3replicationRole
+
+ARN looks like arn:aws:iam::xxx:role/bookjay-S3replicationRole
+
+To create 'replication.json' file in the Cloud9, 
+$vi replication.json
+esc+i: insert
+copy and paste the following
+esc+wq! save
 
 {
   "Role": "<IAM-role-ARN>",
@@ -80,9 +110,17 @@ $ aws s3api put-bucket-replication \
 --replication-configuration file://replication.json \
 --bucket <source>
 
-https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-walkthrough1.html
+$ aws s3api put-bucket-replication \
+--replication-configuration file://replication.json \
+--bucket bookjay-s3
 
-### 2. Build multi-region solution - DynamoDB (Q. it's complated cli than console. one with cli, two with ui)
+FYI. Only the newly uploaded to the source bucket will be replicated to the destination bucket
+
+### 3. Enable DynamoDB Global Table using CLI
+
+Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
+Singapore regions using the AWS CLI. 
+
 aws dynamodb create-table \
     --table-name teres-Cart \
     --attribute-definitions \
@@ -101,38 +139,13 @@ aws dynamodb create-global-table \
     --replication-group RegionName=us-west-2 RegionName=eu-central-1 \
     --region us-west-2
 
-#### Enable DynamoDB Global Table using CLI
 
-Follow the steps to create a global table (SXRTickets) consisting of replica tables in the Ireland and 
-Singapore regions using the AWS CLI. 
 
-<!--
-*Enable Streaming on DynamoDB*
-_Ireland_
 
-    aws dynamodb update-table --table-name SXRTickets \
-    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
-    --region eu-west-1 
 
-_Singapore_
 
-    aws dynamodb update-table --table-name SXRTickets \
-    --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
-    --region ap-southeast-1
--->
 
-*Enable DynamoDB Global Table between Ireland and Singapore*
 
-    aws dynamodb create-global-table \
-    --global-table-name SXRTickets \
-    --replication-group RegionName=eu-west-1 RegionName=ap-southeast-1 \
-    --region eu-west-1
-
-Now that we have a working API, let's deploy a UI that can expose this
-functionality to our users.  Note that we will only deploy this UI in our *Primary*
-region (Ireland).  We don't attempt to address failing over a full web application in this
-workshop.  Our failover efforts are focused on the backend API components deployed
-in the first module.
 
 Navigate to the `2_UI/cfn` folder in your local Git repository.
 
