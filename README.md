@@ -233,6 +233,7 @@ we need to acm auto approval
 1. second region cdk
 2. acm health check
 3. Global accelerator
+4. cdk out value pretty
 
 
 
