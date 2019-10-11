@@ -17,31 +17,35 @@ aws rds create-db-cluster \
   --region <region2>
 
 ```
-
+```bash
 aws rds create-db-cluster \
   --db-cluster-identifier arc309-replica-cluster \
   --engine aurora \
   --replication-source-identifier arn:aws:rds:eu-west-1:376715876263:cluster:wordpress-primary-wordpressdbclusterbda8ec52-1tketnnhp1rq9 \
   --region ap-southeast-1
-
+```
+```bash
 aws rds describe-db-clusters --db-cluster-identifier <sample-replica-cluster> --region <region2>
-
+```
+```bash
 aws rds describe-db-clusters --db-cluster-identifier arc309-replica-cluster --region ap-southeast-1
-
+```
+```bash
 aws rds create-db-instance \
   --db-instance-identifier <sample-instance> \ 
   --db-cluster-identifier <sample-replica-cluster> \
   --db-instance-class <db.t3.small> \
   --engine aurora \
   --region <region2>
-
+```
+```bash
   aws rds create-db-instance \
   --db-instance-identifier arc309-instance \
   --db-cluster-identifier arc309-replica-cluster \
   --db-instance-class db.t3.small \
   --engine aurora \
   --region ap-southeast-1
-
+```
 It takes for a while, you can procced the next step first.
 
 ### 2. Enable S3 replication
