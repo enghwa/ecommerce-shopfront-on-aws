@@ -21,7 +21,7 @@ Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL 
 export AWS_DEFAULT_REGION=eu-west-1
 export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
 npm install
-npx cdk bootstrap
+npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy hostedZone
 npx cdk@1.8.0 deploy Wordpress-Primary
 
@@ -74,13 +74,6 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 <summary><strong>CLI step-by-step instructions </strong></summary>
 
 Navigate to the `1_PrimaryRegion` folder within your local Git repository and you will see 'arc309_primary.yaml' file.
-
-#### High-level instructions
-
-Go ahead and create two SAM deployment package in Ireland and Singapore regions respectively.
-You can do this using the following CLI command. Note that you must replace
-`[bucket-name]` in this command with the bucket you just created:
-
 Execute this command to enter the correct subdirectory:
 
     cd /home/ec2-user/environment/MultiRegion-Serverless-Workshop/1_API
