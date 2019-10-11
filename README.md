@@ -94,7 +94,7 @@ Please use only Chrome or Firefox browsers.
 To start the workshop you need the AWS Command Line Interface
 (CLI). The front end application is written on Amplify and requires node and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured.
 
-Follow the instruction [here to launch a AWS Cloud9 IDE](0_Prerequisites/README.md) before we start the lab.
+Follow the instruction [here to launch a AWS Cloud9 IDE](0_Prerequisities/README.md) before we start the lab.
 
 ================================================
 
