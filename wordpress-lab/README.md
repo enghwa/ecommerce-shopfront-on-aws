@@ -113,6 +113,33 @@ go to Secondary Region (Singapore) -> AWS Secretmanager -> wordpressDBPassword->
 
 
 
+##Clean up
+
+Do this in order:
+Using AWS Console:
+ * Promote RDS Cluster then delete RDS instance in ap-southeast-1
+ * delete CFN stack in both regions
+ * delete recordsets (except NS and SOA ) in Route 53 
+
+
+//maybe easier to use cfn console to delete these stacks created by CDK.. :P
+In AWS Cloud9:
+
+```bash
+export AWS_DEFAULT_REGION=ap-southeast-1
+npx cdk@1.8.0 destroy Wordpress-Primary
+
+
+export AWS_DEFAULT_REGION=eu-west-1
+npx cdk@1.8.0 destroy Wordpress-Primary
+npx cdk@1.8.0 destroy hostedZone
+```
+
+Using AWS Console:
+* manually delete all the ACM certs in ap-southeast-1 and eu-west-1
+
+
+
 <!-- 
 # Useful commands
 

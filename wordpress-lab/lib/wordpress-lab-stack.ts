@@ -32,7 +32,7 @@ export class WordpressLabStack extends cdk.Stack {
     //ACM and DNS
     const myDomainName = props.hostedZoneName //process.env.MYSUBDOMAIN + ".multi-region.xyz";
     const HZID = props.hostedZoneID //process.env.HOSTEDZONE as string ;
-    const hostedZone = route53.HostedZone.fromHostedZoneAttributes(this, "hostedZone",{
+    const hostedZone = route53.HostedZone.fromHostedZoneAttributes(this, "hostedZone", {
       hostedZoneId: HZID,
       zoneName: myDomainName
     })
@@ -58,7 +58,7 @@ export class WordpressLabStack extends cdk.Stack {
     const cluster = new ecs.Cluster(this, 'ecscluster', { vpc });
 
     const secret = new secretsmanager.Secret(this, 'DBSecret', {
-       secretName: "wordpressDBPassword",
+      secretName: "wordpressDBPassword",
       generateSecretString: {
         excludePunctuation: true
       }
@@ -96,7 +96,7 @@ export class WordpressLabStack extends cdk.Stack {
         vpc
       }
     })
-    
+
 
     const wordpressSvc = new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'wordpress-svc', {
       cluster: cluster,
@@ -183,9 +183,10 @@ export class WordpressLabStack extends cdk.Stack {
     loadWordpressDB.node.addDependency(dbcluster) // can only load wordpress DB when dbcluster is created., only do this for Primary Region
 
     // cdk/cfn output
-    new cdk.CfnOutput(this, 'Primary Region VpcId_'+ props.region , { value: vpc.vpcId });
-    new cdk.CfnOutput(this, 'Primary Region private subnet for Elasticache (bookstoreSubnet1)', { value: vpc.selectSubnets({subnetType: SubnetType.PRIVATE}).subnetIds[0] });
-    new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_'+ props.region , { value: validatedWildCardCert.certificateArn });
-    
+    new cdk.CfnOutput(this, 'Primary Region VpcId_' + props.region, { value: vpc.vpcId });
+    new cdk.CfnOutput(this, 'Primary Region private subnet for Elasticache (bookstoreSubnet1)', { value: vpc.selectSubnets({ subnetType: SubnetType.PRIVATE }).subnetIds[0] });
+    new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_' + props.region, { value: validatedWildCardCert.certificateArn });
+    new cdk.CfnOutput(this, 'RDS replication-source-identifier', { value: `arn:aws:rds:${this.region}:${this.account}:clusterIdentifier:${dbcluster.clusterIdentifier}` });
+
   }
 }
