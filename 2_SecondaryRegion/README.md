@@ -48,6 +48,7 @@ aws rds create-db-cluster \
   --db-cluster-identifier <sample-replica-cluster> \
   --engine aurora \
   --replication-source-identifier <source aurora cluster arn> \
+  --vpc-security-group-ids <value> \
   --db-subnet-group-name <value> \
   --region <region2>
 
@@ -57,7 +58,10 @@ aws rds create-db-cluster \
   --db-cluster-identifier arc309-replica-cluster \
   --engine aurora \
   --replication-source-identifier arn:aws:rds:eu-west-1:376715876263:cluster:wordpress-primary-wordpressdbclusterbda8ec52-1tketnnhp1rq9 \
+  --vpc-security-group-ids sg-0757437ab28ae86ed \
+  --db-subnet-group-name secondaryregion-wordpressdb-subnetgroup \
   --region ap-southeast-1
+  
 ```
 ```bash
 aws rds describe-db-clusters --db-cluster-identifier <sample-replica-cluster> --region <region2>

@@ -16,9 +16,9 @@ export AWS_DEFAULT_REGION=eu-west-1
 export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
 cd MultiRegion-Modern-Architecture/wordpress-lab
 npm install
-npx cdk@1.8.0 bootstrap
-npx cdk@1.8.0 deploy hostedZone
-npx cdk@1.8.0 deploy Wordpress-Primary
+npx cdk@1.12.0 bootstrap
+npx cdk@1.12.0 deploy hostedZone
+npx cdk@1.12.0 deploy Wordpress-Primary
 ```
 
 Create Secondary Region resources:
@@ -27,7 +27,7 @@ Create Secondary Region resources:
 export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
-npx cdk@1.8.0 deploy Wordpress-Secondary
+npx cdk@1.12.0 deploy Wordpress-Secondary
 
 ```
 
@@ -116,6 +116,9 @@ go to Secondary Region (Singapore) -> AWS Secretmanager -> wordpressDBPassword->
 ##Clean up
 
 Do this in order:
+
+delete the S3 asset bucket, codepipeline bucket
+
 Using AWS Console:
  * Promote RDS Cluster then delete RDS instance in ap-southeast-1
  * delete CFN stack in both regions
@@ -127,12 +130,12 @@ In AWS Cloud9:
 
 ```bash
 export AWS_DEFAULT_REGION=ap-southeast-1
-npx cdk@1.8.0 destroy Wordpress-Primary
+npx cdk@1.12.0 destroy Wordpress-Primary
 
 
 export AWS_DEFAULT_REGION=eu-west-1
-npx cdk@1.8.0 destroy Wordpress-Primary
-npx cdk@1.8.0 destroy hostedZone
+npx cdk@1.12.0 destroy Wordpress-Primary
+npx cdk@1.12.0 destroy hostedZone
 ```
 
 Using AWS Console:

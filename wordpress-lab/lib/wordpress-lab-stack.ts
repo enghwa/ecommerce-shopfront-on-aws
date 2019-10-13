@@ -1,8 +1,7 @@
 import ec2 = require('@aws-cdk/aws-ec2');
 import ecs = require('@aws-cdk/aws-ecs');
 import ecs_patterns = require('@aws-cdk/aws-ecs-patterns');
-import { Certificate } from '@aws-cdk/aws-certificatemanager';
-// import elbv2 = require("@aws-cdk/aws-elasticloadbalancingv2");
+import elbv2 = require("@aws-cdk/aws-elasticloadbalancingv2");
 import route53 = require('@aws-cdk/aws-route53');
 import acm = require('@aws-cdk/aws-certificatemanager');
 import rds = require('@aws-cdk/aws-rds');
@@ -11,6 +10,7 @@ import cdk = require('@aws-cdk/core');
 import secretsmanager = require('@aws-cdk/aws-secretsmanager');
 import { AwsCustomResource } from "@aws-cdk/custom-resources";
 import { SubnetType } from '@aws-cdk/aws-ec2';
+
 
 export interface WordpressLabProps {
   hostedZoneID: string,
@@ -48,9 +48,15 @@ export class WordpressLabStack extends cdk.Stack {
       domainName: `*.${myDomainName}`,
       region: props.region
     });
+
     const validatedBlogCert = new acm.DnsValidatedCertificate(this, 'validatedBlogCertificate', {
       hostedZone,
       domainName: `blog.${myDomainName}`,
+      region: props.region
+    });
+    const validatedBlogWildCardCert = new acm.DnsValidatedCertificate(this, 'validatedBlogWildCardCertificate', {
+      hostedZone,
+      domainName: `*.blog.${myDomainName}`,
       region: props.region
     });
 
@@ -97,26 +103,29 @@ export class WordpressLabStack extends cdk.Stack {
       }
     })
 
-
     const wordpressSvc = new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'wordpress-svc', {
       cluster: cluster,
-      image: ecs.ContainerImage.fromRegistry('wordpress:5.2.3-php7.2-apache'),
-      containerPort: 80,
       desiredCount: 1,
-      cpu: 512,
       memoryLimitMiB: 1024,
-      secrets: {
-        'WORDPRESS_DB_PASSWORD': ecs.Secret.fromSecretsManager(secret)
+      cpu: 512,
+      taskImageOptions: {
+        image: ecs.ContainerImage.fromRegistry('wordpress:5.2.3-php7.2-apache'),
+        containerPort: 80,
+        secrets: {
+          'WORDPRESS_DB_PASSWORD': ecs.Secret.fromSecretsManager(secret)
+        },
+        environment: {
+          'WORDPRESS_DB_USER': 'root',
+          'WORDPRESS_DB_HOST': dbcluster.clusterReadEndpoint.hostname,  //we only want to read, no admin function
+          'WORDPRESS_DB_NAME': 'wordpress',
+        }
       },
-      environment: {
-        'WORDPRESS_DB_USER': 'root',
-        'WORDPRESS_DB_HOST': dbcluster.clusterReadEndpoint.hostname,  //we only want to read, no admin function
-        'WORDPRESS_DB_NAME': 'wordpress',
-      },
-      domainName: "blog." + myDomainName,
+      domainName: "primary.blog." + myDomainName,
       domainZone: hostedZone,
-      certificate: Certificate.fromCertificateArn(this, 'alb-sslcert', validatedBlogCert.certificateArn)
+      protocol: elbv2.ApplicationProtocol.HTTPS
     })
+    
+    wordpressSvc.listener.addCertificateArns('blogACM', [validatedBlogCert.certificateArn, validatedBlogWildCardCert.certificateArn])
 
     wordpressSvc.targetGroup.configureHealthCheck({
       port: 'traffic-port',
@@ -126,6 +135,20 @@ export class WordpressLabStack extends cdk.Stack {
       healthyThresholdCount: 2,
       unhealthyThresholdCount: 2,
       healthyHttpCodes: "200,301,302"
+    })
+
+    //add primary failover alias
+    new route53.CfnRecordSet(this, 'blog-alias-primary', {
+      name: "blog." + myDomainName + ".",
+      type: route53.RecordType.A,
+      hostedZoneId: props.hostedZoneID,
+      aliasTarget: {
+        dnsName: "primary.blog." + myDomainName + ".",
+        evaluateTargetHealth: true,
+        hostedZoneId: props.hostedZoneID
+      },
+      failover: "PRIMARY",
+      setIdentifier: "blog-Primary",
     })
 
     //TODO : fix ALB path to only /wp-json so WP UI won't render.. (link error too due to db import)
@@ -148,14 +171,16 @@ export class WordpressLabStack extends cdk.Stack {
         'WORDPRESS_DB_HOST': dbcluster.clusterEndpoint.hostname,
         'WORDPRESS_DB_NAME': 'wordpress'
       },
-      logging: wordpressSvc.logDriver
+      // logging: wordpressSvc.logDriver
     })
+    
 
     const loadWordpressDB = new AwsCustomResource(this, "loadWordpressDb", {
       policyStatements: [ // Cannot use automatic policy statements because we need iam:PassRole, https://github.com/aws/aws-cdk/blob/master/packages/@aws-cdk/aws-events-targets/lib/ecs-task.ts
         new iam.PolicyStatement({
           actions: ["iam:PassRole"],
-          resources: [loadWordpressTaskDef.executionRole!.roleArn, loadWordpressTaskDef.taskRole.roleArn] //for Fargate need both
+          // resources: [loadWordpressTaskDef.executionRole!.roleArn, loadWordpressTaskDef.taskRole.roleArn] //for Fargate need both
+          resources: [loadWordpressTaskDef.obtainExecutionRole().roleArn, loadWordpressTaskDef.taskRole.roleArn]
         }),
         new iam.PolicyStatement({
           actions: ["ecs:RunTask"],
@@ -186,7 +211,6 @@ export class WordpressLabStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'Primary Region VpcId_' + props.region, { value: vpc.vpcId });
     new cdk.CfnOutput(this, 'Primary Region private subnet for Elasticache (bookstoreSubnet1)', { value: vpc.selectSubnets({ subnetType: SubnetType.PRIVATE }).subnetIds[0] });
     new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_' + props.region, { value: validatedWildCardCert.certificateArn });
-    new cdk.CfnOutput(this, 'RDS replication-source-identifier', { value: `arn:aws:rds:${this.region}:${this.account}:clusterIdentifier:${dbcluster.clusterIdentifier}` });
-
+    new cdk.CfnOutput(this, 'RDS replication-source-identifier', { value: `arn:aws:rds:${this.region}:${this.account}:cluster:${dbcluster.clusterIdentifier}` });
   }
 }
