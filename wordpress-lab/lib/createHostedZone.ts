@@ -54,8 +54,8 @@ export class createHostedZoneStack extends cdk.Stack {
     updateParentHostedZone.node.addDependency(myHostedZone)
     updateParentHostedZone.node.addDependency(requestJoinMasterDomain)
 
-    new cdk.CfnOutput(this, 'zoneName', { value: zoneName });
-    new cdk.CfnOutput(this, 'hohostedZoneIds', { value: myHostedZone.hostedZoneId });
+    new cdk.CfnOutput(this, 'hostedZoneName', { description: "export hostedZoneName="+zoneName, value: zoneName });
+    new cdk.CfnOutput(this, 'hostedZoneID', { description: "export hostedZoneID=", value: myHostedZone.hostedZoneId });
     new cdk.CfnOutput(this, "NameServers", {
       description: "NameServers for " + zoneName,
       value: cdk.Fn.join(", ", nameServers)

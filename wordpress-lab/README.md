@@ -21,7 +21,16 @@ npx cdk@1.12.0 deploy hostedZone
 npx cdk@1.12.0 deploy Wordpress-Primary
 ```
 
-Create Secondary Region resources:
+_Validate blog_
+curl http://blog.<MYSUBDOMAIN>.multi-region.xyz/wp-json/wp/v2/posts
+curl http://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/wp-json/wp/v2/posts
+
+
+_Create Secondary Region resources_
+
+go to CF output to find the value of your hostedZoneID: 
+
+https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/outputs?filteringText=&filteringStatus=active&viewNested=true&hideStacks=true&stackId=arn%3Aaws%3Acloudformation%3Aeu-west-1%3A203083063306%3Astack%2FhostedZone%2F54a25e00-ee67-11e9-b59f-02078729aa3e
 
 ```bash
 export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
@@ -97,7 +106,7 @@ Alias 'Yes', Type `A` and point it to the cloudfront domain name, `?????????????
 
 ## make Secondary Region Wordpress work
 make sure rds replication is setup properly in Singapore Region..
-get the endpoint.
+get the READ endpoint of the RDS Cluster in Singapore
 
 // below need a few screenshots to show
 

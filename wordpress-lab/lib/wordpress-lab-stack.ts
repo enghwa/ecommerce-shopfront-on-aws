@@ -116,7 +116,8 @@ export class WordpressLabStack extends cdk.Stack {
         },
         environment: {
           'WORDPRESS_DB_USER': 'root',
-          'WORDPRESS_DB_HOST': dbcluster.clusterReadEndpoint.hostname,  //we only want to read, no admin function
+          // 'WORDPRESS_DB_HOST': dbcluster.clusterReadEndpoint.hostname,  //we only want to read, no admin function (dbcluster.clusterEndpoint.hostname)
+          'WORDPRESS_DB_HOST': dbcluster.clusterEndpoint.hostname,
           'WORDPRESS_DB_NAME': 'wordpress',
         }
       },
@@ -124,7 +125,7 @@ export class WordpressLabStack extends cdk.Stack {
       domainZone: hostedZone,
       protocol: elbv2.ApplicationProtocol.HTTPS
     })
-    
+
     wordpressSvc.listener.addCertificateArns('blogACM', [validatedBlogCert.certificateArn, validatedBlogWildCardCert.certificateArn])
 
     wordpressSvc.targetGroup.configureHealthCheck({
@@ -161,6 +162,7 @@ export class WordpressLabStack extends cdk.Stack {
     loadWordpressTaskDef.addContainer('loadWordpressContainer', {
       image: ecs.ContainerImage.fromRegistry('mysql:5.5'),
       entryPoint: ["/bin/bash", "-c", "apt-get update && apt-get install -y wget && wget https://woof.kopi.io/wordpress.sql \
+      && perl -pi -e 's/http:\\/\\/cdkwo-wordp-18gj2uwix34xa-916813877.ap-southeast-1.elb.amazonaws.com/https:\\/\\/$WORDPRESS_DOMAINNAME/g' wordpress.sql \
       && mysql -u $WORDPRESS_DB_USER --password=$WORDPRESS_DB_PASSWORD -h $WORDPRESS_DB_HOST < wordpress.sql"],
       memoryLimitMiB: 1024,
       secrets: {
@@ -168,12 +170,13 @@ export class WordpressLabStack extends cdk.Stack {
       },
       environment: {
         'WORDPRESS_DB_USER': 'root',
+        'WORDPRESS_DOMAINNAME': props.hostedZoneName,
         'WORDPRESS_DB_HOST': dbcluster.clusterEndpoint.hostname,
         'WORDPRESS_DB_NAME': 'wordpress'
       },
-      // logging: wordpressSvc.logDriver
+      logging: new ecs.AwsLogDriver({ streamPrefix: "wordpress-load" })
     })
-    
+
 
     const loadWordpressDB = new AwsCustomResource(this, "loadWordpressDb", {
       policyStatements: [ // Cannot use automatic policy statements because we need iam:PassRole, https://github.com/aws/aws-cdk/blob/master/packages/@aws-cdk/aws-events-targets/lib/ecs-task.ts
