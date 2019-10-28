@@ -19,7 +19,7 @@ because of the nature of DNS.
 recently. See http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 -->
 
-### 1.1 Purchase (or repurpose) your own domain name
+<!-- ### 1.1 Purchase (or repurpose) your own domain name
 
 In this step, you will provision your own domain name for this
 application. If you already have a domain name registered with Route53 and
@@ -32,7 +32,7 @@ domain name, ensure there is no CloudFront distribution already setup for the do
 contacts are configured and up-to-date on the domain's SOA/registration records
 since you may need to receive an approval e-mail in the next step.-->
 
-#### I do not want to purchase a new domain name and I do not have an existing domain name
+<!-- #### I do not want to purchase a new domain name and I do not have an existing domain name
 If you do not want to purchase a domain name and you do not have a existing domain name for this lab, you can get a subdomain from the workshop. 
 First, create a subdomain under this domain : `arc315.cf` in Route 53. For example : Navigate to `Route 53` console and create a new public Hosted Zone `myname.arc315.cf`.
 Next, mail the 4 `NS` record field to this email address `arc315lab@gmail.com`. Call out to the helper at the workshop and he will setup this subdomain for you.
@@ -71,7 +71,7 @@ It will take around 10 mins to register your domain. You will configure a certif
 AWS Certificate Manager and a health check in Route53 later. 
 
 For the remainder of this workshop we will use `example.com` as to
-demonstrate. Please substitute your own domain into any commands or configurations.
+demonstrate. Please substitute your own domain into any commands or configurations. --> -->
 
 <!-- ## 2. Replicate the primary API stack
 

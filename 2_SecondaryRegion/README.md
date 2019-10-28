@@ -50,7 +50,7 @@ aws rds create-db-cluster \
   --replication-source-identifier <source aurora cluster arn> \
   --vpc-security-group-ids <value> \
   --db-subnet-group-name <value> \
-  --source-region eu-west-1 \
+  --source-region <value> \
   --region <region2>
 
 ```
@@ -304,7 +304,7 @@ If you need to remove a file from CloudFront edge caches before it expires, you 
 
 ## update Blog url to the webasset and it will kick off another codepipeline
 
-Find your code repo in codecommit and edit: (screenshot) under src/ in Ireland
+Find your code repo in codecommit and edit: (screenshot) under src/ in Oregon
 `wordpressconfig.ts`.
 Update:
 `https://blog.<your subdomain name>.multi-region.xyz`
