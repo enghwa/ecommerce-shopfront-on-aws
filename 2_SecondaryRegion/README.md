@@ -167,6 +167,19 @@ FYI. Only the newly uploaded to the source bucket will be replicated to the dest
 
 ### 3. Enable DynamoDB Global Table using Console
 
+Let's take a look at continuously replicating the data in DynamoDB from the primary region (Oregon) to the
+secondary region (Singapore) so that there is always a backup.
+
+We will be using a feature of DynamoDB Global Tables for this. Any changes 
+made to any item in any replica table will be replicated to all of the other 
+replicas within the same global table. In a global table, a newly-written item is 
+usually propagated to all replica tables within seconds.
+
+However, conflicts can arise if applications update the same item in different 
+regions at about the same time. To ensure eventual consistency, DynamoDB global tables 
+use a “last writer wins” reconciliation between concurrent updates, where DynamoDB makes 
+a best effort to determine the last writer. 
+
 Follow the steps to create a global table of Book, Order, Cart form the Ireland to Singapore regions using the console. (screenshot)
 
 Go to DynampDB Ireland
@@ -283,6 +296,29 @@ The endpoint should be updated in the Fargate to point the replica in Singapore 
 aws rds describe-db-instances \ 
 --db-instance-identifier <sample-instance> \
 --region <region2> | grep Endpoint
+
+
+<!-- ## 2. Replicate the primary API stack
+
+For the first part of this module, all of the steps will be the same as module
+1_API but performed in our secondary region (AP Singapore) instead. Please follow
+module 1_API again then come back here. We suggest using the CloudFormation templates
+from that module to make this much quicker the second time.
+
+**IMPORTANT** Ensure you deploy only to *Singapore* the second time you go through
+Module 1_API
+
+* [Build an API layer](../1_API/README.md)
+
+Once you are done, verify that you get a second API URL for your application from
+the *outputs* of the CloudFormation template you deployed. -->
+
+## Replicated to the seconday region
+
+So now that you have a separate stack.
+
+You can test to see if it is working by ordering a new book. Then, look at the Order table in *source* region DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
+for the book you just ordered. 
 
 ## Cloudfront Origin Group
 
