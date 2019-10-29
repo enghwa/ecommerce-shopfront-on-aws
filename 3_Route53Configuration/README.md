@@ -73,49 +73,16 @@ AWS Certificate Manager and a health check in Route53 later.
 For the remainder of this workshop we will use `example.com` as to
 demonstrate. Please substitute your own domain into any commands or configurations. --> -->
 
-<!-- ## 2. Replicate the primary API stack
-
-For the first part of this module, all of the steps will be the same as module
-1_API but performed in our secondary region (AP Singapore) instead. Please follow
-module 1_API again then come back here. We suggest using the CloudFormation templates
-from that module to make this much quicker the second time.
-
-**IMPORTANT** Ensure you deploy only to *Singapore* the second time you go through
-Module 1_API
-
-* [Build an API layer](../1_API/README.md)
-
-Once you are done, verify that you get a second API URL for your application from
-the *outputs* of the CloudFormation template you deployed. -->
-
-<!-- ## 3. Replicating the data
-
-So now that you have a separate stack, let's take a look at continuously
-replicating the data in DynamoDB from the primary region (Ireland) to the
-secondary region (Singapore) so that there is always a backup.
-
-We will be using a feature of DynamoDB Global Tables for this. Any changes 
-made to any item in any replica table will be replicated to all of the other 
-replicas within the same global table. In a global table, a newly-written item is 
-usually propagated to all replica tables within seconds.
-
-However, conflicts can arise if applications update the same item in different 
-regions at about the same time. To ensure eventual consistency, DynamoDB global tables 
-use a “last writer wins” reconciliation between concurrent updates, where DynamoDB makes 
-a best effort to determine the last writer. 
-
-You can test to see if it is working by creating a new ticket in the UI you deployed 
-in the second module.  Then, look at the SXRTickets table in *source* region (double check this) DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
-for the ticket you just created. --> 
-
 ## 2. Configure ACM and Custom Domains in API Gateway
 
 ### 2.1 Configure a certificate in Certificate Manager in each region
 
-We will need an SSL certificate in order to configure our domain name with API
-Gateway. AWS makes this simple with AWS Certificate Manager.
+We need an SSL certificate in order to configure our domain name with API
+Gateway, and the CDK modules already made this for you.
+Naviagte you have 3 certificates in each region `team1234.multi-region.xyz` and `*.example.com`.
+<screen shot>
 
-#### High-level instructions
+<!-- #### High-level instructions
 
 Navigate over to the *Certificate Manager* service and request a new
 certificate for your domain. You will specify the domain name you just created
@@ -137,10 +104,10 @@ own domain via Route 53.
 6. In the Validation screen, click **Create record in Route53**. The DNS records(CNAME and Value) was written to your Route53 hosted zone.
 ![ACM Certificate request](images/acm-certification1.png)
 7. Go to **Route 53** service console, and select the Domain Name that you created in **Hosted zones**. Confirm your Domain Name and the DNS records of certificate are created in the Record Set. Change the TTL to **60**, and click the **Save Record Set**. It will take about 10 mins, so you can keep the next steps first.<!-- 6. A validation email will be sent to the email address configured for the domain. Ensure that you received this email and click the validation link before moving on. Now click **Continue** (it is also possible to use DNS validation to issue the certificate as well - follow the instructions on the screen if you choose/need to validate this way) -->
-8. Repeat steps 2-5 again in your second region (Singapore). As the CNAME and Value of certificates are the same, hence, it will be automatically issued when the Ireland certification is confirmed.
+<!-- 8. Repeat steps 2-5 again in your second region (Singapore). As the CNAME and Value of certificates are the same, hence, it will be automatically issued when the Ireland certification is confirmed.
 9. Once the certificate validation is confirmed, it will appear as `Issued` in
 your list of certificates.
-![ACM Certificate issued](images/acm-certification2.png)
+![ACM Certificate issued](images/acm-certification2.png) --> -->
 
 ### 2.2 Configure custom domains on each API in each region
 
@@ -151,22 +118,29 @@ name. While you can configure DNS records to point directly to the regular API
 Gateway endpoint, an error will be returned unless you have this custom domain
 configuration.
 
-You will want two domain configurations in each Region. We will be using the
-`api.` subdomain prefix for our application UI and `ireland.` and `singapore.`
-to configure health checks and also so we can visit each region independently
-for convenience.
+AWS recently launched new feature in custom domain names of Amazon API Gateway.
+Customers can now create wildcard custom domain names for their Amazon API Gateway EDGE, Regional, and WebSocket APIs. This enhancement extends API Gateway’s existing support for invoking APIs via custom domain names backed by certificates from AWS Certificate Manager (ACM).
+
+Creating an API Gateway wildcard custom domain name makes it easy to provide flexible API invoke URLs to customers, allowing for scalable customer isolation. For example, a common custom domain name use case is to implement customer-specific routing by providing each API customer with a unique, branded invoke URL. Previously this required creating a new API Gateway custom domain name for each customer, but now implementing this strategy will be possible with just one wildcard custom domain name.
+
+You want one domain configurations in each Region with `*.` 
 
 * `eu-west-1` Ireland:
+    * `*.team1234.multi-region.xyz`
+* `ap-southeast-1` Singapore:
+    * `*.team1234.multi-region.xyz`
+
+<!-- * `eu-west-1` Ireland:
     * `api.example.com`
     * `ireland.example.com`
 * `ap-southeast-1` Singapore:
     * `api.example.com`
-    * `singapore.example.com`
+    * `singapore.example.com` -->
 
 #### High-level instructions
 
 Navigate over to the **API Gateway** service, choose **Custom Domain Names**
-then go ahead and configure a custom domain name for `api.example.com`. Make
+then go ahead and configure a custom domain name for `*.team1234.multi-region.xyz`. Make
 sure to choose the **Regional** endpoint configuration. For the Base Path
 Mappings, you choose `/` as the path and `prod` as the destination, then hit **Save**. 
 If you get an error about rate
@@ -174,12 +148,12 @@ limits, wait a minute before attempting to create again.
 
 ![Custom API Gateway domain](images/custom-domain.png)
 
-Now repeat the process for :
+<!-- Now repeat the process for :
 **Ireland**
     * `ireland.example.com`
 **Singapore**
     * `api.example.com`
-    * `singapore.example.com`
+    * `singapore.example.com` -->
 
 Your newly-created Custom Domains will each show a Target Domain Name. You
 will use this to configure your health checks and DNS records next. The final
@@ -191,8 +165,12 @@ configuration for the Ireland region should look similar to the below image.
 
 ### 3.1 Configure DNS records
 
+subdomain prefix for our application UI and `oregon.` and `singapore.`
+to configure health checks and also so we can visit each region independently
+for convenience.
+
 Now let's start pointing your domain name at the API endpoints. In this step
-you will configure CNAME records for your `ireland.` and `singapore.`
+you will configure CNAME records for your `oregon.` and `singapore.`
 subdomains.
 
 #### High-level instructions
