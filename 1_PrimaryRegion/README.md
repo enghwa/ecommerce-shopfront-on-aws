@@ -37,11 +37,12 @@ will take around 20 min.
 
 ![CDK](../images/01-cdk-02.png)
 ![CDK](../images/01-cdk-03.png)
+* You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
 ![CDK](../images/01-cdk-04.png)
 
 **Your book blog is completed**
 
-Now, you book blog is built. Please verify with followings
+Now, you book blog is built. Please verify with followings:
 ```
 https://blog.<MYSUBDOMAIN>.multi-region.xyz/
 https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/
@@ -52,7 +53,7 @@ https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/
 You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console or Cloudformation output tab in the Primary region (Ireland).
 ![CDK](../images/01-cdk-06.png)
 
-## Building the Bookstore application using Cloudformation in your Primary Region (Ireland)
+## Building the Bookstore using Cloudformation in your Primary Region (Ireland)
 
 **Frontend**
 
@@ -87,7 +88,7 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 **Step-by-step instructions**
 
 To build the Bookstore application using CloudFormation, you need to download the yaml file from [Primary CloudFormation](https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml).  
-**TOFIX:Change to S3 arc309 bucket.**
+**TOFIX:Change the file download location to S3 arc309 bucket.**
 
 1. Go to the CloudFormation console in Ireland and select `Wordpress-Primary` stack.
 ![CFN](../images/01-cfn-01.png)
@@ -106,7 +107,7 @@ Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choo
 5. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 ![CFN](../images/01-cfn-05.png)
 
-This CloudFormation template may take around 20mins. You can hop over the progress of resources creation in `Events` tab in CloudFormation. 
+This CloudFormation template may take around 10 mins. You can hop over the progress of resources creation in `Events` tab in CloudFormation. 
 ![CFN](../images/01-cfn-06.png)
 
 Once your stack has successfully completed, navigate to the `Outputs` tab of your stack

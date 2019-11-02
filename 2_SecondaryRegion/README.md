@@ -1,50 +1,12 @@
-# Building a second bookstore in the secondary region
+# Building the Bookstore in your Secondary Region (Singapore)
 
-## Building your book blog in your Primary Region
+We completed building the bookstore in the primary region (Ireland) in the previous module. In this module, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
-In this module, you will deploy Bookstore application in Irelad region. This components include followings:
-1. S3 - Web statci content
-2. API Gateway and Cognito - App layer with authentication
-3. DynamoDB - Books, Order, Cart table
-4. Lambda - multiple functions
+### Replication of Aurora, S3, and DynamoDB 
 
-You will also create the IAM polices and roles required by these components.
+### Enable Aurora MySQL Read replica in Singapore region
 
-Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
-
-Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Secondary Region, Singapore.
-Your `MYSUBDOMAIN` was previously exported in Lab 1.
-
-```bash
-export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
-export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
-export AWS_DEFAULT_REGION=ap-southeast-1
-npx cdk@1.8.0 bootstrap
-npx cdk@1.8.0 deploy Wordpress-Secondary
-
-```
-
-```
-Do you wish to deploy these changes (y/n)? -> both "npx cdk deploy" asked this question.
-```
-Type "Y".
-this will take 20 min.
-
-### Your book blog is completed
-
-Now, you book blog is built. Please verify with following
-```
-https://blog.<MYSUBDOMAIN>.multi-region.xyz/
-https://secondarry.blog.<MYSUBDOMAIN>.multi-region.xyz/
-```
-
-You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
-
-We completed build the first bookstore in the primary region in the previous section. In this section, we will replicate S3 bucket for static contects, Aurora MySQL for the blog content, and DynamoDB tables for the books/order/cart data from the primary region to the secondary region.
-
-#### Enable Aurora MySQL Read replica in Singapore region
-
-This Aurora MySQL Read replica helps you have redundancy plan when you have issue in the primary database in the primary region. The replica in Singapore region can be promoted as the primary database. 
+Aurora MySQL Read replica helps you have redundancy plan. The replica in Singapore region can be promoted as the primary database when the primary database in the primary region (Ireland) has issues.
 
 Follow the steps to enable the read replica of Aurora in Singapore region using the AWS CLI. 
 
@@ -59,6 +21,14 @@ aws rds create-db-cluster \
   --region <region2>
 
 ```
+
+
+
+
+
+
+
+
 As an example:
 Get `replication-source-identifier` from Cloudformation stack `Wordpress-Primary` in Ireland Region.
 Get `vpc-security-group-ids`  from Cloudformation stack `Wordpress-Secondary` in Singapore Region.
@@ -247,34 +217,33 @@ aws dynamodb create-global-table \
 
 Now, you completed the replication across two regions. It's time to build the Web/App layer in Singapore. 
 
-## CDK for the secondary region
+## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
 
-Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
-
-Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
+Go back to your Cloud9, and execute following commands. It will take around 15 mins.
+* **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (ex.Z7VDWLHBQQSCF)
+![CDK](../images/02-cdk-01.png)
+* Your `MYSUBDOMAIN` was previously exported in module 1.
 
 ```bash
-//nvm ....
-//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
-
-export AWS_DEFAULT_REGION=eu-west-1
-export MYSUBDOMAIN=<enter a 8 char subdomain name, eg: team5432>
-npm install
+export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
+export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
+export AWS_DEFAULT_REGION=ap-southeast-1
 npx cdk@1.8.0 bootstrap
-npx cdk@1.8.0 deploy hostedZone
-npx cdk@1.8.0 deploy Wordpress-Primary
+npx cdk@1.8.0 deploy Wordpress-Secondary
+
+```
+![CDK](../images/02-cdk-02.png)
+
+**Your book blog is completed**
+
+Now, you book blog is built. Please verify with followings:
+```
+https://blog.<MYSUBDOMAIN>.multi-region.xyz/
+https://secondarry.blog.<MYSUBDOMAIN>.multi-region.xyz/
 
 ```
 
-```
-Do you wish to deploy these changes (y/n)? -> both "npx cdk@1.8.0 deploy" commands asked this question.
-```
-Type "Y".
-this will take 20 min.
-
-### Your book blog is completed
-
-## CFN for the Singapore region
+## Building the Bookstore using Cloudformation in your Secondary Region (Singapore)
 
 Let's build App layer in Singapore
 
