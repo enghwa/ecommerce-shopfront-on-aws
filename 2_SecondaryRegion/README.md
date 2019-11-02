@@ -76,7 +76,7 @@ aws rds create-db-cluster \
 ```
 
 Verify RDS replication in RDS console in Singapore region:
-![RDS diagram](images/rds-secondary-replicate.png)
+![RDS diagram](../images/rds-secondary-replicate.png)
 
 
 ```bash
