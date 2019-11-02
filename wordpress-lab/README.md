@@ -1,4 +1,6 @@
-# Lab 
+# Lab - ignore..this is for enghwtan use only
+
+
 
 in the Cloud9
 #git clone https://github.com/enghwa/MultiRegion-Modern-Architecture.git
@@ -120,9 +122,21 @@ go to Secondary Region (Singapore) -> AWS Secretmanager -> wordpressDBPassword->
 1. Go Secondary Region (Singapore) -> ECS TASK DEF -> WordpressSecondarywordpresssvcTaskDe??? -> click on the task def -> click "Create new revision -> scroll down-> click "web" ->side menu pops up -> update "WORDPRESS_DB_HOST" -> change from "changme" to the RDS endpoint -> click "update" button
 2. update ECS Service to this new task definition
 
+## Test wordpress failover
+take note of dns lookup on (using the `host primary.blog.<MYSUBDOMAIN>.multi-region.xyz` command)
+* primary.blog.<MYSUBDOMAIN>.multi-region.xyz
+* secondary.blog.<MYSUBDOMAIN>.multi-region.xyz
+
+#### failover
+1. do a dns lookup on blog.<MYSUBDOMAIN>.multi-region.xyz
+
+2. Go to `eu-west-1-` ECS console, 
+make wordpress service's task count from `1` to `0`
+3. do another DNS lookup blog.<MYSUBDOMAIN>.multi-region.xyz and note that it has failover the IP from "primary" to "secondary"
 
 
-##Clean up
+
+## Clean up
 
 Do this in order:
 

@@ -12,12 +12,14 @@ You will also create the IAM polices and roles required by these components.
 
 Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
 
-Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
+Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Secondary Region, Singapore.
+Your `MYSUBDOMAIN` was previously exported in Lab 1.
 
 ```bash
 export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
+npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy Wordpress-Secondary
 
 ```
