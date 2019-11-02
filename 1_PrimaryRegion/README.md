@@ -1,16 +1,17 @@
 # Building the Bookstore in your Primary Region
 
-## Building your book blog in your Primary Region
-
-In this module, you will deploy Bookstore application in Irelad region. This components include followings:
-1. S3 - Web statci content
-2. API Gateway and Cognito - App layer with authentication
-3. DynamoDB - Books, Order, Cart table
-4. Lambda - multiple functions
-
+In this module, you will deploy Bookstore application and Blog wordpress in primary (Irelad, eu-west-1) region using AWS CDK(Cloud Developemnt Kit) and AWS CloudFormation. This components include followings:
+1. Fargate and Aurora - Book blog posts with wordpress
+2. CloudFront and S3 - Web static content
+3. API Gateway and Cognito - App layer with authentication
+4. DynamoDB and ElastiCache - Books, Order, Cart tables and Best Seller information
+5. Lambda - multiple functions
 You will also create the IAM polices and roles required by these components.
 
-Go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+## Building your Book Blog using AWS CDK in your Primary Region (Ireland)
+
+In Cloud9, go to `wordpress-lab` directory (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+![CDK](../images/01-cdk-01.png)
 
 Deploy Wordpress for the Book blog with AWS Fargate, ALB, ACM, and Aurora MySQL in Primary Region.
 
