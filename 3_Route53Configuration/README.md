@@ -194,7 +194,7 @@ subdomain with the Target Domain Name for Singapore.
 
 At this point you should now be able to visit your subdomain and see your API
 working. Navigate to the health check endpoint on your API using your custom
-domain in your web browser (e.g. `https://ireland.example.com/health`) and
+domain in your web browser (e.g. `https://oregon.team1234.multi-region.xyz/books`) and
 ensure that you see a successful response.
 
 This endpoint should return the region it is running in so you can also
@@ -217,7 +217,7 @@ handling traffic under normal conditions.-->
 #### High-level instructions
 
 Navigate over to the **Route53** service and choose **Health checks**. Create
-a new health check, give it an easily identifiable name e.g. `ireland-api`.
+a new health check, give it an easily identifiable name e.g. `oregon-api`.
 Under *Monitor an endpoint*, specify the endpoint by domain name.
 
 Since our API is protected by a TLS certificate you will need to change the
@@ -286,7 +286,7 @@ regions is served based on Weighted routing policy.
 
 ![Ireland health check response](images/ireland-health-response.png)
 
-## 4. Update your UI with new API Gateway Endpoint
+<!-- ## 4. Update your UI with new API Gateway Endpoint
 
 Now that we have completed active-active configuration, you will need to change the API
 endpoint in your *2_UI/src/environments/environments.ts* file to use our newly
@@ -303,7 +303,7 @@ testing the UI in the second module.
 Ensure you run `npm run build` from the *2_UI* directory, and then upload the */dist*
 contents to the S3 bucket using the same *aws s3* command you used in the second module. ie:
 
-    aws s3 sync --delete dist/ s3://[bucket_name]
+    aws s3 sync --delete dist/ s3://[bucket_name] -->
 
 ## Completion
 
