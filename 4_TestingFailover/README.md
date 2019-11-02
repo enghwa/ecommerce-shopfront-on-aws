@@ -14,7 +14,7 @@ maintaining availability of the API and functionality of the UI.
 ## Breaking the primary region
 
 In the AWS Console, ensure you are in your primary region (Ireland) then head over to
-**API Gateway**, choose your API and select the `GET` method of the `/health`
+**API Gateway**, choose your API and select the `GET` method of the `/Books`
 endpoint. Under **Integration Request** change the associated Lambda function
 to instead be your *TicketPostFunction*. Click the tick icon next to it to save the
 change. This function expects to be called with a JSON body containing new ticket information however when triggered by the health endpoint it will fail and return an error code, causing the health check to fail.
@@ -36,7 +36,7 @@ automatically use this information to point your domain at your another
 region.
 
 You should now be able to go back and visit the `api.` prefix of your domain
-(remember to use HTTPS). Go to the `/health` path and notice how it now
+(remember to use HTTPS). Go to the `/books` path and notice how it now
 returns the Singapore region indicating that our Secondary region is being
 served and that failover has occurred. You're UI should also continue to
 function and you should still be able to view and create tickets.
