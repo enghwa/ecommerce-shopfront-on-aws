@@ -59,17 +59,26 @@ aws rds create-db-cluster \
   --region <region2>
 
 ```
+As an example:
+Get `replication-source-identifier` from Cloudformation stack `Wordpress-Primary` in Ireland Region.
+Get `vpc-security-group-ids`  from Cloudformation stack `Wordpress-Secondary` in Singapore Region.
+
 ```bash
 aws rds create-db-cluster \
   --db-cluster-identifier arc309-replica-cluster \
   --engine aurora \
-  --replication-source-identifier arn:aws:rds:eu-west-1:376715876263:cluster:wordpress-primary-wordpressdbclusterbda8ec52-1tketnnhp1rq9 \
-  --vpc-security-group-ids sg-0757437ab28ae86ed \
+  --replication-source-identifier <value> \
+  --vpc-security-group-ids <value> \
   --db-subnet-group-name secondaryregion-wordpressdb-subnetgroup \
   --source-region eu-west-1 \
   --region ap-southeast-1
   
 ```
+
+Verify RDS replication in RDS console in Singapore region:
+![RDS diagram](images/rds-secondary-replicate.png)
+
+
 ```bash
 aws rds describe-db-clusters --db-cluster-identifier <sample-replica-cluster> --region <region2>
 ```
