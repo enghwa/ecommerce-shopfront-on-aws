@@ -19,12 +19,11 @@ Click "Create environment" and AWS Cloud9 will start! It would typically take 30
 ## Clone the workshop project
 Once AWS Cloud9 is up and running, execute the following commands in the command shell of Cloud9 to clone the lab files to your Cloud9.
 
-![Create AWS Cloud9](../images/00-c9-05.png)
-
 ```bash
 git clone https://github.com/enghwa/MultiRegion-Modern-Architecture.git
 
 ```
+![Create AWS Cloud9](../images/00-c9-05.png)
 
 ## Completion
 Cloud9 setup is completed. [Go back to Main](../README.md) or let's start the 
