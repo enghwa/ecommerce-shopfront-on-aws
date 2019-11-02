@@ -50,6 +50,7 @@ https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/
 ![CDK](../images/01-cdk-05.png)
 
 You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console or Cloudformation output tab in the Primary region (Ireland).
+![CDK](../images/01-cdk-06.png)
 
 ## Building the Bookstore application using Cloudformation in your Primary Region (Ireland)
 
@@ -86,39 +87,40 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 **Step-by-step instructions**
 
 To build the Bookstore application using CloudFormation, you need to download the yaml file from [Primary CloudFormation](https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml).  
-*TOFIX* Change to S3 arc309 bucket. 
+**TOFIX:Change to S3 arc309 bucket.**
 
-
-```
-Go to the CloudFormation console in Ireland 
-(screenshot)
+1. Go to the CloudFormation console in Ireland and select `Wordpress-Primary` stack.
+![CFN](../images/01-cfn-01.png)
+2. Find the VPC id and Subnet Id in the `Outputs` tab for the next step.
+![CFN](../images/01-cfn-02.png)
+3. Create stack with the downloaded template
 Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
-Stack name (ex. arc309-jay) and Parameters
-          - ProjectName: 10 characters with lowercase (no number) (ex.bookjay)
-          - AssetsBucketName: S3 bucket name with lowercase (ex.bookjay-s3)
-          - SeedRepository: Web file (use default)
-          - bookstoreVPC: VPC id (output of cdk)
-          - bookstoreSubnet1: Subnet id for Elasticache (output of cdk)
-```
-Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
+![CFN](../images/01-cfn-03.png)
+4. Input `Stack name` and `Parameters`
+* **ProjectName**: 10 characters with lowercase (no number is allowed) (ex.bookstore)
+* **AssetsBucketName**: S3 bucket name with lowercase (ex.arc309-ireland-bookstore)
+* **SeedRepository**: Web file (use default)
+* **bookstoreVPC**: VPC id (output of previous cdk, vpc-xxxxxxxxxx)
+* **bookstoreSubnet1**: Subnet id for Elasticache (output of previous cdk, subnet-xxxxxxxxxx)
+![CFN](../images/01-cfn-04.png)
+5. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
+![CFN](../images/01-cfn-05.png)
 
-This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
-and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
-and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-1`. (screenshot)
+This CloudFormation template may take around 20mins. You can hop over the progress of resources creation in `Events` tab in CloudFormation. 
+![CFN](../images/01-cfn-06.png)
 
-Once your stack has successfully completed, navigate to the Outputs tab of your stack
-where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)
+Once your stack has successfully completed, navigate to the `Outputs` tab of your stack
+where you find an `WebApplication` includes CloudFront Domain name. Type this URL in your broswer and check your Bookstore application.
 
 ```
 https://d1zltjarei3438.cloudfront.net/
 ```
+![CFN](../images/01-cfn-07.png)
 
-FYI. This bookstore doesn't have blog yet. It will be shown after you complete buiding the secondary region.
+FYI. This Bookstore doesn't include the Book Blog yet that you created with CDK. It will be shown after you complete buiding the secondary region Bookstore application.
 
 ## Completion
 
-Congratulations you have configured the bookstore in the primary region. In the next module you will replicate your data to the secondary region and build the same bookstore in the secondary region for the high availability. 
-
-You need to write down the S3 Replication Role ARN to use it in the next step.
+Congratulations you have configured the bookstore in the primary region (Ireland). In the next module, you will replicate your data (Blog data in Aurora, Web content in S3, Book data in DynamoDB) to the secondary region (Singapore) and build the same Blog and Bookstore application in the secondary region (Singapore) for Resilience and High availability. 
 
 Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md)
