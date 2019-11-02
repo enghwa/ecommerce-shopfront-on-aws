@@ -33,7 +33,10 @@ this will take 20 min.
 ### Your book blog is completed
 
 Now, you book blog is built. Please verify with following
-"https://blog.<MYSUBDOMAIN>.multi-region.xyz/"
+```
+https://blog.<MYSUBDOMAIN>.multi-region.xyz/
+https://secondarry.blog.<MYSUBDOMAIN>.multi-region.xyz/
+```
 
 You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9 console of Cloudformation output tab in the Primary region.
 

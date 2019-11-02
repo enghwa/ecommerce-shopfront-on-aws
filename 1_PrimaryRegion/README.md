@@ -78,8 +78,10 @@ The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web applicatio
 
 <summary><strong>Step-by-step instructions </strong></summary>
 
+*TOFIX* we might need a screenshot, a raw url link and optionally a awscli cmd here.
 Download the 'arc309_primary.yaml' file from S3???(https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml)
 
+```
 Go to the CloudFormation console in Ireland 
 (screenshot)
 Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
@@ -89,6 +91,7 @@ Stack name (ex. arc309-jay) and Parameters
           - SeedRepository: Web file (use default)
           - bookstoreVPC: VPC id (output of cdk)
           - bookstoreSubnet1: Subnet id for Elasticache (output of cdk)
+```
 Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
 
 This CloudFormation template may take around 20mins. In this time you can hop over to the AWS console
@@ -98,7 +101,9 @@ and check you are in the respective regions (EU Ireland or Asia Pacific. You sho
 Once your stack has successfully completed, navigate to the Outputs tab of your stack
 where you will find an `WebApplication`. Type this URL in your broswer and your can check your bookstore. (screenshot)
 
+```
 https://d1zltjarei3438.cloudfront.net/
+```
 
 FYI. This bookstore doesn't have blog yet. It will be shown after you complete buiding the secondary region.
 
