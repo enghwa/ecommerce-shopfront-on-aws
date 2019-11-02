@@ -23,6 +23,9 @@ Parameters:
   OrderTableStreamARN:
     Type: String
     Description: DynamoDB Stream ARN
+  UserPool:
+    Type: String
+    Description: Congnito in Oregon UserPool ARN
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -1314,10 +1317,10 @@ Resources:
       AuthorizerResultTtlInSeconds: 300
       IdentitySource: method.request.header.Authorization
       Name: CognitoDefaultUserPoolAuthorizer
-      ProviderARNs:
-        - !GetAtt 
-          - UserPool
-          - Arn
+      ProviderARNs: !Sub '${UserPool}'
+        # - !GetAtt 
+        #   - UserPool
+        #   - Arn
       RestApiId: !Ref AppApi
       Type: COGNITO_USER_POOLS
   APIDeployment:
@@ -1365,134 +1368,134 @@ Resources:
   #             - Effect: Allow
   #               Action: 'sns:publish'
   #               Resource: '*'
-  UserPool:
-    Type: 'AWS::Cognito::UserPool'
-    Properties:
-      UserPoolName: !Sub '${ProjectName}-user-pool'
-      UsernameAttributes:
-        - email
-      AdminCreateUserConfig:
-        AllowAdminCreateUserOnly: false
-        InviteMessageTemplate:
-          EmailMessage: 'Your username is {username} and temporary password is {####}. '
-          EmailSubject: Your temporary password
-          SMSMessage: 'Your username is {username} and temporary password is {####}.'
-        UnusedAccountValidityDays: 7
-      Policies:
-        PasswordPolicy:
-          MinimumLength: 8
-          RequireLowercase: false
-          RequireNumbers: false
-          RequireSymbols: false
-          RequireUppercase: false
-      AutoVerifiedAttributes:
-        - email
-      EmailVerificationMessage: 'Here is your verification code: {####}'
-      EmailVerificationSubject: Your verification code
-      Schema:
-        - Name: email
-          AttributeDataType: String
-          Mutable: false
-          Required: true
-  UserPoolClient:
-    Type: 'AWS::Cognito::UserPoolClient'
-    Properties:
-      ClientName: !Sub '${ProjectName}-client'
-      GenerateSecret: false
-      UserPoolId: !Ref UserPool
-  IdentityPool:
-    Type: 'AWS::Cognito::IdentityPool'
-    Properties:
-      IdentityPoolName: !Sub '${ProjectName}Identity'
-      AllowUnauthenticatedIdentities: true
-      CognitoIdentityProviders:
-        - ClientId: !Ref UserPoolClient
-          ProviderName: !GetAtt 
-            - UserPool
-            - ProviderName
-  CognitoUnAuthorizedRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Federated: cognito-identity.amazonaws.com
-            Action:
-              - 'sts:AssumeRoleWithWebIdentity'
-            Condition:
-              StringEquals:
-                'cognito-identity.amazonaws.com:aud': !Ref IdentityPool
-              'ForAnyValue:StringLike':
-                'cognito-identity.amazonaws.com:amr': unauthenticated
-      Policies:
-        - PolicyName: CognitoUnauthorizedPolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 'mobileanalytics:PutEvents'
-                  - 'cognito-sync:*'
-                Resource: '*'
-  CognitoAuthorizedRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Federated: cognito-identity.amazonaws.com
-            Action:
-              - 'sts:AssumeRoleWithWebIdentity'
-            Condition:
-              StringEquals:
-                'cognito-identity.amazonaws.com:aud': !Ref IdentityPool
-              'ForAnyValue:StringLike':
-                'cognito-identity.amazonaws.com:amr': authenticated
-      Policies:
-        - PolicyName: CognitoAuthorizedPolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 'mobileanalytics:PutEvents'
-                  - 'cognito-sync:*'
-                  - 'cognito-identity:*'
-                Resource: '*'
-              - Effect: Allow
-                Action:
-                  - 'execute-api:Invoke'
-                Resource: !Join 
-                  - ''
-                  - - 'arn:aws:execute-api:'
-                    - !Ref 'AWS::Region'
-                    - ':'
-                    - !Ref 'AWS::AccountId'
-                    - ':'
-                    - !Ref AppApi
-                    - /*
-  IdentityPoolRoleMapping:
-    Type: 'AWS::Cognito::IdentityPoolRoleAttachment'
-    Properties:
-      IdentityPoolId: !Ref IdentityPool
-      Roles:
-        authenticated: !GetAtt 
-          - CognitoAuthorizedRole
-          - Arn
-        unauthenticated: !GetAtt 
-          - CognitoUnAuthorizedRole
-          - Arn
-  BooksUploader:
-    Type: 'Custom::CustomResource'
-    Properties:
-      ServiceToken: !GetAtt FunctionUploadBooks.Arn
-      ParameterOne: Parameter to pass into Custom Lambda Function
-      DependsOn: 
-       - FunctionUploadBooks
+  # UserPool:
+  #   Type: 'AWS::Cognito::UserPool'
+  #   Properties:
+  #     UserPoolName: !Sub '${ProjectName}-user-pool'
+  #     UsernameAttributes:
+  #       - email
+  #     AdminCreateUserConfig:
+  #       AllowAdminCreateUserOnly: false
+  #       InviteMessageTemplate:
+  #         EmailMessage: 'Your username is {username} and temporary password is {####}. '
+  #         EmailSubject: Your temporary password
+  #         SMSMessage: 'Your username is {username} and temporary password is {####}.'
+  #       UnusedAccountValidityDays: 7
+  #     Policies:
+  #       PasswordPolicy:
+  #         MinimumLength: 8
+  #         RequireLowercase: false
+  #         RequireNumbers: false
+  #         RequireSymbols: false
+  #         RequireUppercase: false
+  #     AutoVerifiedAttributes:
+  #       - email
+  #     EmailVerificationMessage: 'Here is your verification code: {####}'
+  #     EmailVerificationSubject: Your verification code
+  #     Schema:
+  #       - Name: email
+  #         AttributeDataType: String
+  #         Mutable: false
+  #         Required: true
+  # UserPoolClient:
+  #   Type: 'AWS::Cognito::UserPoolClient'
+  #   Properties:
+  #     ClientName: !Sub '${ProjectName}-client'
+  #     GenerateSecret: false
+  #     UserPoolId: !Ref UserPool
+  # IdentityPool:
+  #   Type: 'AWS::Cognito::IdentityPool'
+  #   Properties:
+  #     IdentityPoolName: !Sub '${ProjectName}Identity'
+  #     AllowUnauthenticatedIdentities: true
+  #     CognitoIdentityProviders:
+  #       - ClientId: !Ref UserPoolClient
+  #         ProviderName: !GetAtt 
+  #           - UserPool
+  #           - ProviderName
+  # CognitoUnAuthorizedRole:
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Federated: cognito-identity.amazonaws.com
+  #           Action:
+  #             - 'sts:AssumeRoleWithWebIdentity'
+  #           Condition:
+  #             StringEquals:
+  #               'cognito-identity.amazonaws.com:aud': !Ref IdentityPool
+  #             'ForAnyValue:StringLike':
+  #               'cognito-identity.amazonaws.com:amr': unauthenticated
+  #     Policies:
+  #       - PolicyName: CognitoUnauthorizedPolicy
+  #         PolicyDocument:
+  #           Version: 2012-10-17
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - 'mobileanalytics:PutEvents'
+  #                 - 'cognito-sync:*'
+  #               Resource: '*'
+  # CognitoAuthorizedRole:
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Federated: cognito-identity.amazonaws.com
+  #           Action:
+  #             - 'sts:AssumeRoleWithWebIdentity'
+  #           Condition:
+  #             StringEquals:
+  #               'cognito-identity.amazonaws.com:aud': !Ref IdentityPool
+  #             'ForAnyValue:StringLike':
+  #               'cognito-identity.amazonaws.com:amr': authenticated
+  #     Policies:
+  #       - PolicyName: CognitoAuthorizedPolicy
+  #         PolicyDocument:
+  #           Version: 2012-10-17
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - 'mobileanalytics:PutEvents'
+  #                 - 'cognito-sync:*'
+  #                 - 'cognito-identity:*'
+  #               Resource: '*'
+  #             - Effect: Allow
+  #               Action:
+  #                 - 'execute-api:Invoke'
+  #               Resource: !Join 
+  #                 - ''
+  #                 - - 'arn:aws:execute-api:'
+  #                   - !Ref 'AWS::Region'
+  #                   - ':'
+  #                   - !Ref 'AWS::AccountId'
+  #                   - ':'
+  #                   - !Ref AppApi
+  #                   - /*
+  # IdentityPoolRoleMapping:
+  #   Type: 'AWS::Cognito::IdentityPoolRoleAttachment'
+  #   Properties:
+  #     IdentityPoolId: !Ref IdentityPool
+  #     Roles:
+  #       authenticated: !GetAtt 
+  #         - CognitoAuthorizedRole
+  #         - Arn
+  #       unauthenticated: !GetAtt 
+  #         - CognitoUnAuthorizedRole
+  #         - Arn
+  # BooksUploader:
+  #   Type: 'Custom::CustomResource'
+  #   Properties:
+  #     ServiceToken: !GetAtt FunctionUploadBooks.Arn
+  #     ParameterOne: Parameter to pass into Custom Lambda Function
+  #     DependsOn: 
+  #      - FunctionUploadBooks
 
 # ------------------------ FRONTEND ------------------------
   # AssetsCodeRepository:

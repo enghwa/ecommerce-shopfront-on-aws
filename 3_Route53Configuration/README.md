@@ -175,12 +175,11 @@ subdomains.
 
 #### High-level instructions
 
-<!--Make sure you are in your primary (Ireland) region.-->
 Head over to the **Route53** service and select **Hosted zones**. Choose your domain name from
 the list and you should see a couple of records already configured for
 nameservers.
 
-Select **Create Record Set** and create a new CNAME record for `ireland.`
+Select **Create Record Set** and create a new CNAME record for `oregon.`
 pointing to the Target Domain Name for your corresponding API Gateway Custom
 Domain from the previous step. You can set the TTL to 1m (60 seconds) for the
 purpose of this workshop.  We recommend setting ALL DNS entries to 1m (60 seconds)
