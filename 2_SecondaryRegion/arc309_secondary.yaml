@@ -24,8 +24,8 @@ Parameters:
     Type: String
     Description: DynamoDB Stream ARN
   UserPool:
-    Type: String
-    Description: Congnito in Oregon UserPool ARN
+    Type: List
+    Description: Congnito in Primary region UserPool ARN
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
