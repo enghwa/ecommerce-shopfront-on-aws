@@ -11,9 +11,9 @@ Parameters:
     AllowedPattern: "^[a-z0-9-]{3,53}$"
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
     Default: 'projectname-region2'
-  SeedRepository:
-    Type: String
-    Default: 'http://woof.kopi.io/book5.zip'
+  # SeedRepository:
+  #   Type: String
+  #   Default: 'http://woof.kopi.io/book5.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Secondary Region (ex. vpc-xxx)
@@ -35,7 +35,7 @@ Metadata:
         Parameters: 
           - ProjectName
           - AssetsBucketName
-          - SeedRepository
+          # - SeedRepository
           - bookstoreVPC
           - bookstoreSubnet1
           - AssetsCDN
