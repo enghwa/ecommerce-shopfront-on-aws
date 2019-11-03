@@ -4,7 +4,7 @@ We completed building the bookstore in the primary region (Ireland) in the previ
 
 ## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
 
-Go back to your Cloud9, and execute following commands.It will take around 15 mins.
+Go back to your Cloud9, and execute following commands.It will take around 15 mins. (It should be executed under `wordpress-lab` directory)
 * **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (ex.Z7VDWLHBQQSCF)
 ![CDK](../images/02-cdk-01.png)
 * Your `MYSUBDOMAIN` was previously exported in module 1.
@@ -19,18 +19,15 @@ npx cdk@1.8.0 deploy Wordpress-Secondary
 ```
 ![CDK](../images/02-cdk-02.png)
 
-**Your Book Blog is completed**
+Type "y" on `Do you wish to deploy these changes (y/n)?`.
 
-Now, your Book Blog is built. Please verify with followings:
-```
-https://blog.<MYSUBDOMAIN>.multi-region.xyz/
-https://secondarry.blog.<MYSUBDOMAIN>.multi-region.xyz/
+![CDK](../images/02-cdk-03.png)
 
-```
+Now, your Book Blog in Singapore is completed. However, you will find `503 Service Temporarily Unavailable` error if you verify `https://secondary.blog.<MYSUBDOMAIN>.multi-region.xyz/` as the wordpress is not connected the Aurora MySQL in Singapore region yet. We will configure this in the next section.
 
-### Replication of Aurora, S3, and DynamoDB 
+## Replication of Aurora, S3, and DynamoDB 
 
-We completed building the bookstore in the primary region (Ireland) in the previous module. In this module, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
+In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
 ### Enable Aurora MySQL Read replica in Singapore region
 

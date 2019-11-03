@@ -1490,13 +1490,13 @@ Resources:
   #       unauthenticated: !GetAtt 
   #         - CognitoUnAuthorizedRole
   #         - Arn
-  # BooksUploader:
-  #   Type: 'Custom::CustomResource'
-  #   Properties:
-  #     ServiceToken: !GetAtt FunctionUploadBooks.Arn
-  #     ParameterOne: Parameter to pass into Custom Lambda Function
-  #     DependsOn: 
-  #      - FunctionUploadBooks
+  BooksUploader:
+    Type: 'Custom::CustomResource'
+    Properties:
+      ServiceToken: !GetAtt FunctionUploadBooks.Arn
+      ParameterOne: Parameter to pass into Custom Lambda Function
+      DependsOn: 
+       - FunctionUploadBooks
 
 # ------------------------ FRONTEND ------------------------
   # AssetsCodeRepository:
