@@ -240,18 +240,40 @@ To build the Bookstore application using CloudFormation, you need to download th
 ![CFN](../images/02-cfn-01.png)
 5. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 
-This CloudFormation template may take around 10 mins. You can proceed the next steps.
+This CloudFormation template may take around 5 mins. You can proceed the next steps.
 
-## CDK
-You remember the Book Blog you created above had `503 Service Temporarily Unavailable` error due to the Fargate didn't connect to Aurora MySQL in Singapore. 
+## Update Blog DB connection with Read Replica in Singapore
+You remember the Book Blog you created above had `503 Service Temporarily Unavailable` error due to the Fargate didn't connect to Aurora MySQL in Singapore. You can find the endpoint of Read Replica in Singapore with the following commands:
 
+```bash
+aws rds describe-db-instances \
+--db-instance-identifier <arc309-replica-instance> \
+--region <ap-southeast-1> \
+--query "DBInstances[0].Endpoint.Address" --output text
+```
 
-aws rds describe-db-instances \ 
---db-instance-identifier <sample-instance> \
---region <region2> | grep Endpoint
+Go to `ECS` in Singapore region, select `WordpressSecondarywordpresssvcTaskDefACEF634B` in `Task Definition`, and click `Create new revision`.
+![ECS](../images/02-ecs-01.png)
+Select `web` container and update `WORDPRESS_DB_HOST` with the above Aurora Read Replica endpoint. Click `Create`.
+![ECS](../images/02-ecs-02.png)
 
+And we need to update the password in AWS Secrets Manager in Singapore to connect the Aurora Read Replica in Singapore. 
 
-
+Find the password from Ireland with the following command:
+```
+aws secretsmanager get-secret-value \
+--secret-id <arn:aws:secretsmanager:eu-west-1:xxxxxxxxxx:secret:wordpressDBPassword-mOSymc> \
+--region eu-west-1 \
+--query "SecretString" --output text
+```
+Update the Secrets Manager in Singapore
+```
+aws secretsmanager update-secret \
+--secret-id <arn:aws:secretsmanager:ap-southeast-1:xxxxxxxxxx:secret:wordpressDBPassword-lRz9Eg> \
+--secret-string <dGCmmbIlfSxS6ISkJ3JnzvNTkwS4GjpV> \
+--region <ap-southeast-1>
+```
+**TOFIX: Need Secret Id in output of CDK in primary region**
 
 ## Cloudfront Origin Group
 
