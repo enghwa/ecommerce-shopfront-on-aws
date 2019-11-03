@@ -59,7 +59,6 @@ aws rds create-db-cluster \
   --db-subnet-group-name <SecondaryRegion-WordpressDB-subnetgroup> \
   --source-region <eu-west-1> \
   --region <ap-southeast-1>
-  
 ```
 
 Verify the RDS replication cluster is created in Singapore region.
