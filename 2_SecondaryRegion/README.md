@@ -29,89 +29,75 @@ Now, your Book Blog in Singapore is completed. However, you will find `503 Servi
 
 In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
-### Enable Aurora MySQL Read replica in Singapore region
+### 1. Enable Aurora MySQL Read replica in Singapore region
 
 Aurora MySQL Read replica helps you have redundancy plan. The replica in Singapore region can be promoted as the primary database when the primary database in the primary region (Ireland) has issues.
 
 Go back to Cloud9, and execute the following command to enable the read replica of Aurora MySQL in Singapore region
 from Ireland region using the AWS CLI. 
 
-* `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region.
-* `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region.
+* `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region. Or use the following command in Cloud9.
+```bash
+aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 \
+    --query "Stacks[0].Outputs[?OutputKey=='RDSreplicationsourceidentifier'].OutputValue" --output text
 
+```
+
+* `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region. Or use the following command in Cloud9. 
+```bash
+aws cloudformation describe-stacks --stack-name Wordpress-Primary --region ap-southeast-1 \
+    --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupName'].OutputValue" --output text
+```
+
+CLI to create read replica of Aurora MySQL in Singapore region. 
 ```bash
 aws rds create-db-cluster \
   --db-cluster-identifier <arc309-replica-cluster> \
   --engine aurora \
-  --replication-source-identifier <value> \
-  --vpc-security-group-ids <value> \
-  --db-subnet-group-name <secondaryregion-wordpressdb-subnetgroup> \
+  --replication-source-identifier <arn:aws:rds:eu-west-1:xxxxxxxxxx:xxxxxxxxx> \
+  --vpc-security-group-ids <sg-xxxxxxxxx> \
+  --db-subnet-group-name <SecondaryRegion-WordpressDB-subnetgroup> \
   --source-region <eu-west-1> \
   --region <ap-southeast-1>
   
 ```
 
-
-
-
-
-
-
-
-
-
-Verify RDS replication in RDS console in Singapore region:
-![Replica Aurora](../images/02-replica-01.png)
-
-
+Verify the RDS replication cluster is created in Singapore region.
 ```bash
-aws rds describe-db-clusters --db-cluster-identifier <sample-replica-cluster> --region <region2>
+aws rds describe-db-clusters --db-cluster-identifier <arc309-replica-cluster> --region <ap-southeast-1>
 ```
-```bash
-aws rds describe-db-clusters --db-cluster-identifier arc309-replica-cluster --region ap-southeast-1
-```
+Create RDS read replica instance. 
+
 ```bash
 aws rds create-db-instance \
-  --db-instance-identifier <sample-instance> \ 
-  --db-cluster-identifier <sample-replica-cluster> \
+  --db-instance-identifier <arc309-replica-instance> \
+  --db-cluster-identifier <arc309-replica-cluster> \
   --db-instance-class <db.t3.small> \
   --engine aurora \
-  --region <region2>
+  --region <ap-southeast-1>
 ```
-```bash
-  aws rds create-db-instance \
-  --db-instance-identifier arc309-instance \
-  --db-cluster-identifier arc309-replica-cluster \
-  --db-instance-class db.t3.small \
-  --engine aurora \
-  --region ap-southeast-1
-```
+
+Verify RDS replication in RDS console in Singapore region or using CLI in Cloud9.
+![Replica Aurora](../images/02-replica-01.png)
+
 It takes for a while, you can procced the next step first.
 
-### 2. Enable S3 replication
+### 2. Enable S3 replication for Web contents replication
 
-This S3 replication will replicate the statice contents from Irelad region to Singapore whenever there is update. 
-Follow the steps to enable the S3 replication using the AWS CLI. 
+This S3 replication will replicate the static contents from Irelad region to Singapore whenever there is update. 
+Follow the steps to enable the S3 replication using the AWS CLI in Cloud9.
 
+```bash
 aws s3api create-bucket \
---bucket <AssetsBucketName-region2> \
---region <region2> \
---create-bucket-configuration LocationConstraint=<region2>
-
-aws s3api create-bucket \
---bucket bookjay-s3-region2 \
---region ap-southeast-1 \
---create-bucket-configuration LocationConstraint=ap-southeast-1
-
-S3 replication requires the versioning.
-
+  --bucket <arc309-singapore-bookstore> \
+  --region <ap-southeast-1> \
+  --create-bucket-configuration LocationConstraint=<ap-southeast-1>
+```
+```bash
 aws s3api put-bucket-versioning \
---bucket <AssetsBucketName-region2> \
---versioning-configuration Status=Enabled
-
-aws s3api put-bucket-versioning \
---bucket bookjay-s3-region2 \
---versioning-configuration Status=Enabled
+  --bucket <arc309-singapore-bookstore> \
+  --versioning-configuration Status=Enabled
+```
 
 <!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
 
@@ -124,21 +110,21 @@ $ aws iam put-role-policy \
 --policy-document file://s3-role-permissions-policy.json \
 --policy-name crrRolePolicy \ -->
 
-Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the local directory on your Cloud9. 
+Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the your Cloud9. You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack (ex.arc309-ireland) in Ireland or execute following command in the Cloud9.
 
-You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack in Ireland or execute following command in the Cloud9.
+```bash
+aws cloudformation describe-stacks --stack-name <arc309-ireland> --region eu-west-1 \
+    --query "Stacks[0].Outputs[?OutputKey=='S3replicationRole'].OutputValue" --output text
+```
 
-aws iam get-role --role-name <projectname-S3replicationRole>
-aws iam get-role --role-name bookjay-S3replicationRole
-
-ARN looks like arn:aws:iam::xxx:role/bookjay-S3replicationRole
-
-To create 'replication.json' file in the Cloud9, 
+To create `replication.json` file in the Cloud9, 
+```bash
 $vi replication.json
 esc+i: insert
-copy and paste the following
-esc+wq! save
+```
+copy and paste the following and save with `esc+wq!`.
 
+```
 {
   "Role": "<IAM-role-ARN>",
   "Rules": [
@@ -148,29 +134,26 @@ esc+wq! save
       "DeleteMarkerReplication": { "Status": "Disabled" },
       "Filter" : { "Prefix": ""},
       "Destination": {
-        "Bucket": "arn:aws:s3:::<bucketname-region2>"
+        "Bucket": "arn:aws:s3:::<arc309-singapore-bookstore>"
       }
     }
   ]
 }
+```
 
-$ aws s3api put-bucket-replication \
---replication-configuration file://replication.json \
---bucket <source>
+```bash
+aws s3api put-bucket-replication \
+  --replication-configuration file://replication.json \
+  --bucket <arc309-ireland-bookstore>
+```
 
-$ aws s3api put-bucket-replication \
---replication-configuration file://replication.json \
---bucket bookjay-s3
+### 3. Enable DynamoDB Global Tables using Console
 
-FYI. Only the newly uploaded to the source bucket will be replicated to the destination bucket
-
-### 3. Enable DynamoDB Global Table using Console
-
-Let's take a look at continuously replicating the data in DynamoDB from the primary region (Oregon) to the
+Let's take a look at continuously replicating the data in DynamoDB from the primary region (Ireland) to the
 secondary region (Singapore) so that there is always a backup.
 
 We will be using a feature of DynamoDB Global Tables for this. Any changes 
-made to any item in any replica table will be replicated to all of the other 
+made to any items in any replica tables will be replicated to all of the other 
 replicas within the same global table. In a global table, a newly-written item is 
 usually propagated to all replica tables within seconds.
 
@@ -179,7 +162,7 @@ regions at about the same time. To ensure eventual consistency, DynamoDB global 
 use a “last writer wins” reconciliation between concurrent updates, where DynamoDB makes 
 a best effort to determine the last writer. 
 
-Follow the steps to create a global table of Book, Order, Cart form the Ireland to Singapore regions using the console. (screenshot)
+Follow the steps to create a global table of Book, Order, Cart form the Ireland to Singapore regions using the console. 
 
 Go to DynampDB Ireland
 Select Books table - Global Tables tab - Add region - Select Singapore - Continue
