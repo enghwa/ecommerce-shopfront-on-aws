@@ -10,7 +10,6 @@ Parameters:
     Description: The S3 bucket name in the secondary region created by S3 replication
     AllowedPattern: "^[a-z0-9-]{3,53}$"
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
-    Default: 'projectname-region2'
   # SeedRepository:
   #   Type: String
   #   Default: 'http://woof.kopi.io/book5.zip'
@@ -40,6 +39,7 @@ Metadata:
           - bookstoreSubnet1
           - AssetsCDN
           - OrderTableStreamARN
+          - UserPool
 
 Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]

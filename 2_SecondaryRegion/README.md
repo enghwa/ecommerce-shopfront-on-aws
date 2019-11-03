@@ -147,6 +147,9 @@ aws s3api put-bucket-replication \
   --bucket <arc309-ireland-bookstore>
 ```
 
+You can check the replication configuration in S3 console.
+![Replica S3](../images/02-replica-02.png)
+
 ### 3. Enable DynamoDB Global Tables using Console
 
 Let's take a look at continuously replicating the data in DynamoDB from the primary region (Ireland) to the
@@ -164,10 +167,13 @@ a best effort to determine the last writer.
 
 Follow the steps to create a global table of Book, Order, Cart form the Ireland to Singapore regions using the console. 
 
-Go to DynampDB Ireland
-Select Books table - Global Tables tab - Add region - Select Singapore - Continue
-Do the same things or Orders and Cart.
-You can check there are two regions in the Global Table regions.
+Go to DynamoDB in Ireland. Select `Books` table, go to `Global Tables` tab, and click `Add region`
+![Replica DynamoDVB](../images/02-replica-03.png)
+
+Select `Singapore`, and click `Continue`.
+![Replica DynamoDVB](../images/02-replica-04.png)
+
+Do the same steps or `Orders` and `Cart` tables.
 
 <!-- aws dynamodb create-table \
     --table-name <Books table name> \
@@ -213,68 +219,39 @@ aws dynamodb create-global-table \
     --replication-group RegionName=<region1> RegionName=<region2> \
     --region <region2> -->
 
-Now, you completed the replication across two regions. It's time to build the Web/App layer in Singapore. 
-
+Now, you completed the replication across two regions for Aurora MySQL, S3, and DynamoDB. It's time to build the Bookstore eb/App layer in Singapore. 
 
 ## Building the Bookstore using Cloudformation in your Secondary Region (Singapore)
 
-Let's build App layer in Singapore
+**Step-by-step instructions**
 
-<summary><strong>Step-by-step instructions </strong></summary>
+To build the Bookstore application using CloudFormation, you need to download the yaml file from [Secondary CloudFormation](https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_SecondaryRegion/arc309_secondary.yaml).  
+**TOFIX:Change the file download location to S3 arc309 bucket.**
 
-Download the 'arc309_secondayr.yaml' file from S3???(https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_SecondaryRegion/arc309_secondary.yaml)
+1. Go to the CloudFormation console in Singapore
+2. Create stack with the downloaded template
+3. Input `Stack name` (ex. arc309-singapore) and `Parameters`
+* **ProjectName**: the same 10 characters with lowercase name (ex.bookstore)
+* **AssetsBucketName**: S3 bucket name replicated from Ireland (ex.arc309-singapore-bookstore)
+* **bookstoreVPC**: VPC id (output of `Wordpress-Secondary` cdk, vpc-xxxxxxxxxx)
+* **bookstoreSubnet1**: Subnet id for Elasticache (output of `Wordpress-Secondary` cdk, subnet-xxxxxxxxxx)
+* **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)
+* **UserPool**: Congnito UserPool Arn in Ireland region (ex. arn:aws:cognito-idp:eu-west-1:376715876263:userpool/eu-west-1_1rry319Ri)
+![CFN](../images/02-cfn-01.png)
+5. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 
-Go to the CloudFormation console in Singapore 
-(screenshot)
-Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
-Stack name (ex. arc309-jay2) and Parameters
-          - ProjectName: the same project name (ex.bookjay)
-          - AssetsBucketName: S3 bucket name replicated from Ireland (ex.bookjay-s3-region2)
-          - SeedRepository: Web file (use default)
-          - bookstoreVPC: VPC id in Singapore (output of second cdk ex. vpc-4360ec26)
-          - bookstoreSubnet1: Subnet id for Elasticache (output of second cdk ex. subnet-ab9ed9dd)
-          - OrderTableStreamARN: Stream ARN of Order table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookjay-Orders/stream/2019-10-11T08:20:56.998)
-Next-Next-Check "I acknowledge that AWS CloudFormation might create IAM resources with custom names." - Create stack.
-
-This CloudFormation template may take around 10mins. In this time you can hop over to the AWS console
-and watch all of the resources being created for you in CloudFormation. Open up the AWS Console in your browser
-and check you are in the respective regions (EU Ireland or Asia Pacific. You should check your stack listed with your stack name such as `arc309-jay-2`. (screenshot)
-
-Once your stack has successfully completed, type the previous Cloudfront URL in your broswer and your can check your bookstore. (screenshot)
-
-https://d1zltjarei3438.cloudfront.net/
-
-FYI. This bookstore doesn't have blog yet. It will be shown after you complete buiding the secondary region.
+This CloudFormation template may take around 10 mins. You can proceed the next steps.
 
 ## CDK
-The endpoint should be updated in the Fargate to point the replica in Singapore region. 
+You remember the Book Blog you created above had `503 Service Temporarily Unavailable` error due to the Fargate didn't connect to Aurora MySQL in Singapore. 
+
 
 aws rds describe-db-instances \ 
 --db-instance-identifier <sample-instance> \
 --region <region2> | grep Endpoint
 
 
-<!-- ## 2. Replicate the primary API stack
 
-For the first part of this module, all of the steps will be the same as module
-1_API but performed in our secondary region (AP Singapore) instead. Please follow
-module 1_API again then come back here. We suggest using the CloudFormation templates
-from that module to make this much quicker the second time.
-
-**IMPORTANT** Ensure you deploy only to *Singapore* the second time you go through
-Module 1_API
-
-* [Build an API layer](../1_API/README.md)
-
-Once you are done, verify that you get a second API URL for your application from
-the *outputs* of the CloudFormation template you deployed. -->
-
-## Replicated to the seconday region
-
-So now that you have a separate stack.
-
-You can test to see if it is working by ordering a new book. Then, look at the Order table in *source* region DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
-for the book you just ordered. 
 
 ## Cloudfront Origin Group
 
@@ -330,6 +307,14 @@ Alias 'Yes', Type `A` and point it to the cloudfront domain name, `?????????????
 
 Congratulations! You have successfully deployed a user interface for our users
 on S3. In the next module you will learn how to configure active/active using Route53.
+
+
+## Replicated to the seconday region
+
+So now that you have a separate stack.
+
+You can test to see if it is working by ordering a new book. Then, look at the Order table in *source* region DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
+for the book you just ordered. 
 
 Module 3: [Configure Active-Active Route53](../3_Route53Configuration/README.md)
 
