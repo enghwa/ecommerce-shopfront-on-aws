@@ -24,7 +24,7 @@ Parameters:
     Type: String
     Description: DynamoDB Stream ARN
   UserPool:
-    Type: List
+    Type: String
     Description: Congnito in Primary region UserPool ARN
 Metadata: 
   AWS::CloudFormation::Interface: 
@@ -1317,7 +1317,7 @@ Resources:
       AuthorizerResultTtlInSeconds: 300
       IdentitySource: method.request.header.Authorization
       Name: CognitoDefaultUserPoolAuthorizer
-      ProviderARNs: !Sub '${UserPool}'
+      ProviderARNs: !Ref UserPool
         # - !GetAtt 
         #   - UserPool
         #   - Arn
