@@ -275,68 +275,62 @@ aws secretsmanager update-secret \
 ```
 **TOFIX: Need Secret Id in output of CDK in primary region**
 
-## Cloudfront Origin Group
+## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions 
 
-To enable Origin Failover for your CloudFront distributions to improve the availability of content delivered to your end users.
+Origin Failover of CloudFront distributions improves the availability of content delivered to end users.
 
-With CloudFront’s Origin Failover capability, you can setup two origins for your distributions - primary (Ireland) and secondary (Singapore), such that your content is served from your secondary origin if CloudFront detects that your primary origin is unavailable. For example, you can have two Amazon S3 buckets that serve as your origin, that you independently upload your content to. If an object that CloudFront requests from your primary bucket is not present or if connection to your primary bucket times-out, CloudFront will request the object from your secondary bucket. So, you can configure CloudFront to trigger a failover in response to either HTTP 4xx or 5xx status codes.
+With CloudFront’s Origin Failover capability, your content is served from your secondary origin (Singapore) if CloudFront detects that your primary origin (Ireland) is unavailable. 
+<!-- For example, you can have two Amazon S3 buckets that serve as your origin, that you independently upload your content to. If an object that CloudFront requests from your primary bucket is not present or if connection to your primary bucket times-out, CloudFront will request the object from your secondary bucket. So, you can configure CloudFront to trigger a failover in response to either HTTP 4xx or 5xx status codes. -->
 
-To get started, create the second origin with the same OAI (Origin Access Identity) of the primary origin. You can choose the S3 bucket in the second region (Singapore) that you created above for the Origin Domain Name.
+Select your CloudFront Distributions.
+![CloudFront](../images/02-cf-01.png)
 
-![CloudFront Second Origin](images/cloudfront-secondorigin.png)
+Create the second origin (in Singapire). 
+![CloudFront](../images/02-cf-02.png)
 
-Next, create an origin group in which you designate a primary origin for CloudFront plus a second origin that CloudFront automatically switches to when the primary origin returns specific HTTP status code failure responses.
+Choose your S3 bucket name in Singapore in `Orgin Domain Name`, `Origin ID`, and `Origin Access Identity`.
+![CloudFront](../images/02-cf-03.png)
 
-![CloudFront Origin Group](images/cloudfront-origingroup.png)
+Next, create an origin group.
+![CloudFront](../images/02-cf-04.png)
+CloudFront automatically switches to the secondary origin when the primary origin returns specific HTTP status code failure responses.
+![CloudFront](../images/02-cf-05.png)
 
-If you need to remove a file from CloudFront edge caches before it expires, you can do Invalidate the file from edge caches:
+## Update Blog WebAsset URL with Wordpress Application Load Balancer 
 
-    aws cloudfront create-invalidation --distribution-id <value> --paths /
+Find your code repo in CodeCommit and edit `wordpressconfig.ts` (ex. bookstore-WebAssetssrcwordpressconfig.ts) in Ireland region.
+![Wordpress](../images/02-wp-01.png)
 
-## update Blog url to the webasset and it will kick off another codepipeline
-
-Find your code repo in codecommit and edit: (screenshot) under src/ in Oregon
-`wordpressconfig.ts`.
-Update:
-`https://blog.<your subdomain name>.multi-region.xyz`
-
-eg:
-assume my `MYSUBDOMAIN` i set previously was `team5432`,
+Update `http://<FQDN of your Wordpress Application Load Balancer` to
 ```javascript
 export default {
 
   wordpress: {
-    WPURL: "https://blog.team5432.multi-region.xyz/"
+    WPURL: "https://blog.arc30901.multi-region.xyz"
   }
 }
 ```
-author and email. -> commit changes 
-you can check the build process in codepipeline.
-once codepipeline fully build again, blog should show up at cloudfront url.
 
-next:
-## update Cloudfront to your domain name instead of `https://?????????????.cloudfront.net`:
+Enter any `Author name` and `Email address`, and click `Commit changes`. You can check the progress in CodePipeline and CodeBuild.
+![Code](../images/02-code-01.png)
 
-an ACM cert is already created for CloudFront in your region.
+## Update CloudFront Domain Name with your domain
 
-Update Cloudfront CNAME to `$MYSUBDOMAIN.multi-region.xyz` (screenshot)
-in Cloudfront, general tab - Alternate Domain Names (CNAMEs) and SSL Certificate
+Update CloudFront Domain Name (ex. xxxxxxxxx.cloudfront.net) to `$MYSUBDOMAIN.multi-region.xyz`.
+Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
+![CloudFront](../images/02-cf-06.png)
 
-in Route53, create an apex record:
-Alias 'Yes', Type `A` and point it to the cloudfront domain name, `?????????????.cloudfront.net`. (screenshot)
+Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
+![CloudFront](../images/02-cf-07.png)
+
+Copu your CloudFront Domain Name (ex. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
+* Type: A-IPv4 address
+* Alias: `Yes` and Target: `dunq4klru02xw.cloudfront.net`
+![CloudFront](../images/02-cf-08.png)
 
 ## Completion
 
-Congratulations! You have successfully deployed a user interface for our users
-on S3. In the next module you will learn how to configure active/active using Route53.
-
-
-## Replicated to the seconday region
-
-So now that you have a separate stack.
-
-You can test to see if it is working by ordering a new book. Then, look at the Order table in *source* region DynamoDB and the DynamoDB table in your *secondary* region, and see if you can see the record
-for the book you just ordered. 
+Congratulations! You have successfully deployed Bookstore applications in Ireland and Singapore. In the next module you will configure active/active solution using Route53.
 
 Module 3: [Configure Active-Active Route53](../3_Route53Configuration/README.md)
 
