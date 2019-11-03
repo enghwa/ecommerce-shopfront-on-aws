@@ -40,7 +40,7 @@ will take around 20 min.
 * You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
 ![CDK](../images/01-cdk-04.png)
 
-**Your book blog is completed**
+**Your Book Blog is completed**
 
 Now, you book blog is built. Please verify with followings:
 ```

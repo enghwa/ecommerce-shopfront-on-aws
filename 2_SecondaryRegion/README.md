@@ -1,52 +1,70 @@
 # Building the Bookstore in your Secondary Region (Singapore)
 
-We completed building the bookstore in the primary region (Ireland) in the previous module. In this module, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
+We completed building the bookstore in the primary region (Ireland) in the previous module. In this module, we will build the same Bookstore in Singapore region and configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
+
+## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
+
+Go back to your Cloud9, and execute following commands.It will take around 15 mins.
+* **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (ex.Z7VDWLHBQQSCF)
+![CDK](../images/02-cdk-01.png)
+* Your `MYSUBDOMAIN` was previously exported in module 1.
+
+```bash
+export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
+export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
+export AWS_DEFAULT_REGION=ap-southeast-1
+npx cdk@1.8.0 bootstrap
+npx cdk@1.8.0 deploy Wordpress-Secondary
+
+```
+![CDK](../images/02-cdk-02.png)
+
+**Your Book Blog is completed**
+
+Now, your Book Blog is built. Please verify with followings:
+```
+https://blog.<MYSUBDOMAIN>.multi-region.xyz/
+https://secondarry.blog.<MYSUBDOMAIN>.multi-region.xyz/
+
+```
 
 ### Replication of Aurora, S3, and DynamoDB 
+
+We completed building the bookstore in the primary region (Ireland) in the previous module. In this module, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
 ### Enable Aurora MySQL Read replica in Singapore region
 
 Aurora MySQL Read replica helps you have redundancy plan. The replica in Singapore region can be promoted as the primary database when the primary database in the primary region (Ireland) has issues.
 
-Follow the steps to enable the read replica of Aurora in Singapore region using the AWS CLI. 
+Go back to Cloud9, and execute the following command to enable the read replica of Aurora MySQL in Singapore region
+from Ireland region using the AWS CLI. 
+
+* `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region.
+* `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region.
 
 ```bash
 aws rds create-db-cluster \
-  --db-cluster-identifier <sample-replica-cluster> \
-  --engine aurora \
-  --replication-source-identifier <source aurora cluster arn> \
-  --vpc-security-group-ids <value> \
-  --db-subnet-group-name <value> \
-  --source-region <value> \
-  --region <region2>
-
-```
-
-
-
-
-
-
-
-
-As an example:
-Get `replication-source-identifier` from Cloudformation stack `Wordpress-Primary` in Ireland Region.
-Get `vpc-security-group-ids`  from Cloudformation stack `Wordpress-Secondary` in Singapore Region.
-
-```bash
-aws rds create-db-cluster \
-  --db-cluster-identifier arc309-replica-cluster \
+  --db-cluster-identifier <arc309-replica-cluster> \
   --engine aurora \
   --replication-source-identifier <value> \
   --vpc-security-group-ids <value> \
-  --db-subnet-group-name secondaryregion-wordpressdb-subnetgroup \
-  --source-region eu-west-1 \
-  --region ap-southeast-1
+  --db-subnet-group-name <secondaryregion-wordpressdb-subnetgroup> \
+  --source-region <eu-west-1> \
+  --region <ap-southeast-1>
   
 ```
 
+
+
+
+
+
+
+
+
+
 Verify RDS replication in RDS console in Singapore region:
-![RDS diagram](../images/rds-secondary-replicate.png)
+![Replica Aurora](../images/02-replica-01.png)
 
 
 ```bash
@@ -217,31 +235,6 @@ aws dynamodb create-global-table \
 
 Now, you completed the replication across two regions. It's time to build the Web/App layer in Singapore. 
 
-## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
-
-Go back to your Cloud9, and execute following commands. It will take around 15 mins.
-* **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (ex.Z7VDWLHBQQSCF)
-![CDK](../images/02-cdk-01.png)
-* Your `MYSUBDOMAIN` was previously exported in module 1.
-
-```bash
-export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
-export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
-export AWS_DEFAULT_REGION=ap-southeast-1
-npx cdk@1.8.0 bootstrap
-npx cdk@1.8.0 deploy Wordpress-Secondary
-
-```
-![CDK](../images/02-cdk-02.png)
-
-**Your book blog is completed**
-
-Now, you book blog is built. Please verify with followings:
-```
-https://blog.<MYSUBDOMAIN>.multi-region.xyz/
-https://secondarry.blog.<MYSUBDOMAIN>.multi-region.xyz/
-
-```
 
 ## Building the Bookstore using Cloudformation in your Secondary Region (Singapore)
 
