@@ -1,7 +1,8 @@
 # Testing Multi-region Failover
 
-It is one thing to configure active-active but to have real confidence in our
-setup, we need to test it. In this module we will artificially break our
+<!-- It is one thing to configure active-active but to have real confidence in our
+setup, we need to test it.  -->
+In this module we will artificially break our
 primary region and observe our failover in action.
 
 To demonstrate this we will replicate a scenario where a developer

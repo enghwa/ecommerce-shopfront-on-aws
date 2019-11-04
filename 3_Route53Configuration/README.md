@@ -120,17 +120,12 @@ Choose `Hosted zones` in `Route53`. Select `Create Record Set` with a new CNAME 
 version of your domain. Since this is an alias, it should appear in the
 dropdown list.
 
-Next, choose the `Geolocation` routing policy. You can select a value that determines 
-the proportion of DNS queries that Route 53 responds for your Ireland record such as `50`.
+Next, choose the `Geolocation` routing policy. Route 53 responds to queries based on the locations from which DNS queries originate. We recommend that you create a `Default` location resource record set. 
 Turn on both `Evaluate Target Health` and `Associate with Health Check` then select the `ireland-api` 
 health check you created previously. 
 ![Route53](../images/03-dns-05.png)
 
-***Note.*** Weighted routing lets you associate multiple resources with a single 
-domain name (example.com) or subdomain name (acme.example.com) and choose how much 
-traffic is routed to each resource. 
-
-Create one more CNAME record with `api-sg` Alias with the same step.
+Create one more CNAME record with `api-sg` Alias with the same step. Choose the location with `Singapore` instead of `Default`.
 ![Route53](../images/03-dns-06.png)
 
 With the DNS configured, you should now be able to visit the `api.` prefix of
