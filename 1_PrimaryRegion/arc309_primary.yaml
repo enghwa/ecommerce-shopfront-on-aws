@@ -12,6 +12,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
+    Description: Don't change the defualt value
     Default: 'http://woof.kopi.io/book6.zip'
   bookstoreVPC:
     Type: String
@@ -29,8 +30,8 @@ Metadata:
           - bookstoreVPC
           - bookstoreSubnet1
 
-# Conditions:
-#   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
+Conditions:
+  IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
 Mappings:
   S3Buckets:
     # us-east-1:
@@ -1538,7 +1539,7 @@ Resources:
           - DomainName: !Join
               - ''
               - - !Sub '${AssetsBucketName}.s3'
-                # - !If [IADRegion, '', !Sub '-${AWS::Region}']
+                - !If [IADRegion, '', !Sub '-${AWS::Region}']
                 - '.amazonaws.com'
             Id: S3
             S3OriginConfig:
