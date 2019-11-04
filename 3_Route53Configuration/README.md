@@ -144,7 +144,7 @@ Now that we have active-active configuration, you will need to change the API
 endpoint in your WebAssets (*bookstore-WebAssets/src/config.js*) to use our newly
 created DNS name for our API endpoint.
 
-Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz/prod` (substituting your own domain) instead of the region specific name and remove the `REGION`.
+Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz/prod` (substituting your own domain) instead of the region specific name.
 ![Route53](../images/03-dns-08.png)
 
 ## Completion

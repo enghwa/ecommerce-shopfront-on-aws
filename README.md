@@ -110,12 +110,12 @@ Remove metadata, neptune, search (dependson), apigateway (auth:none 3 item, book
 input param (vpc cdk#1)
 route53 hostzone -> call remote api do nsrecord xyz (random number acm) -> origincal acm region1/2 (auto approval)
 
-### 2. Build multi-region solution - Aurora cross-region read replica(2nd region)
-in Cloud9, --region
-
 ### 3. Secondary region - CDK
 ACM, Route53 Domain Name and the DNS
 ALB, fargate, input param (VPC cdk#1, aurora read endpoint of #2)
+
+### 2. Build multi-region solution - Aurora cross-region read replica(2nd region)
+in Cloud9, --region
 
 ### 3. Secondary region - CFN
 cognito, apigateway, lambda, cache 
@@ -134,10 +134,10 @@ content is in the cdk readme
 3. Delete (aurora, dynamdb) - video 
 
 ### Todo
-1. second region creation in the first cdk
-2. cdk output value pretty
-3. first cdk additional output aurora mysql cluster arn
-4. Global accelerator
+1. first cdk additional output aurora mysql cluster arn
+2. Global accelerator
+3. CLI for workpress, tsconfig, config.js
+
 
 
 

@@ -1,4 +1,4 @@
-# Testing Multi-region Active-active
+# Testing Multi-region Failover
 
 It is one thing to configure active-active but to have real confidence in our
 setup, we need to test it. In this module we will artificially break our
