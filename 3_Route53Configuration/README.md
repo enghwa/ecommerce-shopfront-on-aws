@@ -120,7 +120,7 @@ Choose `Hosted zones` in `Route53`. Select `Create Record Set` with a new CNAME 
 version of your domain. Since this is an alias, it should appear in the
 dropdown list.
 
-Next, choose the `Weighted` routing policy. You can select a value that determines 
+Next, choose the `Geolocation` routing policy. You can select a value that determines 
 the proportion of DNS queries that Route 53 responds for your Ireland record such as `50`.
 Turn on both `Evaluate Target Health` and `Associate with Health Check` then select the `ireland-api` 
 health check you created previously. 
