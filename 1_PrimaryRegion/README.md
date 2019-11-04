@@ -2,10 +2,10 @@
 
 In this module, you will deploy Bookstore application and Blog wordpress in primary (Irelad, eu-west-1) region using AWS CDK(Cloud Developemnt Kit) and AWS CloudFormation. This components include followings:
 1. Fargate and Aurora - Book blog posts with wordpress (AWS Fargate is a compute engine for Amazon ECS and EKS that allows you to run containers without having to manage servers or clusters)
-2. CloudFront and S3 - Web static content
-3. API Gateway and Cognito - App layer with authentication
+2. CloudFront and S3 - Web static content, ReactJS files
+3. API Gateway, AWS Lambda and Cognito - App layer with authentication
 4. DynamoDB and ElastiCache - Books, Order, Cart tables and Best Seller information
-5. Lambda - multiple functions
+
 You will also create the IAM polices and roles required by these components.
 
 ## Building your Book Blog using AWS CDK in your Primary Region (Ireland)
@@ -14,11 +14,9 @@ In Cloud9, go to `wordpress-lab` directory
 (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
 ![CDK](../images/01-cdk-01.png)
 
-Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Eecute following commands one by one in Cloud9.
+Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Execute following commands one by one in AWS Cloud9.
 
 ```bash
-//nvm ....
-//need to export AWS_DEFAULT_REGION = "primary region" , eg: `eu-west-1`, 
 
 export AWS_DEFAULT_REGION=eu-west-1
 export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
@@ -32,7 +30,7 @@ npx cdk@1.8.0 deploy Wordpress-Primary
 ```
 Do you wish to deploy these changes (y/n)? 
 ```
-Both "npx cdk@1.8.0 deploy" hostedZone and Wordpress-Primary commands ask this question. Type "Y", and it 
+Both `npx cdk@1.8.0 deploy hostedZone` and `Wordpress-Primary` commands ask this question. Type "Y", and it 
 will take around 20 min.
 
 ![CDK](../images/01-cdk-02.png)
@@ -57,11 +55,11 @@ You need the VPC id and Subnet ID for the next steps. You can check it in Cloud9
 
 **Frontend**
 
-Build artifacts are stored in a S3 bucket where web application assets are maintained (like book cover photos, web graphics, etc.). Amazon CloudFront caches the frontend content from S3, presenting the application to the user via a CloudFront distribution. The frontend interacts with Amazon Cognito and Amazon API Gateway only. Amazon Cognito is used for all authentication requests, whereas API Gateway (and Lambda) is used for all API calls interacting across DynamoDB and ElastiCach. 
+Build artifacts are stored in a S3 bucket where web application assets are maintained (like book cover photos, web graphics, etc.). Amazon CloudFront caches the frontend content from S3, presenting the application to the user via a CloudFront distribution. The frontend interacts with Amazon Cognito and Amazon API Gateway only. Amazon Cognito is used for all authentication requests, whereas API Gateway (and Lambda) is used for all API calls interacting across DynamoDB and ElastiCache. 
 
 **Backend**
 
-The core of the backend infrastructure consists of Amazon Cognito, Amazon DynamoDB, AWS Lambda, and Amazon API Gateway. The application leverages Amazon Cognito for user authentication, and Amazon DynamoDB to store all of the data for books, orders, and the checkout cart. As books and orders are added, Amazon DynamoDB Streams push updates to AWS Lambda functions that update the Amazon ElasticCache for Redis cluster that powers the books leaderboard. 
+The core of the backend infrastructure consists of Amazon Cognito, Amazon DynamoDB, AWS Lambda, and Amazon API Gateway. The application leverages Amazon Cognito for user authentication, and Amazon DynamoDB to store all of the data for books, orders, and the checkout cart. As books and orders are added, Amazon DynamoDB Streams trigger AWS Lambda functions that update the Amazon ElasticCache for Redis cluster that powers the books leaderboard (best seller). 
 
 <!-- ### AWS Lambda
 
@@ -81,7 +79,7 @@ Amazon CloudFront hosts the web application frontend that users interface with. 
 
 **Developer Tools**
 
-The code is hosted in AWS CodeCommit. AWS CodePipeline builds the web application using AWS CodeBuild. After successfully building, CodeBuild copies the build artifacts into a S3 bucket where the web application assets are maintained (like book cover photos, web graphics, etc.). Along with uploading to Amazon S3, CodeBuild invalidates the cache so users always see the latest experience when accessing the storefront through the Amazon CloudFront distribution.  AWS CodeCommit, AWS CodePipeline, and AWS CodeBuild are used in the deployment and update processes only, not while the application is in a steady-state of use.
+The frontend code (ReactJS) is hosted in AWS CodeCommit. AWS CodePipeline builds the web application using AWS CodeBuild. After successfully building, CodeBuild copies the build artifacts into a S3 bucket where the web application assets are maintained. Along with uploading to Amazon S3, CodeBuild invalidates the cache so users always see the latest experience when accessing the storefront through the Amazon CloudFront distribution.  AWS CodeCommit, AWS CodePipeline, and AWS CodeBuild are used in the deployment and update processes only, not while the application is in a steady-state of use.
 
 <!-- ![Developer Tools Diagram](assets/readmeImages/DeveloperTools.png) -->
 
@@ -122,6 +120,6 @@ FYI. This Bookstore doesn't include the Book Blog yet that you created with CDK.
 
 ## Completion
 
-Congratulations you have configured the bookstore in the primary region (Ireland). In the next module, you will replicate your data (Blog data in Aurora, Web content in S3, Book data in DynamoDB) to the secondary region (Singapore) and build the same Blog and Bookstore application in the secondary region (Singapore) for Resilience and High availability. 
+Congratulations you have configured the bookstore in the primary region (Ireland). In the next module, you will replicate your data (Blog data in Aurora RDS, Web content in S3, Book data in DynamoDB) to the secondary region (Singapore) and build the same Blog and Bookstore application in the secondary region (Singapore) for Resilience and High availability. 
 
 Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md)
