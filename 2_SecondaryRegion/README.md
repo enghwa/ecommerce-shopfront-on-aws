@@ -97,6 +97,9 @@ aws s3api put-bucket-versioning \
   --bucket <arc309-ireland-bookstore>-region2 \
   --versioning-configuration Status=Enabled
 ```
+```bash
+aws s3 website s3:\\<arc309-ireland-bookstore>-region2\ --index-document index.html
+```
 
 <!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
 
@@ -293,7 +296,7 @@ Select your CloudFront Distributions.
 Create the second origin (in Singapire). 
 ![CloudFront](../images/02-cf-02.png)
 
-Choose your S3 bucket name in Singapore in `Orgin Domain Name`, `Origin ID`, and `Origin Access Identity`.
+Type your `Orgin Domain Name` with `<your Singapiore S3 bucket name>.s3-ap-southeast-1.amazonaws.com` and select the options like the following.
 ![CloudFront](../images/02-cf-03.png)
 
 Next, create an origin group.
