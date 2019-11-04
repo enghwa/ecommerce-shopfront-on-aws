@@ -1913,7 +1913,7 @@ Outputs:
   S3replicationRole: 
     Description: The ARN of S3 repliction role
     Value: !GetAtt S3replicationRole.Arn
-  UserPool
+  UserPool:
     Description: The ARN of Cognito UserPool Arn
     Value: !GetAtt UserPool.Arn
   
