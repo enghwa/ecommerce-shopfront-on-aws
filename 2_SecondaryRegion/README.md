@@ -231,7 +231,7 @@ To build the Bookstore application using CloudFormation, you need to download th
 2. Create stack with the downloaded template
 3. Input `Stack name` (ex. arc309-singapore) and `Parameters`
 * **ProjectName**: the same 10 characters with lowercase name (ex.bookstore)
-* **AssetsBucketName**: S3 bucket name replicated from Ireland (ex.arc309-singapore-bookstore)
+* **AssetsBucketName**: S3 bucket name replicated from Ireland (ex.arc309-ireland-bookstore-region2)
 * **bookstoreVPC**: VPC id (output of `Wordpress-Secondary` cdk, vpc-xxxxxxxxxx)
 * **bookstoreSubnet1**: Subnet id for Elasticache (output of `Wordpress-Secondary` cdk, subnet-xxxxxxxxxx)
 * **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)

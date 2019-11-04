@@ -48,7 +48,7 @@ You will use this Custom Domain in Ireland and Singapore to configure health che
 
 ### 2.1 Configure DNS records for Health Check
 
-We will creat additional subdomain prefix to configure health checks with `api-ir.` and `api-sg.`.
+We will creat additional subdomain prefix to configure health checks with `api-ir.` and `api-sg.`. (Please follow the naming.)
 
 **High-level instructions**
 
