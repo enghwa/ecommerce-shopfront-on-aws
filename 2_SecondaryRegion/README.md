@@ -149,6 +149,12 @@ aws s3api put-bucket-replication \
 You can check the replication configuration in S3 console.
 ![Replica S3](../images/02-replica-02.png)
 
+S3 doesn't replicate objects retroactively. S3 Objects that existed before you added the replication configuration to the bucket aren't replicated to the new desination bucket. Hence, you need to sync the existing content to the new bucket in Singapore with following command. 
+
+```bash
+aws s3 sync s3://<arc309-ireland-bookstore> s3://<arc309-ireland-bookstore-region2>
+```
+
 ### 3. Enable DynamoDB Global Tables using Console
 
 Let's take a look at continuously replicating the data in DynamoDB from the primary region (Ireland) to the
