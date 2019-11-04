@@ -1539,7 +1539,7 @@ Resources:
           - DomainName: !Join
               - ''
               - - !Sub '${AssetsBucketName}.s3'
-                - !If [IADRegion, '', !Sub '-${AWS::Region}']
+                # - !If [IADRegion, '', !Sub '-${AWS::Region}']
                 - '.amazonaws.com'
             Id: S3
             S3OriginConfig:
