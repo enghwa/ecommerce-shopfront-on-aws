@@ -131,7 +131,7 @@ copy and paste the following and save with `esc+wq!`.
       "Status": "Enabled",
       "Priority": 1,
       "DeleteMarkerReplication": { "Status": "Disabled" },
-      "Filter" : { "Prefix": ""},
+      "Filter": {},
       "Destination": {
         "Bucket": "arn:aws:s3:::<arc309-singapore-bookstore>"
       }
