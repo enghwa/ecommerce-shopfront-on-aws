@@ -12,7 +12,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
-    Default: 'http://woof.kopi.io/book5a.zip'
+    Default: 'http://woof.kopi.io/book6.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
