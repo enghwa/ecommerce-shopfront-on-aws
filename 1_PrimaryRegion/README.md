@@ -28,7 +28,18 @@ export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
 npm install
 npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy hostedZone
-**TOFIX:Dig and check the successful registration in Route53.**
+```
+
+Now, let's check if the DNS is setup correctly in Route53. Open a new Terminal or iTerm and enter the following command to make sure you see that the DNS is resolving to the correct addresses.
+```
+dig +short NS <<YOUR HOSTED NAME URL>> e.g. myUniqueTeamName.multi-region.xyz
+```
+
+![Compare Route53 namespace](../images/01-r53-01.png)
+
+Now, compare the results with the ones in Route53. If they are the same, you can proceed to deploy the Wordpress. If not, please wait another 1 min before you seek help from the AWS instructors.
+
+```
 npx cdk@1.8.0 deploy Wordpress-Primary
 
 ```
