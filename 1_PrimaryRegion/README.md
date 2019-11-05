@@ -8,7 +8,7 @@ In this module, you will deploy Bookstore application and Blog wordpress in prim
 
 You will also create the IAM polices and roles required by these components.
 
-## Building your Book Blog using AWS CDK in your Primary Region (Ireland)
+## 1. Building your Book Blog using AWS CDK in your Primary Region (Ireland)
 
 In Cloud9, go to `wordpress-lab` directory 
 (ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
@@ -70,7 +70,7 @@ You need the VPC ID and Subnet ID for the next steps. You can check it in Cloud9
 
 If you can find the VPC ID and Subnet ID from the VPC console in Ireland though the CDK is not completed, you can proceed the next step, CloudFormation stack creation.
 
-## Building the Bookstore using Cloudformation in your Primary Region (Ireland)
+## 2. Building the Bookstore using Cloudformation in your Primary Region (Ireland)
 
 **Frontend**
 
