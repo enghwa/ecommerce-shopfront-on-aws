@@ -3,6 +3,10 @@
 Here are high level instructions on cleaning up after you have completed the
 workshop.
 
+## Delete CloudFront Origin Access
+The CloudFront origin access identity is still being used, hence, we need to delete the AssetsBucketOriginAccessIdentity manually first.
+Go to `CloudFront` and select your `CloudFront Distribution`. Go to `Origins and Origin Groups` and delete the `Origin Group` and `Orgin in Singapore` that you created.
+
 ## Delete CloudFormation staks
 
 You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` during the workshop.
