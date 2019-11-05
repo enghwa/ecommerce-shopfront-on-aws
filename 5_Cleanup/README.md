@@ -10,6 +10,9 @@ Go to `CloudFront` and select your `CloudFront Distribution`. Go to `Origins and
 ## Delete API Gateway
 Go to `Custom Domain Names` in `API Gateway` in Singapore and select your `*.arc30901.multi-region.xyz` domain name. Click `x` button to delete it.
 
+## Delete Aurora Read Replicas
+You created the Aurora Read Replica in Singapore using CLI. Go to `RDS`, select Read Replica Cluster `arc309-replica-cluster`, and select `Promte` in `Actions`. We need to promte the read replia as standalone to delete the instance. Then select Read Replica Instance `arc309-replica-instance` and select `Delete` in `Actions`. 
+
 ## Delete CloudFormation staks
 
 You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` during the workshop.

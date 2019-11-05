@@ -13,7 +13,7 @@ Parameters:
   SeedRepository:
     Type: String
     Description: Don't change the defualt value
-    Default: 'http://woof.kopi.io/book6.zip'
+    Default: 'http://woof.kopi.io/book7.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
@@ -34,18 +34,6 @@ Conditions:
   IADRegion: !Equals [!Ref "AWS::Region", "us-east-1"]
 Mappings:
   S3Buckets:
-    # us-east-1:
-    #   Bucket: aws-bookstore-demo
-    #   SeederFunctionBucket: fsd-aws-wildrydes-us-east-1
-    # us-west-2:
-    #   Bucket: aws-bookstore-demo-us-west-2
-    #   SeederFunctionBucket: fsd-aws-wildrydes-us-west-2
-    # eu-central-1:
-    #   Bucket: aws-bookstore-demo-eu-central-1
-    #   SeederFunctionBucket: fsd-aws-wildrydes-eu-central-1
-    # eu-west-1:
-    #   Bucket: aws-bookstore-demo-eu-west-1
-    #   SeederFunctionBucket: fsd-aws-wildrydes-eu-west-1
     ap-southeast-1:
       Bucket: arc309-bookstore-ap-southeast-1
       SeederFunctionBucket: arc309-aws-wildrydes-ap-southeast-1
@@ -64,78 +52,17 @@ Mappings:
       RemoveFromCartCode: functions/RemoveFromCart.zip
       GetBestSellersCode: functions/GetBestSellers.zip
       CheckoutCode: functions/Checkout.zip
-      # UploadBooksCode: functions/UploadBooks.zip
       UpdateBestSellersCode: functions/UpdateBestSellers.zip
       booksData: data/books.json
       UpdateConfigCode: functions/UpdateConfig.zip
       SeederFunctionCode: aws-serverless-codecommit-seeder.zip
 Resources:
-# ---------- VPC - SUBNET - SECURITY GROUPS  ---------
-
-  # bookstoreVPC:
-  #   Type: "AWS::EC2::VPC"
-  #   Properties:
-      # CidrBlock: '172.31.0.0/16'
-  
-  # bookstoreSubnet1:
-  #   Type: "AWS::EC2::Subnet"
-  #   Properties:
-  #     CidrBlock: 
-  #       Fn::Select:
-  #         - 0
-  #         - Fn::Cidr:
-  #            - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
-  #           - 2
-  #           - 5
-  #     VpcId:
-  #       Ref: bookstoreVPC
-  #     AvailabilityZone:
-  #       Fn::Select:
-  #         - 0
-  #         - Fn::GetAZs:
-  #             Ref: "AWS::Region"
-
-  # bookstoreSubnet2:
-  #   Type: "AWS::EC2::Subnet"
-  #   Properties:
-  #     CidrBlock:
-  #       Fn::Select:
-  #         - 1
-  #         - Fn::Cidr:
-  #           - Fn::GetAtt: [!Ref bookstoreVPC, !Ref CidrBlock]
-  #           - 3
-  #           - 8
-  #     VpcId:
-  #       Ref: bookstoreVPC
-  #     AvailabilityZone:
-  #       Fn::Select:
-  #         - 1
-  #         - Fn::GetAZs:
-  #             Ref: "AWS::Region"  
-
   bookstoreSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupName: !Sub '${ProjectName}-SG'
       GroupDescription: Lock cache down to webserver access only
       VpcId: !Ref bookstoreVPC
-
-  # bookstoreVPCRouteTable:  
-  #   Type: AWS::EC2::RouteTable
-  #   Properties: 
-  #     VpcId: !Ref bookstoreVPC
-  
-  # bookstoreVPCRouteTableAssociation:
-  #   Type: AWS::EC2::SubnetRouteTableAssociation
-  #   Properties: 
-  #     RouteTableId: !Ref bookstoreVPCRouteTable
-  #     SubnetId: !Ref bookstoreSubnet1
-
-  # bookstoreVPCRouteTableAssociationTwo:
-  #   Type: AWS::EC2::SubnetRouteTableAssociation
-  #   Properties: 
-  #     RouteTableId: !Ref bookstoreVPCRouteTable
-  #     SubnetId: !Ref bookstoreSubnet2    
 
   redisLambdaSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
@@ -586,37 +513,6 @@ Resources:
           - Constants
           - S3Keys
           - CheckoutCode
-  # FunctionUploadBooks:
-  #   Type: 'AWS::Lambda::Function'
-  #   Properties:
-  #     FunctionName: !Sub '${ProjectName}-UploadBooks'
-  #     Description: Upload sample data for books
-  #     Handler: index.handler
-  #     Runtime: nodejs8.10
-  #     Role: !GetAtt 
-  #       - DynamoDbRole
-  #       - Arn
-  #     Timeout: 120
-  #     Environment:
-  #       Variables:
-  #         TABLE_NAME: !Sub '${ProjectName}-Books'
-  #         S3_BUCKET: !FindInMap 
-  #                   - S3Buckets
-  #                   - !Ref 'AWS::Region'
-  #                   - Bucket
-  #         FILE_NAME: !FindInMap 
-  #                   - Constants
-  #                   - S3Keys
-  #                   - booksData
-  #     Code:
-  #       S3Bucket: !FindInMap 
-  #         - S3Buckets
-  #         - !Ref 'AWS::Region'
-  #         - Bucket
-  #       S3Key: !FindInMap 
-  #         - Constants
-  #         - S3Keys
-  #         - UploadBooksCode
 
 # ---------- LAMBDA FUNCTIONS for ELASTICACHE  ---------          
   FunctionGetBestSellers:
@@ -1481,13 +1377,6 @@ Resources:
         unauthenticated: !GetAtt 
           - CognitoUnAuthorizedRole
           - Arn
-  # BooksUploader:
-  #   Type: 'Custom::CustomResource'
-  #   Properties:
-  #     ServiceToken: !GetAtt FunctionUploadBooks.Arn
-  #     ParameterOne: Parameter to pass into Custom Lambda Function
-  #     DependsOn: 
-  #      - FunctionUploadBooks
 
 # ------------------------ FRONTEND ------------------------
   AssetsCodeRepository:
@@ -1517,8 +1406,6 @@ Resources:
             Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}/*'
             Principal:
               CanonicalUser: !GetAtt AssetsBucketOriginAccessIdentity.S3CanonicalUserId
-              # both the below won't work - https://github.com/terraform-providers/terraform-provider-aws/issues/10158
-              # AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront_Origin_Access_Identity_${AssetsBucketOriginAccessIdentity}'
     DependsOn:
       - AssetsBucketOriginAccessIdentity
   AssetsBucketOriginAccessIdentity:
@@ -1898,11 +1785,6 @@ Resources:
                 Resource: !Sub 'arn:aws:s3:::${AssetsBucketName}-region2/*'
 
 Outputs:
-  # CodeRepository:
-  #   Description: Code repository for the web application.
-  #   Export:
-  #     Name: !Sub '${ProjectName}CodeRepository'
-  #   Value: !GetAtt AssetsCodeRepository.Name
   WebApplication:
     Description: The URL for the web application
     Export:
