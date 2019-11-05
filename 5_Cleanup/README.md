@@ -14,7 +14,10 @@ Go to `Custom Domain Names` in `API Gateway` in Singapore and select your `*.arc
 You created the Aurora Read Replica in Singapore using CLI. Go to `RDS`, select Read Replica Cluster `arc309-replica-cluster`, and select `Promte` in `Actions`. We need to promte the read replia as standalone to delete the instance. Then select Read Replica Instance `arc309-replica-instance` and select `Delete` in `Actions`. 
 
 ## 4. Delete S3 buckets
-You need to empty the S3 bucket to delete resources. Go to `S3` and delete workshop related buckets such as `cdktoolkit-stagingbucket-xxxxxxx`.
+You need to empty the S3 bucket to delete resources. Go to `S3` and delete workshop related buckets: 
+* `cdktoolkit-stagingbucket-xxxxxxx` in Singapore and Ireland
+* `bookstore bucket` in Singapore and Ireland
+* `pipeline bucket` in Ireland
 
 ## 5. Delete CloudFormation staks
 
@@ -25,16 +28,9 @@ You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` du
 
 This is an oder to delete Stacks:
 1. `Singpore API stack` - `Workpress-Secondary` - `CDKTookit` in Singapore
-2. `Ireland API stack` - `Workpress-primary` - `hostedZone` - `cloud9` - `CDKTookit` in Ireland
+2. `Ireland API stack` - `Workpress-primary` - `hostedZone` - `CDKTookit` - `aws-cloud9` in Ireland
 
 To delete Cloudformation stacks, go to `CloudFormation` in the specific region, select the stack name and click `Delete` button. The template will delete along with all resources it created. 
-
-### Module 2_UI
-
-- In the Console, go into S3, and *Empty* but don't delete the bucket hosting
-  your website content
-- Go to `CloudFormation` console, Select the web-ui-stack stack and then *delete* it.
-- The template will be deleted along with all resources it created
 
 ### Module 3_Route53
 
