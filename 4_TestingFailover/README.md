@@ -1,20 +1,19 @@
 # Testing Multi-region Failover
 
 To have real confidence in our multi-region active-active setup, we need to test it.
-In this module we will artificially break our
-primary region and observe our failover in action.
+In this module we will artificially break our primary region and observe our failover in action.
 
-To demonstrate this we coduct a scenario where a developer
-accidentally deletes production setting in API gateway in
+To demonstrate this, we conduct a scenario where a developer
+accidentally deletes the production setting in API gateway in
 primary region (Ireland), thus breaking the API layer. We expect our application detects
 this failure and adjusts the DNS settings to continue service of the
-application from the second region (Singapore)
+application from the second region (Singapore),
 maintaining availability of the API/Database and functionality of the UI.
 
 ## 1. Breaking API layer in primary region (Ireland)
 
 In the AWS Console, ensure you are in your primary region (Ireland) then head over to
-`API Gateway`, choose your `Custom Domain Name`. Then delete the `Base Path Mappings` and save changes.
+`API Gateway` console, choose `Custom Domain Name`. Then delete the `Base Path Mappings` and save changes.
 
 ![Failover](../images/04-failover-01.png)
 
@@ -27,19 +26,16 @@ failure.
 ![Failover](../images/04-failover-02.png)
 
 Since your DNS records are configured to use this health check, Route53 should
-automatically use this information to point your domain at your another
-region.
+automatically use this information to point your application to the second region (Singapore).
 
 You can validate this failover scenario when you visit `https://api-ir.arc30901.multi-region.xyz/books` with `Interanl Server Error`. However, you will get the book list when you visit `https://api.arc30901.multi-region.xyz/books` as the Singapore region API is working properly (same as `https://api-sg.arc30901.multi-region.xyz/books`. 
 
-You're UI should also continue to 
+The web application UI should also continue to 
 function and you should still be able to view and order books.
 
 To confirm everything went as expected, go to your Bookstore application (`https://arc30901.multi-region.xyz/books`)
-and order a book again. You should see your application indicates Singapore region. 
+and order a book again. You should see your application indicates Singapore region. (Singapore flag icon at top left hand corner). In Singapore's DynamoDB console, you will also see that the `Orders` table has a new record with `aws:rep:updateregion` set to `ap-southeast-1`, indicating that this transaction originated from Singapore.
 
-And your DynamoDB tables in both Irelad and Singapore have the same items though you created
-tickets in any places. 
 
 ## Completion
 
