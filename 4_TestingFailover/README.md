@@ -46,7 +46,8 @@ tickets in any places.
 Congratulations! You have now setup and verified an API that fails over from
 one region to another automatically in the event of a disaster.
 
-If you are feeling adventurous, you can proceed to the optional lab - [S3 Cross Region Replication and CloudFront Custom Domain](../6_S3Replication/README.md).
+If you are feeling adventurous, you can read to the optional lab - [Global Accelerlator](../6_Optional/README.md).
+
 Else to end the lab and prevent further AWS charges, please clean-up the AWS resources created in this workshop by following the [steps here.](../5_Cleanup/README.md)
 
 The application you have built includes many components that you would need to
