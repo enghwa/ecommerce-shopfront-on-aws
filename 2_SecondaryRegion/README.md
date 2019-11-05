@@ -92,18 +92,19 @@ This S3 replication will replicate the static contents from Irelad region to Sin
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-regin2`.
 
 ```bash
+export s3bucketRegion2=<arc309-ireland-bookstore>
 aws s3api create-bucket \
-  --bucket <arc309-ireland-bookstore>-region2 \
-  --region <ap-southeast-1> \
-  --create-bucket-configuration LocationConstraint=<ap-southeast-1>
+  --bucket $s3bucketRegion2-region2 \
+  --region ap-southeast-1 \
+  --create-bucket-configuration LocationConstraint=ap-southeast-1
 ```
 ```bash
 aws s3api put-bucket-versioning \
-  --bucket <arc309-ireland-bookstore>-region2 \
+  --bucket $s3bucketRegion2-region2 \
   --versioning-configuration Status=Enabled
 ```
 ```bash
-aws s3 website s3:\\<arc309-ireland-bookstore>-region2\ --index-document index.html
+aws s3 website s3://$s3bucketRegion2-region2/ --index-document index.html
 ```
 
 <!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
@@ -238,12 +239,13 @@ Now, you completed the replication across two regions for Aurora MySQL, S3, and 
 
 **Step-by-step instructions**
 
-To build the Bookstore application using CloudFormation, you need to download the yaml file from [Secondary CloudFormation](https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_SecondaryRegion/arc309_secondary.yaml).  
-**TOFIX:Change the file download location to S3 arc309 bucket.**
+1. Create CloudFormation stack with the following template in Singapore 
 
-1. Go to the CloudFormation console in Singapore
-2. Create stack with the downloaded template
-3. Input `Stack name` (ex. arc309-singapore) and `Parameters`
+Region name | Region code | Launch
+--- | --- | ---
+AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=MyBookstoreSingapore&templateURL=https://arc309-bookstore-ap-southeast-1.s3-ap-southeast-1.amazonaws.com/arc309_secondary.yaml) 
+
+2. Input `Stack name` (ex. arc309-singapore) and `Parameters`
 * **ProjectName**: the same 10 characters with lowercase name (ex.bookstore)
 * **AssetsBucketName**: S3 bucket name replicated from Ireland (ex.arc309-ireland-bookstore-region2)
 * **bookstoreVPC**: VPC id (output of `Wordpress-Secondary` cdk, vpc-xxxxxxxxxx)
@@ -251,7 +253,7 @@ To build the Bookstore application using CloudFormation, you need to download th
 * **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)
 * **UserPool**: Congnito UserPool Arn in Ireland region (ex. arn:aws:cognito-idp:eu-west-1:376715876263:userpool/eu-west-1_1rry319Ri)
 ![CFN](../images/02-cfn-01.png)
-5. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
+3. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 
 This CloudFormation template may take around 5 mins. You can proceed the next steps.
 
