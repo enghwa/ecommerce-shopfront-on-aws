@@ -19,10 +19,10 @@ Your Bookstore on multi-region active-active (or active-passive) architecture me
 
 The application will utilize four layers:
 
-1. An Wordpress layer for the book blog posts.
-2. An UI layer built using HTML, Javascript and CSS and hosted directly from AWS S3.
+1. An Wordpress layer for the book blog posts, using AWS Fargate and RDS.
+2. An UI layer built using HTML, Javascript (ReactJS) and CSS and hosted directly from AWS S3.
 2. An API layer built using Node.js running on AWS Lambda and exposed via Amazon API Gateway.
-3. A data layer storing book and order information in DynamoDB.
+3. A data layer storing book and order information in DynamoDB and Elasticache.
 
 
 ![Architecture diagram](images/architecture_diagram.png)
@@ -32,7 +32,7 @@ our application (in this case, a web application) through API Gateway,
 Lambda and DynamoDB.  
 
 The backend components are replicated to the second region so that it can be
-failovered in the event of a disaster (not in this workshop). All data in DynamoDB, S3, Aurora MySQL will be
+failovered in the event of a disaster. All data in DynamoDB, S3, Aurora MySQL will be
 replicated from the primary region to the secondary region ensures that our
 application data will be available when we failover.
 
@@ -41,7 +41,7 @@ application data will be available when we failover.
 * Web application blueprint – We include a React web application pre-integrated out-of-the-box with tools such as React Bootstrap, Redux, React Router, internationalization, and more.
 * Serverless service backend – Amazon API Gateway powers the interface layer between the frontend and backend, and invokes serverless compute with AWS Lambda.  
 * Authentication - Amazon Cognito to allow the application to authenticate users and authorize access to
-the API layer.
+the API layer. *Note* We will only use a single region for Amazon Cognito, as this serves as a reference implementation for authentication. In real-world deployment, this can be a social media authentication, eg: Facebook, Google etc.
 
 **Database components**
 
