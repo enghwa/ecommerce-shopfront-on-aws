@@ -24,7 +24,7 @@ Now head over to `Route53` and select `Health checks`. Within a few
 minutes, your health check should turn from Green to `Red` and display a
 failure.
 
-![Failed health check](images/failed-health.png)
+![Failover](../images/04-failover-02.png)
 
 Since your DNS records are configured to use this health check, Route53 should
 automatically use this information to point your domain at your another
