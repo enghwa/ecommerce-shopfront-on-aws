@@ -45,35 +45,35 @@ aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-we
 
 * `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region. Or use the following command in Cloud9. 
 ```bash
-aws cloudformation describe-stacks --stack-name Wordpress-Primary --region ap-southeast-1 \
-    --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupName'].OutputValue" --output text
+aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region ap-southeast-1 \
+    --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupId'].OutputValue" --output text
 ```
 
 CLI to create read replica of Aurora MySQL in Singapore region. 
 ```bash
 aws rds create-db-cluster \
-  --db-cluster-identifier <arc309-replica-cluster> \
+  --db-cluster-identifier arc309-replica-cluster \
   --engine aurora \
   --replication-source-identifier <arn:aws:rds:eu-west-1:xxxxxxxxxx:xxxxxxxxx> \
   --vpc-security-group-ids <sg-xxxxxxxxx> \
-  --db-subnet-group-name <SecondaryRegion-WordpressDB-subnetgroup> \
-  --source-region <eu-west-1> \
-  --region <ap-southeast-1>
+  --db-subnet-group-name secondaryregion-wordpressdb-subnetgroup \
+  --source-region eu-west-1 \
+  --region ap-southeast-1
 ```
 
 Verify the RDS replication cluster is created in Singapore region.
 ```bash
-aws rds describe-db-clusters --db-cluster-identifier <arc309-replica-cluster> --region <ap-southeast-1>
+aws rds describe-db-clusters --db-cluster-identifier arc309-replica-cluster --region ap-southeast-1
 ```
 Create RDS read replica instance. 
 
 ```bash
 aws rds create-db-instance \
-  --db-instance-identifier <arc309-replica-instance> \
-  --db-cluster-identifier <arc309-replica-cluster> \
-  --db-instance-class <db.t3.small> \
+  --db-instance-identifier arc309-replica-instance \
+  --db-cluster-identifier arc309-replica-cluster \
+  --db-instance-class db.t3.small \
   --engine aurora \
-  --region <ap-southeast-1>
+  --region ap-southeast-1
 ```
 
 Verify RDS replication in RDS console in Singapore region or using CLI in Cloud9.
