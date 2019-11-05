@@ -1,27 +1,20 @@
-Delete S3 bucket. if not cfn deletion is failed.
-
-
 # Cleaning Up after the Workshop
 
 Here are high level instructions on cleaning up after you have completed the
 workshop.
 
-### Module 1_API:
+## Delete CloudFormation staks
 
-If you manually deploy a region in module 1_API
+You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` during the workshop.
 
-- Delete the three Lambda functions
-- Delete the SXRTickets DynamoDB table
-- Delete the API Gateway and Custom Domains
-- Delete the SSL Certificates in ACM (you may need to wait some time for resources
-  to fully un-deploy before this is possible)
-- Delete the IAM Roles and Policies you created
+* Ireland: `Ireland API stack`, `Workpress-primary`, `hostedZone`, `cloud9`, `CDKTookit`
+* Singapore: `Singpore API stack`, `Workpress-Secondary`, `CDKTookit`
 
-If you used CloudFormation to deploy a 1_API regions
+This is an oder to delete Stacks:
+1. `Singpore API stack` - `Workpress-Secondary` - `CDKTookit`
+2. `Ireland API stack` - `Workpress-primary` - `hostedZone` - `cloud9` - `CDKTookit`
 
-- In the console, select the correct regions
-- Go into CloudFormation and select the wild-rydes-api stack and then select *delete*
-- The template will be deleted along with all resources it created
+To delete Cloudformation stacks, go to `CloudFormation` in the specific region, select the stack name and click `Delete` button. The template will delete along with all resources it created. 
 
 ### Module 2_UI
 
