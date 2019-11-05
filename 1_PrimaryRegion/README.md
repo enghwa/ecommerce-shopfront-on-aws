@@ -105,15 +105,19 @@ The frontend code (ReactJS) is hosted in AWS CodeCommit. AWS CodePipeline builds
 **Step-by-step instructions**
 
 To build the Bookstore application using CloudFormation, you need to download the yaml file from [Primary CloudFormation](https://github.com/enghwa/MultiRegion-Modern-Architecture/blob/master/1_PrimaryRegion/arc309_primary.yaml).  
-**TOFIX:Change the file download location to S3 arc309 bucket.**
 
 1. Go to the CloudFormation console in Ireland and select `Wordpress-Primary` stack.
 ![CFN](../images/01-cfn-01.png)
 2. Find the VPC id and Subnet Id in the `Outputs` tab for the next step.
 ![CFN](../images/01-cfn-02.png)
 3. Create stack with the downloaded template
-Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'
+Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'. Or click the `Launch stack` button in the table.
 ![CFN](../images/01-cfn-03.png)
+
+Region name | Region code | Launch
+--- | --- | ---
+EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=MyBookstoreIreland&templateURL=https://arc309-bookstore-ap-southeast-1.s3-ap-southeast-1.amazonaws.com/arc309_secondary.yaml) 
+
 4. Input `Stack name` and `Parameters`
 * **ProjectName**: 10 characters with lowercase (no number is allowed) (ex.bookstore)
 * **AssetsBucketName**: S3 bucket name with lowercase (ex.arc309-ireland-bookstore)
