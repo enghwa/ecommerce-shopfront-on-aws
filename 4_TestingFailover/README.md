@@ -1,21 +1,24 @@
 # Testing Multi-region Failover
 
-<!-- It is one thing to configure active-active but to have real confidence in our
-setup, we need to test it.  -->
+To have real confidence in our multi-region active-active setup, we need to test it.
 In this module we will artificially break our
 primary region and observe our failover in action.
 
-To demonstrate this we will replicate a scenario where a developer
-accidentally deploys incorrect code to the health check endpoint in the
-primary region (Ireland), thus breaking it. We will expect our application to detect
-this failure and adjust the DNS settings to continue service of the
-application (and the unchanged health check) from the second region (Singapore)
-maintaining availability of the API and functionality of the UI.
+To demonstrate this we coduct a scenario where a developer
+accidentally deletes production setting in API gateway in
+primary region (Ireland), thus breaking the API layer. We expect our application detects
+this failure and adjusts the DNS settings to continue service of the
+application from the second region (Singapore)
+maintaining availability of the API/Database and functionality of the UI.
 
 ## Breaking the primary region
 
 In the AWS Console, ensure you are in your primary region (Ireland) then head over to
-**API Gateway**, choose your API and select the `GET` method of the `/Books`
+`API Gateway`, choose your `Custom Domain Name`. Then delete the `Base Path Mappings` and save.
+
+![Failover](../images/04-failover-01.png)
+
+choose your API and select the `GET` method of the `/Books`
 endpoint. Under **Integration Request** change the associated Lambda function
 to instead be your *TicketPostFunction*. Click the tick icon next to it to save the
 change. This function expects to be called with a JSON body containing new ticket information however when triggered by the health endpoint it will fail and return an error code, causing the health check to fail.
