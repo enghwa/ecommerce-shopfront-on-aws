@@ -7,12 +7,15 @@ workshop.
 The CloudFront origin access identity is still being used, hence, we need to delete the AssetsBucketOriginAccessIdentity manually first.
 Go to `CloudFront` and select your `CloudFront Distribution`. Go to `Origins and Origin Groups` and delete the `Origin Group` and `Orgin in Singapore` that you created.
 
+## Delete API Gateway
+Go to `Custom Domain Names` in `API Gateway` in Singapore and select your `*.arc30901.multi-region.xyz` domain name. Click `x` button to delete it.
+
 ## Delete CloudFormation staks
 
 You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` during the workshop.
 
-* Ireland: `Ireland API stack`, `Workpress-primary`, `hostedZone`, `cloud9`, `CDKTookit`
-* Singapore: `Singpore API stack`, `Workpress-Secondary`, `CDKTookit`
+<!-- * Ireland: `Ireland API stack`, `Workpress-primary`, `hostedZone`, `cloud9`, `CDKTookit`
+* Singapore: `Singpore API stack`, `Workpress-Secondary`, `CDKTookit` -->
 
 This is an oder to delete Stacks:
 1. `Singpore API stack` - `Workpress-Secondary` - `CDKTookit`
