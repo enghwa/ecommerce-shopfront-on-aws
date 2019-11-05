@@ -157,4 +157,4 @@ You can `Sign up` and `Log in` to order books through your domain `https://arc30
 
 In the next module we will intentionally break the primary region (Ireland) and verify that the second region (Singapore) works.
 
-Module 4: [Test Active-Active](../4_Testing/README.md)
+Module 4: [Test Multi-region Failover](../4_Testing/README.md)
