@@ -131,8 +131,7 @@ export class wordpressRegion2 extends cdk.Stack {
     new cdk.CfnOutput(this, 'Secondary Region VpcId_' + props.region, { value: vpc.vpcId });
     new cdk.CfnOutput(this, 'Secondary Region private subnet for Elasticache', { value: vpc.selectSubnets({ subnetType: SubnetType.PRIVATE }).subnetIds[0] });
     new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_' + props.region, { value: validatedWildCardCert.certificateArn });
-    new cdk.CfnOutput(this, 'WordpressDB SubnetGroup Name', { value: dbSubnetGroup.dbSubnetGroupName || "" });
+    new cdk.CfnOutput(this, 'WordpressDB SubnetGroup Name', { value: dbSubnetGroup.dbSubnetGroupName!.toLowerCase() || "" });
     new cdk.CfnOutput(this, 'WordpressDB securityGroup Id', { value: dbsecuritygroup.securityGroupName });
-
   }
 } 
