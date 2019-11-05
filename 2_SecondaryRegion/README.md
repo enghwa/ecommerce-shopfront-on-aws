@@ -121,20 +121,18 @@ $ aws iam put-role-policy \
 Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the your Cloud9. You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack (ex.arc309-ireland) in Ireland or execute following command in the Cloud9.
 
 ```bash
-aws cloudformation describe-stacks --stack-name <arc309-ireland> --region eu-west-1 \
-    --query "Stacks[0].Outputs[?OutputKey=='S3replicationRole'].OutputValue" --output text
+export IrelandStackName=<arc309-ireland>
+export GetReplicationArnRole=`aws cloudformation describe-stacks --stack-name $IrelandStackName --region eu-west-1 \
+     --query "Stacks[0].Outputs[?OutputKey=='S3replicationRole'].OutputValue" --output text`
+export ReplicationArnRole="$GetReplicationArnRole"
 ```
 
-To create `replication.json` file in the Cloud9, 
-```bash
-$vi replication.json
-esc+i: insert
-```
-copy and paste the following and save with `esc+wq!`.
+
+copy and paste the following command to create a replication.json file:
 
 ```
-{
-  "Role": "<IAM-role-ARN>",
+echo '{
+  "Role": "'$ReplicationArnRole'",
   "Rules": [
     {
       "Status": "Enabled",
@@ -142,17 +140,17 @@ copy and paste the following and save with `esc+wq!`.
       "DeleteMarkerReplication": { "Status": "Disabled" },
       "Filter": {},
       "Destination": {
-        "Bucket": "arn:aws:s3:::<arc309-singapore-bookstore>"
+        "Bucket": "arn:aws:s3:::'$s3bucketRegion2'-region2"
       }
     }
   ]
-}
+}' > replication.json
 ```
 
 ```bash
 aws s3api put-bucket-replication \
   --replication-configuration file://replication.json \
-  --bucket <arc309-ireland-bookstore>
+  --bucket $s3bucketRegion2
 ```
 
 You can check the replication configuration in S3 console.
@@ -161,7 +159,7 @@ You can check the replication configuration in S3 console.
 S3 doesn't replicate objects retroactively. S3 Objects that existed before you added the replication configuration to the bucket aren't replicated to the new desination bucket. Hence, you need to sync the existing content to the new bucket in Singapore with following command. 
 
 ```bash
-aws s3 sync s3://<arc309-ireland-bookstore> s3://<arc309-ireland-bookstore-region2>
+aws s3 sync s3://$s3bucketRegion2 s3://$s3bucketRegion2-region2
 ```
 
 ### 3. Enable DynamoDB Global Tables using Console
