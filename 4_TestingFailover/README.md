@@ -14,23 +14,14 @@ maintaining availability of the API/Database and functionality of the UI.
 ## Breaking the primary region
 
 In the AWS Console, ensure you are in your primary region (Ireland) then head over to
-`API Gateway`, choose your `Custom Domain Name`. Then delete the `Base Path Mappings` and save.
+`API Gateway`, choose your `Custom Domain Name`. Then delete the `Base Path Mappings` and save changes.
 
 ![Failover](../images/04-failover-01.png)
 
-choose your API and select the `GET` method of the `/Books`
-endpoint. Under **Integration Request** change the associated Lambda function
-to instead be your *TicketPostFunction*. Click the tick icon next to it to save the
-change. This function expects to be called with a JSON body containing new ticket information however when triggered by the health endpoint it will fail and return an error code, causing the health check to fail.
-
-![Break api](images/break-api.png)
-
-Under **Actions** select **Deploy** to redeploy your API to the `prod` stage.
-
 ## Verifying the failure
 
-Now head over to **Route53** and select **Health checks**. Within a few
-minutes, your health check should turn from green to red and display a
+Now head over to `Route53` and select `Health checks`. Within a few
+minutes, your health check should turn from Green to `Red` and display a
 failure.
 
 ![Failed health check](images/failed-health.png)
