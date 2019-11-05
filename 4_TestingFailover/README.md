@@ -11,14 +11,14 @@ this failure and adjusts the DNS settings to continue service of the
 application from the second region (Singapore)
 maintaining availability of the API/Database and functionality of the UI.
 
-## Breaking the primary region
+## 1. Breaking API layer in primary region (Ireland)
 
 In the AWS Console, ensure you are in your primary region (Ireland) then head over to
 `API Gateway`, choose your `Custom Domain Name`. Then delete the `Base Path Mappings` and save changes.
 
 ![Failover](../images/04-failover-01.png)
 
-## Verifying the failure
+## 2. Verifying the failure
 
 Now head over to `Route53` and select `Health checks`. Within a few
 minutes, your health check should turn from Green to `Red` and display a
