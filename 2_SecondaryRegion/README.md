@@ -5,6 +5,11 @@ We completed building the bookstore in the primary region (Ireland) in the previ
 ## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
 
 Go back to your Cloud9, and execute following commands.It will take around 15 mins. (It should be executed under `wordpress-lab` directory)
+
+```
+cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
+```
+
 * **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (ex.Z7VDWLHBQQSCF)
 ![CDK](../images/02-cdk-01.png)
 * Your `MYSUBDOMAIN` was previously exported in module 1.
