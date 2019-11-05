@@ -267,21 +267,20 @@ Select `web` container and update `WORDPRESS_DB_HOST` with the above Aurora Read
 
 And we need to update the password in AWS Secrets Manager in Singapore to connect the Aurora Read Replica in Singapore. 
 
-Find the password from Ireland with the following command:
-```
-aws secretsmanager get-secret-value \
---secret-id <arn:aws:secretsmanager:eu-west-1:xxxxxxxxxx:secret:wordpressDBPassword-mOSymc> \
---region eu-west-1 \
---query "SecretString" --output text
-```
-Update the Secrets Manager in Singapore
-```
+The following command will update the secretmaanger `wordpressDBPassword` in Singapore to the  same value `wordpressDBPassword` in Ireland:
+
+```bash
+AWS_ACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
+
 aws secretsmanager update-secret \
---secret-id <arn:aws:secretsmanager:ap-southeast-1:xxxxxxxxxx:secret:wordpressDBPassword-lRz9Eg> \
---secret-string <dGCmmbIlfSxS6ISkJ3JnzvNTkwS4GjpV> \
---region <ap-southeast-1>
+--secret-id arn:aws:secretsmanager:ap-southeast-1:$AWS_ACCOUNTID:secret:wordpressDBPassword \
+--secret-string \
+$(aws secretsmanager get-secret-value \
+--secret-id arn:aws:secretsmanager:eu-west-1:$AWS_ACCOUNTID:secret:wordpressDBPassword \
+--region eu-west-1 \
+--query "SecretString" --output text) \
+--region ap-southeast-1
 ```
-**TOFIX: Need Secret Id in output of CDK in primary region**
 
 ## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions 
 
