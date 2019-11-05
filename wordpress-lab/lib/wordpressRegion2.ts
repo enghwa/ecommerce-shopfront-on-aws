@@ -127,6 +127,19 @@ export class wordpressRegion2 extends cdk.Stack {
       setIdentifier: "blog-Secondary",
     })
 
+    new route53.CfnRecordSet(this, 'blog-alias-primary', {
+      name: "blog." + myDomainName + ".",
+      type: route53.RecordType.A,
+      hostedZoneId: props.hostedZoneID,
+      aliasTarget: {
+        dnsName: "primary.blog." + myDomainName + ".",
+        evaluateTargetHealth: true,
+        hostedZoneId: props.hostedZoneID
+      },
+      failover: "PRIMARY",
+      setIdentifier: "blog-Primary",
+    })
+
     // cdk/cfn output
     new cdk.CfnOutput(this, 'Secondary Region VpcId_' + props.region, { value: vpc.vpcId });
     new cdk.CfnOutput(this, 'Secondary Region private subnet for Elasticache', { value: vpc.selectSubnets({ subnetType: SubnetType.PRIVATE }).subnetIds[0] });

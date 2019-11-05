@@ -139,18 +139,18 @@ export class WordpressLabStack extends cdk.Stack {
     })
 
     //add primary failover alias
-    new route53.CfnRecordSet(this, 'blog-alias-primary', {
-      name: "blog." + myDomainName + ".",
-      type: route53.RecordType.A,
-      hostedZoneId: props.hostedZoneID,
-      aliasTarget: {
-        dnsName: "primary.blog." + myDomainName + ".",
-        evaluateTargetHealth: true,
-        hostedZoneId: props.hostedZoneID
-      },
-      failover: "PRIMARY",
-      setIdentifier: "blog-Primary",
-    })
+    // new route53.CfnRecordSet(this, 'blog-alias-primary', {
+    //   name: "blog." + myDomainName + ".",
+    //   type: route53.RecordType.A,
+    //   hostedZoneId: props.hostedZoneID,
+    //   aliasTarget: {
+    //     dnsName: "primary.blog." + myDomainName + ".",
+    //     evaluateTargetHealth: true,
+    //     hostedZoneId: props.hostedZoneID
+    //   },
+    //   failover: "PRIMARY",
+    //   setIdentifier: "blog-Primary",
+    // })
 
     //TODO : fix ALB path to only /wp-json so WP UI won't render.. (link error too due to db import)
 

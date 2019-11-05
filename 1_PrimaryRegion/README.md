@@ -58,9 +58,8 @@ will take around 20 min.
 
 **Your Book Blog is completed**
 
-Now, your Book Blog is built. Please verify with followings:
+Now, your Book Blog is built. Please verify with following:
 ```
-https://blog.<MYSUBDOMAIN>.multi-region.xyz/
 https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/
 
 ```
