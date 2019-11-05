@@ -23,6 +23,7 @@ export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
 npm install
 npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy hostedZone
+**TOFIX:Dig and check the successful registration in Route53.**
 npx cdk@1.8.0 deploy Wordpress-Primary
 
 ```
@@ -36,6 +37,7 @@ will take around 20 min.
 ![CDK](../images/01-cdk-02.png)
 ![CDK](../images/01-cdk-03.png)
 * You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
+
 ![CDK](../images/01-cdk-04.png)
 
 **Your Book Blog is completed**
