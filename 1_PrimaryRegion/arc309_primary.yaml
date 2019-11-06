@@ -13,7 +13,7 @@ Parameters:
   SeedRepository:
     Type: String
     Description: Don't change the defualt value
-    Default: 'http://woof.kopi.io/book7.zip'
+    Default: 'http://woof.kopi.io/book8.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
@@ -56,6 +56,7 @@ Mappings:
       booksData: data/books.json
       UpdateConfigCode: functions/UpdateConfig.zip
       SeederFunctionCode: aws-serverless-codecommit-seeder.zip
+      GetTruthCode: functions/myregion.zip
 Resources:
   bookstoreSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -550,7 +551,30 @@ Resources:
           URL: !GetAtt 
             - ElastiCacheCluster
             - RedisEndpoint.Address          
-  
+
+# ---------- LAMBDA FUNCTIONS for Health Check  ---------          
+  FunctionGetTruth:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub '${ProjectName}-GetTruth'
+      Description: Get the region name for health check
+      Handler: index.handler
+      MemorySize: 256
+      Role: !GetAtt
+        - RedisRole
+        - Arn
+      Runtime: nodejs8.10
+      Timeout: '60'
+      Code:
+        S3Bucket: !FindInMap 
+          - S3Buckets
+          - !Ref 'AWS::Region'
+          - Bucket
+        S3Key: !FindInMap 
+          - Constants
+          - S3Keys
+          - GetTruthCode 
+
  # ---------- LAMBDA PERMISSIONS ---------    
   FunctionListOrdersPermissions:
     Type: 'AWS::Lambda::Permission'
@@ -1235,6 +1259,69 @@ Resources:
       RestApiId: !Ref AppApi
       StageName: prod
 
+  TruthApiRequestGET:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Join 
+          - ''
+          - - 'arn:aws:apigateway:'
+            - !Ref 'AWS::Region'
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt 
+              - FunctionGetTruth
+              - Arn
+            - /invocations
+        IntegrationResponses:
+          - StatusCode: 200
+      ResourceId: !Ref TruthApiResource
+      RestApiId: !Ref AppApi
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty    
+  TruthApiRequestOPTIONS:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      ResourceId: !Ref TruthApiResource
+      RestApiId: !Ref AppApi
+      AuthorizationType: None
+      HttpMethod: OPTIONS
+      Integration:
+        Type: MOCK
+        IntegrationResponses:
+          - ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: >-
+                'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+              method.response.header.Access-Control-Allow-Methods: '''GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            ResponseTemplates:
+              application/json: ''
+            StatusCode: '200'
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+      MethodResponses:
+        - ResponseModels:
+            application/json: Empty
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+          StatusCode: '200'      
+  TruthApiResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref AppApi
+      ParentId: !GetAtt 
+        - AppApi
+        - RootResourceId
+      PathPart: truth 
+    
 # ---------- COGNITO DEFINITIONS ---------           
   SNSRole:
     Type: 'AWS::IAM::Role'
