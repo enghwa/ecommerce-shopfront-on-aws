@@ -1273,7 +1273,6 @@ Resources:
       Description: Prod deployment for API
       RestApiId: !Ref AppApi
       StageName: prod
-
   TruthApiRequestGET:
     Type: 'AWS::ApiGateway::Method'
     DependsOn: FunctionGetTruthPermissions
