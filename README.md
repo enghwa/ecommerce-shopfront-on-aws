@@ -8,7 +8,6 @@ Key points on implementation
  * Active-Active 
  * Multi-Region 
  * Showcases Amazon AWS components to create the reference
- * Liberal license
 
 
 Demo URL

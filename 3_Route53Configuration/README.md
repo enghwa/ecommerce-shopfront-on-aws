@@ -3,7 +3,7 @@
 
 Now that we set up the Bookstore App in Ireland and Singapore regions, and let's configure Route53 for active-active multi-region solution. 
 
-You don't need to purchase or repurpose your domain name for this workshop as our CDK created subdomain automatically for you. Also the CDK made a request ACM certificates in Ireland and Singapore regions for your convinience. 
+You don't need to purchase or repurpose your domain name for this workshop as our CDK created subdomain automatically for you. Also the CDK script has requested ACM certificates in Ireland and Singapore regions for your convinience. 
 
 Naviagte you have 4 certificates in each region.
 ![ACM](../images/03-cert-01.png)
@@ -105,8 +105,9 @@ before proceeding.
 ### 2.3 Configure DNS Routing Policy
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
-configure these as CNAME ALIAS records in a weighted pattern using
-your health check for Multi-region active-active backend.
+configure these as CNAME ALIAS records in a *Geolocation* routing policy using
+your health check for Multi-region active-active backend. Geolocation routing policy routes traffic based on the location of your users. Ireland will be the default region serving global customers. If your users are outside of Singapore, it will default route to Ireland. For Singapore users, it will default to Singapore region.
+
 
 ***Note.*** To create records for complex routing configurations, you can also use the traffic flow 
 visual editor and save the configuration as a traffic policy. However, we use the routing policy
@@ -120,12 +121,12 @@ Choose `Hosted zones` in `Route53`. Select `Create Record Set` with a new CNAME 
 version of your domain. Since this is an alias, it should appear in the
 dropdown list.
 
-Next, choose the `Geolocation` routing policy. Route 53 responds to queries based on the locations from which DNS queries originate. We recommend that you create a `Default` location resource record set. 
+Next, choose the `Geolocation` routing policy. Route 53 responds to queries based on the locations from which DNS queries originate. Remember to  create a `Default` location resource record set. 
 Turn on both `Evaluate Target Health` and `Associate with Health Check` then select the `ireland-api` 
 health check you created previously. 
 ![Route53](../images/03-dns-05.png)
 
-Create one more CNAME record with `api-sg` Alias with the same step. Choose the location with `Singapore` instead of `Default`.
+Create one more CNAME record with `api-sg` Alias with the same step. Choose the location with `Singapore`.
 ![Route53](../images/03-dns-06.png)
 
 With the DNS configured, you should now be able to visit the `api.` prefix of
@@ -139,7 +140,7 @@ Now that we have active-active configuration, you will need to change the API
 endpoint in your WebAssets (*bookstore-WebAssets/src/config.js*) to use our newly
 created DNS name for our API endpoint.
 
-Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz` (substituting your own domain) instead of the region specific name.
+Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name.
 Also, add in `API_IRELAND_URL` with the FQDN of the Ireland's APIGW CNAME, this is to facilitate our failover testing later.
 Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
 
@@ -147,8 +148,7 @@ Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the
 
 ## Completion
 
-Congratulations you have configured a multi-region API and set up a
-healthcheck-based Weighted routing policy using Route53. 
+Congratulations you have configured a multi-region API and set up a healthcheck-based Geolocation routing policy using Route53. 
 ![Bookstore](../images/03-complete-01.png)
 
 You can `Sign up` and `Log in` to order books through your domain `https://arc30901.multi-region.xyz/`. Order a book and see if `Order` and `Best Sellers` are working. Also, check the `Order` table in DynamoDB in `Ireland` region with the DynamoDB table in `Singapore` region to see whether your order data is replicated properly. 
