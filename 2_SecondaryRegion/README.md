@@ -264,8 +264,8 @@ You remember the Book Blog you created above had `503 Service Temporarily Unavai
 
 ```bash
 aws rds describe-db-instances \
---db-instance-identifier <arc309-replica-instance> \
---region <ap-southeast-1> \
+--db-instance-identifier arc309-replica-instance \
+--region ap-southeast-1 \
 --query "DBInstances[0].Endpoint.Address" --output text
 ```
 
