@@ -561,8 +561,8 @@ Resources:
       Handler: index.handler
       MemorySize: 256
       Role: !GetAtt
-        - RedisRole
-        - Arn
+          - SeederRole
+          - Arn
       Runtime: nodejs8.10
       Timeout: '60'
       Code:
