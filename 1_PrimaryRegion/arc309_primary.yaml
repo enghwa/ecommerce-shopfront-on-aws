@@ -13,7 +13,7 @@ Parameters:
   SeedRepository:
     Type: String
     Description: Don't change the defualt value
-    Default: 'http://woof.kopi.io/book8.zip'
+    Default: 'http://woof.kopi.io/book9.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
