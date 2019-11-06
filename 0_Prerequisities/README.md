@@ -4,6 +4,8 @@ Login to AWS Console, go to *Ireland(eu-west-1) Region* and spin up a AWS Cloud9
 
 https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1 
 
+![AWS Ireland](../images/00-c9-00.png)
+
 ![Create AWS Cloud9](../images/00-c9-01.png)
 
 Name your AWS Cloud9 Environment
