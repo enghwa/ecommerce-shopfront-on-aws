@@ -19,7 +19,10 @@ You need to empty the S3 bucket to delete resources. Go to `S3` and delete works
 * `bookstore bucket` in Singapore and Ireland
 * `pipeline bucket` in Ireland
 
-## 5. Delete CloudFormation staks
+## 5. Delete S3 Replication role
+Go to IAM and delete S3 replication role such as `bookstore-S3replicationRole`.
+
+## 6. Delete CloudFormation staks
 
 You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` during the workshop.
 
