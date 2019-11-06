@@ -33,13 +33,13 @@ Now, your Book Blog in Singapore is completed. However, you will find `503 Servi
 
 ## Replication of Aurora, S3, and DynamoDB 
 
-In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
+In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contents, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
 ### 1. Enable Aurora MySQL Read replica in Singapore region
 
-Aurora MySQL Read replica helps you have redundancy plan. The replica in Singapore region can be promoted as the primary database when the primary database in the primary region (Ireland) has issues.
+Aurora MySQL Read replica helps you have a redundancy plan. The replica in Singapore region can be promoted as the primary database when the primary database in the primary region (Ireland) has issues.
 
-Go back to Cloud9, and execute the following command to enable the read replica of Aurora MySQL in Singapore region
+Go back to Cloud9, and execute the following commands to enable the read replica of Aurora MySQL in Singapore region
 from Ireland region using the AWS CLI. 
 
 * `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region. Or use the following command in Cloud9.
@@ -89,11 +89,11 @@ aws rds create-db-instance \
 Verify RDS replication in RDS console in Singapore region or using CLI in Cloud9.
 ![Replica Aurora](../images/02-replica-01.png)
 
-It takes for a while, you can procced the next step first.
+Provisioning the Aurora replica instance can take a while takes for a while, you can procced the next step while the instance is being deployed.
 
 ### 2. Enable S3 replication for Web contents replication
 
-This S3 replication will replicate the static contents from Irelad region to Singapore whenever there is update. 
+This S3 replication will replicate the static contents from Irelad region to Singapore whenever there is an update. 
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
@@ -194,7 +194,7 @@ Go to DynamoDB in Ireland. Select `Books` table, go to `Global Tables` tab, and 
 Select `Singapore`, and click `Continue`.
 ![Replica DynamoDVB](../images/02-replica-04.png)
 
-Do the same steps or `Orders` and `Cart` tables.
+Do the same steps or `bookstore-Orders` and `bookstore-Cart` tables.
 
 <!-- aws dynamodb create-table \
     --table-name <Books table name> \
@@ -274,14 +274,14 @@ aws rds describe-db-instances \
 --query "DBInstances[0].Endpoint.Address" --output text
 ```
 
-Go to `ECS` in Singapore region, select `WordpressSecondarywordpresssvcTaskDefACEF634B` in `Task Definition`, and click `Create new revision`.
+Go to `ECS` in Singapore region, select `WordpressSecondarywordpresssvcTaskDefXXXXXXXX` task in `Task Definition`, and click `Create new revision`.
 ![ECS](../images/02-ecs-01.png)
-Select `web` container and update `WORDPRESS_DB_HOST` with the above Aurora Read Replica endpoint. Click `Create`.
+Select `web` container and update `WORDPRESS_DB_HOST` with the above Aurora Read Replica endpoint. Click `Update`.
 ![ECS](../images/02-ecs-02.png)
 
 And we need to update the password in AWS Secrets Manager in Singapore to connect the Aurora Read Replica in Singapore. 
 
-The following command will update the secretmaanger `wordpressDBPassword` in Singapore to the  same value `wordpressDBPassword` in Ireland:
+The following command will update the Secrets Manager `wordpressDBPassword` in Singapore to the same value as the `wordpressDBPassword` in Ireland:
 
 ```bash
 AWS_ACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
@@ -303,7 +303,7 @@ Origin Failover of CloudFront distributions improves the availability of content
 With CloudFront’s Origin Failover capability, your content is served from your secondary origin (Singapore) if CloudFront detects that your primary origin (Ireland) is unavailable. 
 <!-- For example, you can have two Amazon S3 buckets that serve as your origin, that you independently upload your content to. If an object that CloudFront requests from your primary bucket is not present or if connection to your primary bucket times-out, CloudFront will request the object from your secondary bucket. So, you can configure CloudFront to trigger a failover in response to either HTTP 4xx or 5xx status codes. -->
 
-Select your CloudFront Distributions.
+Click your CloudFront Distributions, and click on the "Origins and Origin Groups" tab.
 ![CloudFront](../images/02-cf-01.png)
 
 Create the second origin (in Singapore). 
@@ -319,7 +319,7 @@ CloudFront automatically switches to the secondary origin when the primary origi
 
 ## Update Blog WebAsset URL with Wordpress Application Load Balancer 
 
-Find your code repo in CodeCommit and edit `wordpressconfig.ts` (ex. bookstore-WebAssetssrcwordpressconfig.ts) in Ireland region.
+Find your code repo in CodeCommit and edit `wordpressconfig.ts` (ex. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region.
 ![Wordpress](../images/02-wp-01.png)
 
 Update `http://<FQDN of your Wordpress Application Load Balancer` to
@@ -344,7 +344,7 @@ Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
 Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
 ![CloudFront](../images/02-cf-07.png)
 
-Copu your CloudFront Domain Name (ex. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
+Copy your CloudFront Domain Name (ex. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
 * Type: A-IPv4 address
 * Alias: `Yes` and Target: `dunq4klru02xw.cloudfront.net`
 ![CloudFront](../images/02-cf-08.png)
