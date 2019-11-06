@@ -28,7 +28,7 @@ failure.
 Since your DNS records are configured to use this health check, Route53 should
 automatically use this information to point your application to the second region (Singapore).
 
-You can validate this failover scenario when you visit `https://api-ir.arc30901.multi-region.xyz/books` with `Interanl Server Error`. However, you will get the book list when you visit `https://api.arc30901.multi-region.xyz/books` as the Singapore region API is working properly (same as `https://api-sg.arc30901.multi-region.xyz/books`. 
+You can validate this failover scenario when you visit `https://api-ir.arc30901.multi-region.xyz/books` with `{"message":"Forbidden"}` error. However, you will get the book list when you visit `https://api.arc30901.multi-region.xyz/books` as the Singapore region API is working properly (same as `https://api-sg.arc30901.multi-region.xyz/books`. 
 
 The web application UI should also continue to 
 function and you should still be able to view and order books.

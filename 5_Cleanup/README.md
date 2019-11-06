@@ -25,15 +25,15 @@ Go to IAM and delete S3 replication role such as `bookstore-S3replicationRole`.
 Go to Route 53, select your `Hosted Zones`, select all your `Record Set`, and `Delete Record Set`. 
 Select `Health Checks` and delete existing `Health Checks` for Ireland and Singapore.
 
-## 6. Delete CloudFormation staks
+## 6. Delete CloudFormation stacks
 
 You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` during the workshop.
 
 <!-- * Ireland: `Ireland API stack`, `Workpress-primary`, `hostedZone`, `cloud9`, `CDKTookit`
-* Singapore: `Singpore API stack`, `Workpress-Secondary`, `CDKTookit` -->
+* Singapore: `Singapore API stack`, `Workpress-Secondary`, `CDKTookit` -->
 
-This is an oder to delete Stacks:
-1. `Singpore API stack` - `Workpress-Secondary` - `CDKTookit` in Singapore
+The stacks must be deleted in the following order:
+1. `Singapore API stack` - `Workpress-Secondary` - `CDKTookit` in Singapore
 2. `Ireland API stack` - `Workpress-primary` - `hostedZone` - `CDKTookit` - `aws-cloud9` in Ireland
 
 To delete Cloudformation stacks, go to `CloudFormation` in the specific region, select the stack name and click `Delete` button. The template will delete along with all resources it created. 

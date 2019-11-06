@@ -1,7 +1,7 @@
 # Building the Bookstore in your Primary Region
 
-In this module, you will deploy Bookstore application and Blog wordpress in primary (Irelad, eu-west-1) region using AWS CDK(Cloud Developemnt Kit) and AWS CloudFormation. This components include followings:
-1. Fargate and Aurora - Book blog posts with wordpress (AWS Fargate is a compute engine for Amazon ECS and EKS that allows you to run containers without having to manage servers or clusters)
+In this module, you will deploy the Bookstore application and Wordpress blog in the rimary (Ireland, eu-west-1) region using AWS CDK(Cloud Development Kit) and AWS CloudFormation. The solution uses the following components:
+1. Fargate and Aurora - Book blog posts with Wordpress (AWS Fargate is a compute engine for Amazon ECS and EKS that allows you to run containers without having to manage servers or clusters)
 2. CloudFront and S3 - Web static content, ReactJS files
 3. API Gateway, AWS Lambda and Cognito - App layer with authentication
 4. DynamoDB and ElastiCache - Books, Order, Cart tables and Best Seller information
@@ -70,7 +70,7 @@ You need the VPC ID and Subnet ID for the next steps. You can check it in Cloud9
 
 If you can find the VPC ID and Subnet ID from the VPC console in Ireland though the CDK is not completed, you can proceed the next step, CloudFormation stack creation.
 
-## 2. Building the Bookstore using Cloudformation in your Primary Region (Ireland)
+## 2. Building the Bookstore using CloudFormation in your Primary Region (Ireland)
 
 **Frontend**
 
@@ -140,7 +140,7 @@ https://d1zltjarei3438.cloudfront.net/
 ```
 ![CFN](../images/01-cfn-07.png)
 
-FYI. This Bookstore doesn't include the Book Blog yet that you created with CDK. It will be shown after you complete buiding the secondary region Bookstore application.
+FYI. This Bookstore doesn't include the Book Blog yet that you created with CDK. It will be shown after you complete building the secondary region Bookstore application.
 
 ## Completion
 
