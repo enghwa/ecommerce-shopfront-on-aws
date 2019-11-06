@@ -1,21 +1,34 @@
-# Module: Build a Multi-Region Serverless Application for Resilience and High Availability
+# How to build a multi-region highly available active-active architecture
 
-In this workshop you will use various AWS Services to build your own BookStore web application 
-with multi-region active-active (or active-passive) architecture. The front app (bookstore) is built on-top of 
-AWS Bookstore Demo App (https://github.com/aws-samples/aws-bookstore-demo-app). 
+This self-paced workshop takes to step by step building multi-region active-active **serverless** architecture. The web application is a Bookstore. This can be used as a reference architecture for highly available ecommerce store.   
 
-Your Bookstore on multi-region active-active (or active-passive) architecture meets the following requirements:
+Key points on implementation
 
-1. Users must be able to read Book Blog posts without login. 
-2. Users must be able to purchase books, manage the cart, checkout, view previous orders, and look at the best sellers. 
-3. The application should be morden Web and App architecture with highly available polygot data persistance. 
-4. The application must be able to failover to another region in the case of a disaster. The both **RTO** and **RPO** must be less than 15 minutes.
-    * **RTO:** Recovery Time Objective – the targeted duration of time and a service
-    level within which a business process must be restored after a disaster.
-    * **RPO:** Recovery Point Objective –  the maximum targeted period in which data
-    might be lost from a service due to a major incident.
+ * Highly available 
+ * Active-Active 
+ * Multi-Region 
+ * Showcases Amazon AWS components to create the reference
+ * Liberal license
 
-## Architecture Overview
+
+Demo URL
+========
+(https://github.com/aws-samples/aws-bookstore-demo-app). 
+
+Functionality
+=============
+ * The content marketing and blogging framework 
+ * Ecommerce flow to purchase, manage the cart, checkout, order history and best seller products
+ * It is a Cloud-Ready 
+
+Highly Available
+================
+ * The application can failover to another region with RTO and RPO of less than 15 minutes
+ * **RTO:** Recovery Time Objective – the targeted duration of time and a service level within which a business process must be restored after a disaster.
+ * **RPO:** Recovery Point Objective –  the maximum targeted period in which data might be lost from a service due to a major incident.
+
+Architecture Overview
+=====================
 
 The application will utilize four layers:
 
@@ -57,7 +70,8 @@ the API layer. *Note* We will only use a single region for Amazon Cognito, as th
 health checks on our primary region, and upon detecting an issue,
 automatically switching to the secondary region using Route53 DNS updates.
 
-## Implementation Instructions
+Implementation Instructions
+===========================
 
 This workshop is broken up into multiple modules. In each, we will walk
 through a high level overview of how to implement or test a part of this architecture. 
@@ -65,7 +79,7 @@ through a high level overview of how to implement or test a part of this archite
 
 **Region Selection**
 
-You can chosse the primary and secondary region with the following two regions for this workshop. 
+You can choose the primary and secondary region with the following two regions for this workshop. 
 Please remember these and check before creating resources to ensure you are in the correct region:
 * Region 1: `eu-west-1` (Ireland)
 * Region 2: `ap-southeast-1` (Singapore)
