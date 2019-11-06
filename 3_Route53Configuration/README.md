@@ -3,9 +3,9 @@
 
 Now that we set up the Bookstore App in Ireland and Singapore regions, and let's configure Route53 for active-active multi-region solution. 
 
-You don't need to purchase or repurpose your domain name for this workshop as our CDK created subdomain automatically for you. Also the CDK script has requested ACM certificates in Ireland and Singapore regions for your convinience. 
+You don't need to purchase or repurpose your domain name for this workshop as our CDK created subdomain automatically for you. Also the CDK script has requested ACM certificates in Ireland and Singapore regions for your convenience. 
 
-Naviagte you have 4 certificates in each region.
+Naviagte to the ACM service and check you have 4 certificates in each region.
 ![ACM](../images/03-cert-01.png)
 
 ## 1. Configure Custom Domains on each API Gateway in each region
@@ -37,7 +37,7 @@ Navigate over to the `API Gateway` in Ireland region (https://eu-west-1.console.
 * TLS 1.2
 * Regional
 * ACM Certificate: '<subdomain>.multi-region.xyz`
-Edit to add `Base Path Mappings` with `/` for path and `prod` for destination. 
+Save and edit. Then `Add mapping` to add the `Base Path Mappings` with `/` for path and `prod` for destination. 
 ![API Gateway](../images/03-apig-01.png)
 
 Repeat the same process in Singapore region. 
@@ -48,7 +48,7 @@ You will use this Custom Domain in Ireland and Singapore to configure health che
 
 ### 2.1 Configure DNS records for Health Check
 
-We will creat additional subdomain prefix to configure health checks with `api-ir.` and `api-sg.`. (Please follow the naming.)
+We will create additional subdomain prefixes to configure health checks with `api-ir.` and `api-sg.`. (Please follow the naming.)
 
 **High-level instructions**
 
@@ -61,7 +61,7 @@ purpose of this workshop. We recommend setting ALL DNS entries to 1m (60 seconds
 as the TTL.
 ![Route53](../images/03-dns-01.png)
 
-Create one more CNAME record with `api-sg` with `Target Domain Name` of `Custom Domain Name` in Singapore.
+Create one more CNAME record with `api-sg.<subdomain>.multi-region.xyz"` with `Target Domain Name` of `Custom Domain Name` in Singapore.
 ![Route53](../images/03-dns-02.png)
 
 At this point you should now be able to visit your subdomain and see your API
