@@ -560,9 +560,9 @@ Resources:
       Description: Get the region name for health check
       Handler: index.handler
       MemorySize: 256
-      Role: !GetAtt
-          - SeederRole
-          - Arn
+      Role: !GetAtt 
+        - DynamoDbRole
+        - Arn
       Runtime: nodejs8.10
       Timeout: '60'
       Code:
@@ -716,6 +716,21 @@ Resources:
     Properties:
       Action: 'lambda:InvokeFunction'
       FunctionName: !Ref FunctionGetBestSellers
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Join 
+        - ''
+        - - 'arn:aws:execute-api:'
+          - !Ref 'AWS::Region'
+          - ':'
+          - !Ref 'AWS::AccountId'
+          - ':'
+          - !Ref AppApi
+          - /*
+  FunctionGetTruthPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref FunctionGetTruth
       Principal: apigateway.amazonaws.com
       SourceArn: !Join 
         - ''
@@ -1261,6 +1276,7 @@ Resources:
 
   TruthApiRequestGET:
     Type: 'AWS::ApiGateway::Method'
+    DependsOn: FunctionGetTruthPermissions
     Properties:
       AuthorizationType: NONE
       HttpMethod: GET
