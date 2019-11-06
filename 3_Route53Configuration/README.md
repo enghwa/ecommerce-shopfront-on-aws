@@ -98,7 +98,8 @@ and failing over (this is not a recommended production configuration but it is
 useful for speeding up the remainder of this Workshop).
 ![Route53](../images/03-dns-03.png)
 
-Do the same for the Singapore region API’s health check.  Once configured, wait a few minutes and you should see your health check go green and say Healthy in the console. Make sure this is green and healthy
+Skip the step to create an alarm. Now, do the same for the Singapore region API’s health check.
+Once configured, wait a few minutes and you should see your health check go green and say Healthy in the console. Make sure this is green and healthy
 before proceeding.
 ![Route53](../images/03-dns-04.png)
 
