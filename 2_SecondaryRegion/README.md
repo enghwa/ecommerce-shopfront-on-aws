@@ -91,7 +91,7 @@ It takes for a while, you can procced the next step first.
 ### 2. Enable S3 replication for Web contents replication
 
 This S3 replication will replicate the static contents from Irelad region to Singapore whenever there is update. 
-Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-regin2`.
+Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
 export s3bucketRegion2=<arc309-ireland-bookstore>
