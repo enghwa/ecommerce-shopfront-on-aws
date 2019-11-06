@@ -16,11 +16,12 @@ cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
 ```bash
 export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
+```
+```bash
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
 npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy Wordpress-Secondary
-
 ```
 ![CDK](../images/02-cdk-02.png)
 
@@ -97,6 +98,8 @@ Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The d
 
 ```bash
 export s3bucketRegion2=<arc309-ireland-bookstore>
+```
+```bash
 aws s3api create-bucket \
   --bucket $s3bucketRegion2-region2 \
   --region ap-southeast-1 \
@@ -126,6 +129,8 @@ Add replication configuration to the source bucket in Ireland region. Save the f
 
 ```bash
 export IrelandStackName=<arc309-ireland>
+```
+```bash
 export GetReplicationArnRole=`aws cloudformation describe-stacks --stack-name $IrelandStackName --region eu-west-1 \
      --query "Stacks[0].Outputs[?OutputKey=='S3replicationRole'].OutputValue" --output text`
 export ReplicationArnRole="$GetReplicationArnRole"
