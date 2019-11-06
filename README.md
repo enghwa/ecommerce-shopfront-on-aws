@@ -99,8 +99,9 @@ instructions in this workshop assume only one student is using a given AWS
 account at a time. If you try sharing an account with another student, you'll
 run into naming conflicts for certain resources - we do not recommend this as
 there may be unpredictable results or difficult to identify configuration issues.
-If your laptop's security policy blocks any 3rd party cookies (required by Cloud9), pair up with someone else who has a laptop which is not blocked.
-Please use Chrome or Firefox browsers.
+Also if your account already has 5 VPCs in Ireland and Singapore, you might experience to hit the default VPC limit of 5.
+
+If your laptop's security policy blocks any 3rd party cookies (required by Cloud9), pair up with someone else who has a laptop which is not blocked. Please use Chrome or Firefox browsers.
 
 To start the workshop you need the AWS Command Line Interface
 (CLI). The front end application is written on Amplify and requires nodejs and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured. Follow the instruction [here to launch a AWS Cloud9 IDE](0_Prerequisities/README.md) before we start the lab.
