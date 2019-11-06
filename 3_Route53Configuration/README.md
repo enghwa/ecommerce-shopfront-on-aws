@@ -106,9 +106,8 @@ before proceeding.
 ### 2.3 Configure DNS Routing Policy
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
-configure these as CNAME ALIAS records in a *Geolocation* routing policy using
-your health check for Multi-region active-active backend. Geolocation routing policy routes traffic based on the location of your users. Ireland will be the default region serving global customers. If your users are outside of Singapore, it will default route to Ireland. For Singapore users, it will default to Singapore region.
-
+configure these as CNAME ALIAS records in a *Latency* routing policy using
+your health check for Multi-region active-active backend. *Latency* routing policy routes traffic to the region that provides the best latency.
 
 ***Note.*** To create records for complex routing configurations, you can also use the traffic flow 
 visual editor and save the configuration as a traffic policy. However, we use the routing policy
@@ -122,13 +121,12 @@ Choose `Hosted zones` in `Route53`. Select `Create Record Set` with a new CNAME 
 version of your domain. Since this is an alias, it should appear in the
 dropdown list.
 
-Next, choose the `Geolocation` routing policy. Route 53 responds to queries based on the locations from which DNS queries originate. Remember to  create a `Default` location resource record set. 
+Next, choose the `Latency` routing policy. Route 53 responds to queries based on the locations from which DNS queries originate. Remember to  create a `Default` location resource record set. 
 Turn on both `Evaluate Target Health` and `Associate with Health Check` then select the `ireland-api` 
 health check you created previously. 
 ![Route53](../images/03-dns-05.png)
 
-Create one more CNAME record with `api-sg` Alias with the same step. Choose the location with `Singapore`.
-![Route53](../images/03-dns-06.png)
+Create one more CNAME record with `api-sg` Alias with the same step. Choose the region with `ap-southeast-1`.
 
 With the DNS configured, you should now be able to visit the `api.` prefix of
 your domain (remember to use HTTPS). Go to the `/books` path and notice which 
