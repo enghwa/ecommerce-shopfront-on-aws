@@ -47,6 +47,7 @@ from Ireland region using the AWS CLI.
 export GetReplicationSourceIdentifier=`aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 \
     --query "Stacks[0].Outputs[?OutputKey=='RDSreplicationsourceidentifier'].OutputValue" --output text`
 export ReplicationSourceIdentifier="$GetReplicationSourceIdentifier"
+echo $ReplicationSourceIdentifier
 ```
 
 * `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region. Or use the following command in Cloud9. 
@@ -54,6 +55,7 @@ export ReplicationSourceIdentifier="$GetReplicationSourceIdentifier"
 export GetVpcSecurityGroupIds=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region ap-southeast-1 \
     --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupId'].OutputValue" --output text`
 export VpcSecurityGroupIds="$GetVpcSecurityGroupIds"
+echo $VpcSecurityGroupIds
 ```
 
 CLI to create read replica of Aurora MySQL in Singapore region. 
