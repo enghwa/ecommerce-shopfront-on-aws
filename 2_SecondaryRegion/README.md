@@ -269,8 +269,8 @@ You remember the Book Blog you created above had `503 Service Temporarily Unavai
 
 ```bash
 aws rds describe-db-instances \
---db-instance-identifier <arc309-replica-instance> \
---region <ap-southeast-1> \
+--db-instance-identifier arc309-replica-instance \
+--region ap-southeast-1 \
 --query "DBInstances[0].Endpoint.Address" --output text
 ```
 
@@ -306,10 +306,10 @@ With CloudFront’s Origin Failover capability, your content is served from your
 Select your CloudFront Distributions.
 ![CloudFront](../images/02-cf-01.png)
 
-Create the second origin (in Singapire). 
+Create the second origin (in Singapore). 
 ![CloudFront](../images/02-cf-02.png)
 
-Type your `Orgin Domain Name` with `<your Singapiore S3 bucket name>.s3-ap-southeast-1.amazonaws.com` and select the options like the following.
+Type your `Orgin Domain Name` with `<your Singapore S3 bucket name>.s3-ap-southeast-1.amazonaws.com` and select the options like the following.
 ![CloudFront](../images/02-cf-03.png)
 
 Next, create an origin group.
