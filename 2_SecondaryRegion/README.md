@@ -42,16 +42,18 @@ Go back to Cloud9, and execute the following command to enable the read replica 
 from Ireland region using the AWS CLI. 
 
 * `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region. Or use the following command in Cloud9.
-```bash
-aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 \
-    --query "Stacks[0].Outputs[?OutputKey=='RDSreplicationsourceidentifier'].OutputValue" --output text
 
+```bash
+export GetReplicationSourceIdentifier=`aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 \
+    --query "Stacks[0].Outputs[?OutputKey=='RDSreplicationsourceidentifier'].OutputValue" --output text`
+export ReplicationSourceIdentifier="$GetReplicationSourceIdentifier"
 ```
 
 * `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region. Or use the following command in Cloud9. 
 ```bash
-aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region ap-southeast-1 \
-    --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupId'].OutputValue" --output text
+export GetVpcSecurityGroupIds=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region ap-southeast-1 \
+    --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupId'].OutputValue" --output text`
+export VpcSecurityGroupIds="$GetVpcSecurityGroupIds"
 ```
 
 CLI to create read replica of Aurora MySQL in Singapore region. 
@@ -59,8 +61,8 @@ CLI to create read replica of Aurora MySQL in Singapore region.
 aws rds create-db-cluster \
   --db-cluster-identifier arc309-replica-cluster \
   --engine aurora \
-  --replication-source-identifier <arn:aws:rds:eu-west-1:xxxxxxxxxx:xxxxxxxxx> \
-  --vpc-security-group-ids <sg-xxxxxxxxx> \
+  --replication-source-identifier $ReplicationSourceIdentifier \
+  --vpc-security-group-ids $VpcSecurityGroupIds \
   --db-subnet-group-name secondaryregion-wordpressdb-subnetgroup \
   --source-region eu-west-1 \
   --region ap-southeast-1
