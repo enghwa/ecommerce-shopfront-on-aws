@@ -147,7 +147,7 @@ Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the
 
 ## Completion
 
-Congratulations you have configured a multi-region API and set up a healthcheck-based Geolocation routing policy using Route53. 
+Congratulations you have configured a multi-region API and set up a healthcheck-based Latency routing policy using Route53. 
 ![Bookstore](../images/03-complete-01.png)
 
 You can `Sign up` and `Log in` to order books through your domain `https://arc30901.multi-region.xyz/`. Order a book and see if `Order` and `Best Sellers` are working. Also, check the `Order` table in DynamoDB in `Ireland` region with the DynamoDB table in `Singapore` region to see whether your order data is replicated properly. 
