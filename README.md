@@ -7,13 +7,7 @@ Key points on implementation
  * Highly available 
  * Active-Active 
  * Multi-Region 
- * Showcases Amazon AWS components to create the reference
-
-
-Demo URL
-========
-(https://github.com/aws-samples/aws-bookstore-demo-app). 
-
+ 
 Functionality
 =============
  * The content marketing and blogging framework 
@@ -53,7 +47,7 @@ application data will be available when we failover.
 * Web application blueprint – We include a React web application pre-integrated out-of-the-box with tools such as React Bootstrap, Redux, React Router, internationalization, and more.
 * Serverless service backend – Amazon API Gateway powers the interface layer between the frontend and backend, and invokes serverless compute with AWS Lambda.  
 * Authentication - Amazon Cognito to allow the application to authenticate users and authorize access to
-the API layer. *Note* We will only use a single region for Amazon Cognito, as this serves as a reference implementation for authentication. In real-world deployment, this can be a social media authentication, eg: Facebook, Google etc.
+the API layer. *Note* We will only use a single region for Amazon Cognito, as this serves as a reference implementation for authentication. In real-world deployment, this can be a social media authentication, eg: Amazon Cognito, Auth0, Facebook, Google etc.
 
 **Database components**
 
