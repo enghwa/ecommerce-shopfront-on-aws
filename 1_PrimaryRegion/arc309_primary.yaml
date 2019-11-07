@@ -13,7 +13,7 @@ Parameters:
   SeedRepository:
     Type: String
     Description: Don't change the defualt value
-    Default: 'http://woof.kopi.io/book9.zip'
+    Default: 'http://woof.kopi.io/book10.zip'
   bookstoreVPC:
     Type: String
     Description: VPC ID of Primary Region (ex. vpc-xxx)
@@ -560,9 +560,10 @@ Resources:
       Description: Get the region name for health check
       Handler: index.handler
       MemorySize: 256
-      Role: !GetAtt 
-        - DynamoDbRole
-        - Arn
+      Role:
+        'Fn::GetAtt':
+          - SeederRole
+          - Arn
       Runtime: nodejs8.10
       Timeout: '60'
       Code:
