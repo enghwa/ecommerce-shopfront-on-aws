@@ -1537,7 +1537,7 @@ Resources:
                 origin-access-identity/cloudfront/${AssetsBucketOriginAccessIdentity}
         DefaultCacheBehavior:
           TargetOriginId: S3
-          ViewerProtocolPolicy: https-only
+          ViewerProtocolPolicy: redirect-to-https
           ForwardedValues:
             QueryString: 'false'
         CustomErrorResponses:   #fix firefox problem.
