@@ -139,9 +139,7 @@ Now that we have active-active configuration, you will need to change the API
 endpoint in your WebAssets (*bookstore-WebAssets/src/config.js*) to use our newly
 created DNS name for our API endpoint.
 
-Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name.
-Also, add in `API_IRELAND_URL` with the FQDN of the Ireland's APIGW CNAME, this is to facilitate our failover testing later.
-Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
+Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name. Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
 
 ![Route53](../images/03-dns-08a.png)
 

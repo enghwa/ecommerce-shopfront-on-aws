@@ -296,6 +296,13 @@ $(aws secretsmanager get-secret-value \
 --region ap-southeast-1
 ```
 
+### Update Wordpress ECS Service
+1. Go to `ECS` in Singapore Region, select the cluster `Wordpress-Secondary-ecscluster6XXXXXXX`
+2. Select the `Wordpress-Secondary-wordpresssvcSXXXXX` service and click `Update`, make sure the latest task definition is selected.
+3. Click `Next` 3 times and finally `Update Service`. 
+
+Your blog in the secondary region is now configured, it will be in Read-only mode as it is connected to the read-replica of our Aurora RDS cluster in Singapore.
+
 ## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions 
 
 Origin Failover of CloudFront distributions improves the availability of content delivered to end users.
