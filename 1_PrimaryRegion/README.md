@@ -124,10 +124,10 @@ EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/clo
 
 2. Input `Stack name` and `Parameters`
 * **ProjectName**: 10 characters with lowercase (no number is allowed) (ex.bookstore)
-* **AssetsBucketName**: S3 bucket name with lowercase (ex.arc309-ireland-bookstore)
-* **SeedRepository**: Web file (use default)
+* **AssetsBucketName**: **Unique** S3 bucket name with lowercase (ex.arc309-ireland-bookstore)
 * **bookstoreVPC**: VPC id (output of previous cdk, vpc-xxxxxxxxxx)
 * **bookstoreSubnet1**: Subnet id for Elasticache (output of previous cdk, subnet-xxxxxxxxxx)
+* **SeedRepository**: Web file (keep default value)
 ![CFN](../images/01-cfn-04.png)
 3. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 ![CFN](../images/01-cfn-05.png)
@@ -136,7 +136,7 @@ This CloudFormation template may take around 10 mins. You can hop over the progr
 ![CFN](../images/01-cfn-06.png)
 
 Once your stack has successfully completed, navigate to the `Outputs` tab of your stack
-where you find an `WebApplication` includes CloudFront Domain name. Type this URL in your broswer and check your Bookstore application.
+where you can find an `WebApplication` output that includes a CloudFront Domain name. Type this URL in your browser and check your Bookstore application.
 
 ```
 https://d1zltjarei3438.cloudfront.net/

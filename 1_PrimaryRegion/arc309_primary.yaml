@@ -12,7 +12,7 @@ Parameters:
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   SeedRepository:
     Type: String
-    Description: Don't change the defualt value
+    Description: <Please keep the default value>
     Default: 'http://woof.kopi.io/book10.zip'
   bookstoreVPC:
     Type: String
