@@ -115,6 +115,7 @@ go to the CloudFormation console in `Ireland` and find the VPC id and Subnet id 
 ![CFN](../images/01-cfn-02.png)
 
 1. You can create stack with the below `Launch Stack` button.  
+
 Region name | Region code | Launch
 --- | --- | ---
 EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=MyBookstoreIreland&templateURL=https://arc309-bookstore-eu-west-1.s3-eu-west-1.amazonaws.com/arc309_primary.yaml) 
