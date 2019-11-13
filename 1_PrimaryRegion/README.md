@@ -29,6 +29,15 @@ npm install
 npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy hostedZone
 ```
+![CDK](../images/01-cdk-02.png)
+
+```
+Do you wish to deploy these changes (y/n)? 
+```
+Type "Y", and it will take around 20 min.
+
+![CDK](../images/01-cdk-03.png)
+* You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
 
 Now, let's check if the DNS is setup correctly in Route53. Open a new Terminal or iTerm and enter the following command to make sure you see that the DNS is resolving to the correct addresses.
 ```
@@ -47,12 +56,7 @@ npx cdk@1.8.0 deploy Wordpress-Primary
 ```
 Do you wish to deploy these changes (y/n)? 
 ```
-Both `npx cdk@1.8.0 deploy hostedZone` and `Wordpress-Primary` commands ask this question. Type "Y", and it 
-will take around 20 min.
-
-![CDK](../images/01-cdk-02.png)
-![CDK](../images/01-cdk-03.png)
-* You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
+Type "Y", and it will take around 20 min.
 
 ![CDK](../images/01-cdk-04.png)
 
