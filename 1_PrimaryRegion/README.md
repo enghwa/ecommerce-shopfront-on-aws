@@ -11,7 +11,7 @@ You will also create the IAM polices and roles required by these components.
 ## 1. Building your Book Blog using AWS CDK in your Primary Region (Ireland)
 
 In Cloud9, go to `wordpress-lab` directory 
-(ex. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
+(eg. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
 
 ```
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
@@ -19,7 +19,7 @@ cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
 ![CDK](../images/01-cdk-01.png)
 
-Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Execute following commands one by one in AWS Cloud9.
+Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Execute following commands **one by one** in AWS Cloud9.
 
 ```bash
 
@@ -123,8 +123,8 @@ EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/clo
 ![CFN](../images/01-cfn-03.png)
 
 2. Input `Stack name` and `Parameters`
-* **ProjectName**: 10 characters with lowercase (no number is allowed) (ex.bookstore)
-* **AssetsBucketName**: **Unique** S3 bucket name with lowercase (ex.arc309-ireland-bookstore)
+* **ProjectName**: 10 characters with lowercase (no number is allowed) (eg.bookstore)
+* **AssetsBucketName**: **Unique** S3 bucket name with lowercase (eg.arc309-ireland-bookstore)
 * **bookstoreVPC**: VPC id (output of previous cdk, vpc-xxxxxxxxxx)
 * **bookstoreSubnet1**: Subnet id for Elasticache (output of previous cdk, subnet-xxxxxxxxxx)
 * **SeedRepository**: Web file (keep default value)

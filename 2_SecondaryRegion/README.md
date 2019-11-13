@@ -10,7 +10,7 @@ Go back to your Cloud9, and execute following commands.It will take around 15 mi
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 ```
 
-* **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (ex.Z7VDWLHBQQSCF)
+* **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (eg.Z7VDWLHBQQSCF)
 ![CDK](../images/02-cdk-01.png)
 * Your `MYSUBDOMAIN` was previously exported in module 1.
 
@@ -93,7 +93,7 @@ Provisioning the Aurora replica instance can take a while takes for a while, you
 
 ### 2. Enable S3 replication for Web contents replication
 
-This S3 replication will replicate the static contents from Irelad region to Singapore whenever there is an update. 
+This S3 replication will replicate the static contents from Ireland region to Singapore whenever there is an update. 
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
@@ -125,7 +125,7 @@ $ aws iam put-role-policy \
 --policy-document file://s3-role-permissions-policy.json \
 --policy-name crrRolePolicy \ -->
 
-Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the your Cloud9. You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack (ex.arc309-ireland) in Ireland or execute following command in the Cloud9.
+Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the your Cloud9. You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack (eg.arc309-ireland) in Ireland or execute following command in the Cloud9.
 
 ```bash
 export IrelandStackName=<arc309-ireland>
@@ -252,13 +252,13 @@ Region name | Region code | Launch
 --- | --- | ---
 AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=MyBookstoreSingapore&templateURL=https://arc309-bookstore-ap-southeast-1.s3-ap-southeast-1.amazonaws.com/arc309_secondary.yaml) 
 
-2. Input `Stack name` (ex. arc309-singapore) and `Parameters`
-* **ProjectName**: the same 10 characters with lowercase name (ex.bookstore)
-* **AssetsBucketName**: S3 bucket name replicated from Ireland (ex.arc309-ireland-bookstore-region2)
+2. Input `Stack name` (eg. arc309-singapore) and `Parameters`
+* **ProjectName**: the same 10 characters with lowercase name (eg.bookstore)
+* **AssetsBucketName**: S3 bucket name replicated from Ireland (eg.arc309-ireland-bookstore-region2)
 * **bookstoreVPC**: VPC id (output of `Wordpress-Secondary` cdk, vpc-xxxxxxxxxx)
 * **bookstoreSubnet1**: Subnet id for Elasticache (output of `Wordpress-Secondary` cdk, subnet-xxxxxxxxxx)
-* **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in Singapore (ex. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)
-* **UserPool**: Congnito UserPool Arn in Ireland region (ex. arn:aws:cognito-idp:eu-west-1:376715876263:userpool/eu-west-1_1rry319Ri)
+* **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in Singapore (eg. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)
+* **UserPool**: Congnito UserPool Arn in Ireland region (eg. arn:aws:cognito-idp:eu-west-1:376715876263:userpool/eu-west-1_1rry319Ri)
 ![CFN](../images/02-cfn-01.png)
 3. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 
@@ -324,9 +324,9 @@ Next, create an origin group.
 CloudFront automatically switches to the secondary origin when the primary origin returns specific HTTP status code failure responses.
 ![CloudFront](../images/02-cf-05.png)
 
-## Update Blog WebAsset URL with Wordpress Application Load Balancer 
+## Update Blog WebAsset URL with Wordpress Application Load Balancer
 
-Find your code repo in CodeCommit and edit `wordpressconfig.ts` (ex. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region.
+Find your code repo in CodeCommit and edit `wordpressconfig.ts` (eg. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region with your own domain name.
 ![Wordpress](../images/02-wp-01.png)
 
 Update `http://<FQDN of your Wordpress Application Load Balancer` to
@@ -344,14 +344,14 @@ Enter any `Author name` and `Email address`, and click `Commit changes`. You can
 
 ## Update CloudFront Domain Name with your domain
 
-Update CloudFront Domain Name (ex. xxxxxxxxx.cloudfront.net) to `$MYSUBDOMAIN.multi-region.xyz`.
+Update CloudFront Domain Name (eg. xxxxxxxxx.cloudfront.net) to `$MYSUBDOMAIN.multi-region.xyz`.
 Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
 ![CloudFront](../images/02-cf-06.png)
 
 Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
 ![CloudFront](../images/02-cf-07.png)
 
-Copy your CloudFront Domain Name (ex. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
+Copy your CloudFront Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
 * Type: A-IPv4 address
 * Alias: `Yes` and Target: `dunq4klru02xw.cloudfront.net`
 ![CloudFront](../images/02-cf-08.png)
