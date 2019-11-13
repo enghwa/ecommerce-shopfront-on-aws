@@ -50,7 +50,6 @@ Now, compare the results with the ones in Route53. If they are the same, you can
 
 ```
 npx cdk@1.8.0 deploy Wordpress-Primary
-
 ```
 
 ```
@@ -72,7 +71,7 @@ https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/
 You need the VPC ID and Subnet ID for the next steps. You can check it in Cloud9 console or Cloudformation output tab in the Primary region (Ireland).
 ![CDK](../images/01-cdk-06.png)
 
-If you can find the VPC ID and Subnet ID from the VPC console in Ireland though the CDK is not completed, you can proceed the next step, CloudFormation stack creation.
+If you can find the VPC ID and Subnet ID (any private subnet in 4 subnets) from the VPC console in Ireland though the CDK is not completed, you can proceed the next step, CloudFormation stack creation.
 
 ## 2. Building the Bookstore using CloudFormation in your Primary Region (Ireland)
 
@@ -115,13 +114,12 @@ go to the CloudFormation console in `Ireland` and find the VPC id and Subnet id 
 ![CFN](../images/01-cfn-01.png)
 ![CFN](../images/01-cfn-02.png)
 
-1. Create stack with the downloaded template
-Create stack - Select 'Template is ready' and 'Upload a template file' and 'Choose file'. Or click the `Launch stack` button in the table.
-![CFN](../images/01-cfn-03.png)
-
+1. You can create stack with the below `Launch Stack` button.  
 Region name | Region code | Launch
 --- | --- | ---
 EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=MyBookstoreIreland&templateURL=https://arc309-bookstore-eu-west-1.s3-eu-west-1.amazonaws.com/arc309_primary.yaml) 
+
+![CFN](../images/01-cfn-03.png)
 
 2. Input `Stack name` and `Parameters`
 * **ProjectName**: 10 characters with lowercase (no number is allowed) (ex.bookstore)
