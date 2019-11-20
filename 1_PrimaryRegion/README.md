@@ -125,6 +125,8 @@ EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/clo
 2. Input `Stack name` and `Parameters`
 * **ProjectName**: 10 characters with lowercase (no number is allowed) (eg.bookstore)
 * **AssetsBucketName**: **Unique** S3 bucket name with lowercase (eg.arc309-ireland-bookstore)
+* **MySubDomain**: Subdomain that you created in CDK deployement (eg. team1234.multi-region.xyz)
+* **CloudfrontACMARNuseast1**: You ACM certificate ARN for CloudFront in us-east-1 (eg. arn:aws:acm:us-east-1:xxxxx:certificate/xxxx-xxxx-xxxx)
 * **bookstoreVPC**: VPC id (output of previous cdk, vpc-xxxxxxxxxx)
 * **bookstoreSubnet1**: Subnet id for Elasticache (output of previous cdk, subnet-xxxxxxxxxx)
 * **SeedRepository**: Web file (keep default value)

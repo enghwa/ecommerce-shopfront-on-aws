@@ -303,6 +303,24 @@ $(aws secretsmanager get-secret-value \
 
 Your blog in the secondary region is now configured, it will be in Read-only mode as it is connected to the read-replica of our Aurora RDS cluster in Singapore.
 
+## Update Blog WebAsset URL with Wordpress Application Load Balancer
+
+Find your code repo in CodeCommit and edit `wordpressconfig.ts` (eg. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region with your own domain name.
+![Wordpress](../images/02-wp-01.png)
+
+Update `http://<FQDN of your Wordpress Application Load Balancer` to
+```javascript
+export default {
+
+  wordpress: {
+    WPURL: "https://blog.arc30901.multi-region.xyz"
+  }
+}
+```
+
+Enter any `Author name` and `Email address`, and click `Commit changes`. You can check the progress in CodePipeline and CodeBuild.
+![Code](../images/02-code-01.png)
+
 ## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions 
 
 Origin Failover of CloudFront distributions improves the availability of content delivered to end users.
@@ -324,32 +342,14 @@ Next, create an origin group.
 CloudFront automatically switches to the secondary origin when the primary origin returns specific HTTP status code failure responses.
 ![CloudFront](../images/02-cf-05.png)
 
-## Update Blog WebAsset URL with Wordpress Application Load Balancer
-
-Find your code repo in CodeCommit and edit `wordpressconfig.ts` (eg. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region with your own domain name.
-![Wordpress](../images/02-wp-01.png)
-
-Update `http://<FQDN of your Wordpress Application Load Balancer` to
-```javascript
-export default {
-
-  wordpress: {
-    WPURL: "https://blog.arc30901.multi-region.xyz"
-  }
-}
-```
-
-Enter any `Author name` and `Email address`, and click `Commit changes`. You can check the progress in CodePipeline and CodeBuild.
-![Code](../images/02-code-01.png)
-
-## Update CloudFront Domain Name with your domain
+<!-- ## Update CloudFront Domain Name with your domain
 
 Update CloudFront Domain Name (eg. xxxxxxxxx.cloudfront.net) to `$MYSUBDOMAIN.multi-region.xyz`.
 Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
 ![CloudFront](../images/02-cf-06.png)
 
 Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
-![CloudFront](../images/02-cf-07.png)
+![CloudFront](../images/02-cf-07.png) -->
 
 Copy your CloudFront Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
 * Type: A-IPv4 address

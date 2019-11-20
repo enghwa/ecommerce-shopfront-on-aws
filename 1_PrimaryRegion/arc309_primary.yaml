@@ -10,16 +10,22 @@ Parameters:
     Description: Name of assets S3 bucket to create (lowercase, numbers or - only, S3 Buckets are globally unique)
     AllowedPattern: "^[a-z0-9-]{3,53}$"
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
+  MySubDomain:
+    Type: String
+    Description: Your subdomain that you created in CDK deployement (eg. team1234.multi-region.xyz)
+  CloudfrontACMARNuseast1:
+    Type: String
+    Description: You ACM certificate ARN for CloudFront in us-east-1 (eg. arn:aws:acm:us-east-1:xxxxx:certificate/xxxx-xxxx-xxxx)
+  bookstoreVPC:
+    Type: String
+    Description: VPC ID of Primary Region (eg. vpc-xxx)
+  bookstoreSubnet1:
+    Type: String
+    Description: Subnet ID for Elasticache (eg.subnet-xxx)
   SeedRepository:
     Type: String
     Description: <Please keep the default value>
     Default: 'http://woof.kopi.io/book10.zip'
-  bookstoreVPC:
-    Type: String
-    Description: VPC ID of Primary Region (ex. vpc-xxx)
-  bookstoreSubnet1:
-    Type: String
-    Description: Subnet ID for Elasticache (ex.subnet-xxx)
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -27,6 +33,8 @@ Metadata:
         Parameters: 
           - ProjectName
           - AssetsBucketName
+          - MySubDomain
+          - CloudfrontACMARNuseast1
           - bookstoreVPC
           - bookstoreSubnet1
 
@@ -1535,6 +1543,11 @@ Resources:
             S3OriginConfig:
               OriginAccessIdentity: !Sub >-
                 origin-access-identity/cloudfront/${AssetsBucketOriginAccessIdentity}
+        Aliases: 
+          - !Ref MySubDomain
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CloudfrontACMARNuseast1  
+          SslSupportMethod: sni-only
         DefaultCacheBehavior:
           TargetOriginId: S3
           ViewerProtocolPolicy: redirect-to-https

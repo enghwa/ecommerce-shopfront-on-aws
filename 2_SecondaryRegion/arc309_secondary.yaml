@@ -7,15 +7,15 @@ Parameters:
     ConstraintDescription: Must be lowercase and under ten characters (no numbers allowed)
   AssetsBucketName:
     Type: String
-    Description: The S3 bucket name in the secondary region created in S3 replication (ex.arc309-ireland-bookstore-region2)
+    Description: The S3 bucket name in the secondary region created in S3 replication (eg.arc309-ireland-bookstore-region2)
     AllowedPattern: "^[a-z0-9-]{3,53}$"
     ConstraintDescription: Must be between 3 and 53 characters (lowercase, numbers or -)
   bookstoreVPC:
     Type: String
-    Description: VPC ID of Secondary Region (ex. vpc-xxx)
+    Description: VPC ID of Secondary Region (eg. vpc-xxx)
   bookstoreSubnet1:
     Type: String
-    Description: Subnet ID for Elasticache (ex. subnet-0c1bdeabbd1e7cf19)
+    Description: Subnet ID for Elasticache (eg. subnet-0c1bdeabbd1e7cf19)
   OrderTableStreamARN:
     Type: String
     Description: DynamoDB Stream ARN
