@@ -36,13 +36,23 @@ function and you should still be able to view and order books.
 To confirm everything went as expected, go to your Bookstore application (`https://arc30901.multi-region.xyz/books`)
 and order a book again. You should see your application indicates Singapore region. (Singapore flag icon at top left hand corner). In Singapore's DynamoDB console, you will also see that the `Orders` table has a new record with `aws:rep:updateregion` set to `ap-southeast-1`, indicating that this transaction originated from Singapore.
 
+### Troubleshooting Common Issues
+It is possible that your Operating system AND browser are caching the old DNS entries, hence your failover will have problem (eg: `403 error` in your browser as you purchase books.).  
+To fix this:
+
+* clear your dns entries in your OS, then verify how your OS is resolving your api endpoint, (eg: `host api.arc30901.multi-region.xyz`). You can tell from the CNAME resolution which AWS region is being called.
+* restart your browser or use another browser
+ 
+To verify your api endpoint has fail-overed, you can also use a tool, [CacheCheck](https://cachecheck.opendns.com/). 
+Enter your api hostname (eg: `api.arc30901.multi-region.xyz`) and observe how clients across the world are resovling your api endpoint. 
+It should resolve to the api gateway in `ap-southeast-1` region.
 
 ## Completion
 
 Congratulations! You have now setup and verified an API that fails over from
 one region to another automatically in the event of a disaster.
 
-If you are feeling adventurous, you can read to the optional lab - [Global Accelerlator](../6_Optional/README.md).
+<!-- If you are feeling adventurous, you can read to the optional lab - [Global Accelerlator](../6_Optional/README.md). -->
 
 Else to end the lab and prevent further AWS charges, please clean-up the AWS resources created in this workshop by following the [steps here.](../5_Cleanup/README.md)
 
