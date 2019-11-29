@@ -145,7 +145,9 @@ https://d1zltjarei3438.cloudfront.net/
 ```
 ![CFN](../images/01-cfn-07.png)
 
-FYI. This Bookstore doesn't include the Book Blog yet that you created with CDK. It will be shown after you complete building the secondary region Bookstore application.
+### FYI
+This Bookstore doesn't include the Book Blog yet that you created with CDK. It will be shown after you complete building the secondary region Bookstore application.
+Also, if your bookstore website did not load or experience permission error, please check that the [codepipeline](https://eu-west-1.console.aws.amazon.com/codesuite/codepipeline/pipelines?region=eu-west-1) has successfully build your front-end assets.
 
 ## Completion
 
