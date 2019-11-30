@@ -8,3 +8,5 @@ node_modules/
 cdk.out
 cdk.out/
 .DS_Store
+
+wordpress-lab/README.md
