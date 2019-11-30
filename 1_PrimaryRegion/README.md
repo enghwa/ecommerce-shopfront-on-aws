@@ -68,7 +68,7 @@ https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/
 ```
 ![CDK](../images/01-cdk-05.png)
 
-You need the VPC ID and Subnet ID for the next steps. You can check it in Cloud9 console or Cloudformation output tab in the Primary region (Ireland).
+You need the VPC ID and Private Subnet ID for the next steps. You can check it in Cloud9 console or Cloudformation output tab in the Primary region (Ireland).
 ![CDK](../images/01-cdk-06.png)
 
 If you can find the VPC ID and Subnet ID (any private subnet in 4 subnets) from the VPC console in Ireland though the CDK is not completed, you can proceed the next step, CloudFormation stack creation.
