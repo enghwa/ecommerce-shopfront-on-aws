@@ -174,9 +174,9 @@ Resources:
           Projection:
             ProjectionType: ALL
           # BillingMode: PAY_PER_REQUEST
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
+          # ProvisionedThroughput:
+          #   ReadCapacityUnits: 1
+          #   WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
   TOrders:
