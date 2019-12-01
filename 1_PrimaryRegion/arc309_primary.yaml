@@ -173,7 +173,6 @@ Resources:
               KeyType: HASH
           Projection:
             ProjectionType: ALL
-          # BillingMode: PAY_PER_REQUEST
           # ProvisionedThroughput:
           #   ReadCapacityUnits: 1
           #   WriteCapacityUnits: 1
