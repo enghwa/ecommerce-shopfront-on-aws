@@ -45,6 +45,8 @@ Repeat the same process in Singapore region.
 
 You will use this Custom Domain in Ireland and Singapore to configure health checks and DNS records in Route 53. Copy the `Target Domain Name` from each region.
 
+![Copy Target Domain Name](images/copy-target-domain-name.png)
+
 ## 2. Configure Route53 DNS records
 
 ### 2.1 Configure DNS records for Health Check
