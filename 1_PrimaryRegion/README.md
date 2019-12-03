@@ -1,6 +1,6 @@
 # Building the Bookstore in your Primary Region
 
-In this module, you will deploy the Bookstore application and Wordpress blog in the rimary (Ireland, eu-west-1) region using AWS CDK(Cloud Development Kit) and AWS CloudFormation. The solution uses the following components:
+In this module, you will deploy the Bookstore application and Wordpress blog in the primary (Ireland, eu-west-1) region using AWS CDK(Cloud Development Kit) and AWS CloudFormation. The solution uses the following components:
 1. Fargate and Aurora - Book blog posts with Wordpress (AWS Fargate is a compute engine for Amazon ECS and EKS that allows you to run containers without having to manage servers or clusters)
 2. CloudFront and S3 - Web static content, ReactJS files
 3. API Gateway, AWS Lambda and Cognito - App layer with authentication
