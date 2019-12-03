@@ -71,11 +71,10 @@ through a high level overview of how to implement or test a part of this archite
 <!-- You will expand sections for detailed command or console instructions. -->
 
 **Region Selection**
-
-You can choose the primary and secondary region with the following two regions for this workshop. 
-Please remember these and check before creating resources to ensure you are in the correct region:
-* Region 1: `eu-west-1` (Ireland)
-* Region 2: `ap-southeast-1` (Singapore)
+We have designed this workshop to use Ireland as the Primary Region and Singapore as Secondary Region.
+Please check before creating resources to ensure you are in the correct region:
+* Primary Region : `eu-west-1` (Ireland)
+* Secondary Region : `ap-southeast-1` (Singapore)
 
 ### Modules 
 0. [Prepare prerequisites](0_Prerequisities/README.md)
