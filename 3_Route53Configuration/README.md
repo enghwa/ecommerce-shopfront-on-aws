@@ -41,7 +41,7 @@ Navigate over to the `API Gateway` in Ireland region (https://eu-west-1.console.
 Save and edit. Then `Add mapping` to add the `Base Path Mappings` with `/` for path and `prod` for destination. 
 ![API Gateway](../images/03-apig-01.png)
 
-Repeat the same process in Singapore region. 
+Now, _repeat_ the same process in **Singapore** region. 
 
 You will use this Custom Domain in Ireland and Singapore to configure health checks and DNS records in Route 53. Copy the `Target Domain Name` from each region.
 
