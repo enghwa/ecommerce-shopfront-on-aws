@@ -106,7 +106,7 @@ EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/clo
 
 ![CFN](../images/01-cfn-03.png)
 
-2. Input `Stack name` and `Parameters`
+2. Fill out `Parameters`
 * **ProjectName**: 10 characters with lowercase (no number is allowed) (eg.bookstore)
 * **AssetsBucketName**: **Unique** S3 bucket name with lowercase (eg.arc309-ireland-bookstore)
 * **MySubDomain**: Subdomain that you created in CDK deployement (eg. team1234.multi-region.xyz)

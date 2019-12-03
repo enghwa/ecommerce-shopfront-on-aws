@@ -254,7 +254,7 @@ Region name | Region code | Launch
 --- | --- | ---
 AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=MyBookstoreSingapore&templateURL=https://arc309-bookstore-ap-southeast-1.s3-ap-southeast-1.amazonaws.com/arc309_secondary.yaml) 
 
-2. Input `Stack name` (eg. arc309-singapore) and `Parameters`
+2. Input `Stack name` (eg. MyBookstoreSingapore) and `Parameters`
 * **ProjectName**: the same 10 characters with lowercase name (eg.bookstore)
 * **AssetsBucketName**: S3 bucket name replicated from Ireland (eg.arc309-ireland-bookstore-region2)
 * **bookstoreVPC**: VPC id (output of `Wordpress-Secondary` cdk, vpc-xxxxxxxxxx)

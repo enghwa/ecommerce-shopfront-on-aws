@@ -34,7 +34,7 @@ The web application UI should also continue to
 function and you should still be able to view and order books.
 
 To confirm everything went as expected, go to your Bookstore application (`https://arc30901.multi-region.xyz/books`)
-and order a book again. You should see your application indicates Singapore region. (Singapore flag icon at top left hand corner). In Singapore's DynamoDB console, you will also see that the `Orders` table has a new record with `aws:rep:updateregion` set to `ap-southeast-1`, indicating that this transaction originated from Singapore.
+and order a book again. You should see your application indicates Singapore region. (Singapore flag icon at top left hand corner). In Singapore's DynamoDB console, you will also see that the `Orders` table has a new record.
 
 ### Troubleshooting Common Issues
 It is possible that your Operating system AND browser are caching the old DNS entries, hence your failover will have problem (eg: `403 error` in your browser as you purchase books.).  
