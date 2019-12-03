@@ -35,6 +35,7 @@ You deployed 5 CloudFormation stacks in `Ireland` and 3 stacks in `Singapore` du
 The stacks must be deleted in the following order:
 1. `MyBookstoreSingapore` stack - `Workpress-Secondary` - `CDKTookit` in Singapore
 2. `MyBookstoreIreland` stack - `Workpress-primary` - `hostedZone` - `CDKTookit` - `aws-cloud9` in Ireland
+(You can only delete the `MyBookstoreIreland` stack 24 hours later after you added the DyanmoDB Global Table)
 
 To delete Cloudformation stacks, go to `CloudFormation` in the specific region, select the stack name and click `Delete` button. The template will delete along with all resources it created. 
 
