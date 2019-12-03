@@ -5,7 +5,7 @@ workshop.
 
 ## 1. Delete CloudFront Origin Access
 The CloudFront origin access identity is still being used, hence, we need to delete the AssetsBucketOriginAccessIdentity manually first.
-Go to `CloudFront` and select your `CloudFront Distribution`. Go to `Origins and Origin Groups` and delete the `Origin Group` and `Orgin in Singapore` that you created.
+Go to `CloudFront` and select your `CloudFront Distribution`. Go to `Origins and Origin Groups` and delete the `Origin Group` and `Orgin` in Singapore that you created.
 
 ## 2. Delete API Gateway
 Go to `Custom Domain Names` in `API Gateway` in Singapore and select your `*.arc30901.multi-region.xyz` domain name. Click `x` button to delete it.
