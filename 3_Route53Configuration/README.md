@@ -25,9 +25,9 @@ Creating an API Gateway wildcard custom domain name makes it easy to provide fle
 You need one domain configurations in each Region with `*.` 
 
 * `eu-west-1` Ireland:
-    * `*.arc30901.multi-region.xyz`
+    * `*.<subdomain>.multi-region.xyz`
 * `ap-southeast-1` Singapore:
-    * `*.arc30901.multi-region.xyz`
+    * `*.<subdomain>.multi-region.xyz`
 
 **High-level instructions**
 
