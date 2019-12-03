@@ -32,11 +32,11 @@ You need one domain configurations in each Region with `*.`
 **High-level instructions**
 
 Navigate over to the `API Gateway` in Ireland region (https://eu-west-1.console.aws.amazon.com/apigateway/home?region=eu-west-1#/apis), and create `Custom Domain Names`.
-* HTTP
+* Choose `HTTP`
 * Domain Name: `*.<subdomain>.multi-region.xyz`
-* TLS 1.2
-* Regional
-* ACM Certificate: '<subdomain>.multi-region.xyz`
+* Choose `TLS 1.2`
+* Choose `Regional` in the Endpoint Configuration
+* Select ACM Certificate: '<subdomain>.multi-region.xyz`
 
 Save and edit. Then `Add mapping` to add the `Base Path Mappings` with `/` for path and `prod` for destination. 
 ![API Gateway](../images/03-apig-01.png)
