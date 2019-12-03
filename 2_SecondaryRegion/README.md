@@ -355,7 +355,7 @@ Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
 Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
 ![CloudFront](../images/02-cf-07.png) -->
 
-Copy your [CloudFront](https://console.aws.amazon.com/cloudfront) Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to `[Route53](https://console.aws.amazon.com/route53/home?#hosted-zones:)`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
+Copy your [CloudFront](https://console.aws.amazon.com/cloudfront) Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to [Route53](https://console.aws.amazon.com/route53/home?#hosted-zones:). Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
 * Type: A-IPv4 address
 * Alias: `Yes` and Target: `dunq4klru02xw.cloudfront.net`
 ![CloudFront](../images/02-cf-08.png)
