@@ -62,12 +62,12 @@ purpose of this workshop. We recommend setting ALL DNS entries to 1m (60 seconds
 as the TTL.
 ![Route53](../images/03-dns-01.png)
 
-Create one more CNAME record with `api-sg.<subdomain>.multi-region.xyz"` with `Target Domain Name` of `Custom Domain Name` in Singapore.
+Create one more CNAME record with `api-sg.<subdomain>.multi-region.xyz` with `Target Domain Name` of `Custom Domain Name` in Singapore.
 ![Route53](../images/03-dns-02.png)
 
 At this point you should now be able to visit your subdomain and see your API
 working. Navigate to the health check endpoint on your API using your custom
-domain in your web browser (e.g. `https://api-ir.arc30901.multi-region.xyz/books`) and
+domain in your web browser (e.g. `https://api-ir.<subdomain>.multi-region.xyz/books`) and
 ensure that you see a successful response.
 
 <!-- This endpoint should return the region it is running in so you can also
@@ -92,7 +92,7 @@ handling traffic under normal conditions.-->
 Select `Health checks` in Route53, and click `Create health check`.
 * Name: identifiable name e.g. `ireland-api`
 * What to monitor: `Endpoint`
-* Specify endppoint by: `Domain Name`, Protocol: `HTTPS`, Domain name: `api-ir.arc30901.multi-region.xyz`, Path: `books`
+* Specify endppoint by: `Domain Name`, Protocol: `HTTPS`, Domain name: `api-ir.<subdomain>.multi-region.xyz`, Path: `books`
 * Advanced configuration: change `Request interval` to `Fast (10 seconds)` and set the failure threshold
 from *3* down to *1*.  This will greatly speed up the time you need for testing
 and failing over (this is not a recommended production configuration but it is
@@ -140,7 +140,7 @@ Now that we have active-active configuration, you will need to change the API
 endpoint in your WebAssets (*bookstore-WebAssets/src/config.js*) to use our newly
 created DNS name for our API endpoint.
 
-Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.arc30901.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name. Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
+Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.<subdomain>.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name. Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
 
 ![Route53](../images/03-dns-08a.png)
 
@@ -149,7 +149,7 @@ Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.a
 Congratulations you have configured a multi-region API and set up a healthcheck-based Latency routing policy using Route53. 
 ![Bookstore](../images/03-complete-01.png)
 
-You can `Sign up` and `Log in` to order books through your domain `https://arc30901.multi-region.xyz/`. Order a book and see if `Order` and `Best Sellers` are working. Also, check the `Order` table in DynamoDB in `Ireland` region with the DynamoDB table in `Singapore` region to see whether your order data is replicated properly. 
+You can `Sign up` and `Log in` to order books through your domain `https://<subdomain>.multi-region.xyz/`. Order a book and see if `Order` and `Best Sellers` are working. Also, check the `Order` table in DynamoDB in `Ireland` region with the DynamoDB table in `Singapore` region to see whether your order data is replicated properly. 
 
 ***Note*** Sign up requires `Confirmation code` through your valid `Email address`.
 
