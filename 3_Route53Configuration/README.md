@@ -36,7 +36,7 @@ Navigate over to the `API Gateway` in Ireland region (https://eu-west-1.console.
 * Domain Name: `*.<subdomain>.multi-region.xyz`
 * Choose `TLS 1.2`
 * Choose `Regional` in the Endpoint Configuration
-* Select ACM Certificate: '<subdomain>.multi-region.xyz`
+* Select ACM Certificate `<subdomain>.multi-region.xyz`
 
 Save and edit. Then `Add mapping` to add the `Base Path Mappings` with `/` for path and `prod` for destination. 
 ![API Gateway](../images/03-apig-01.png)
