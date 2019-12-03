@@ -34,7 +34,7 @@ npx cdk@1.8.0 deploy hostedZone
 ```
 Do you wish to deploy these changes (y/n)? 
 ```
-Type "Y", and it will take around 20 min.
+Type "Y", and it will take around 5 min.
 
 ![CDK](../images/01-cdk-03.png)
 * You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
