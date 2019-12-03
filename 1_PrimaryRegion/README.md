@@ -83,22 +83,6 @@ Build artifacts are stored in a S3 bucket where web application assets are maint
 
 The core of the backend infrastructure consists of Amazon Cognito, Amazon DynamoDB, AWS Lambda, and Amazon API Gateway. The application leverages Amazon Cognito for user authentication, and Amazon DynamoDB to store all of the data for books, orders, and the checkout cart. As books and orders are added, Amazon DynamoDB Streams trigger AWS Lambda functions that update the Amazon ElasticCache for Redis cluster that powers the books leaderboard (best seller). 
 
-<!-- ### AWS Lambda
-
-AWS Lambda is used in a few different places to run the application, as shown in the architecture diagram.  The important Lambda functions that are deployed as part of the template are shown below, and available in the [functions](/functions) folder.  In the cases where the response fields are blank, the application will return a statusCode 200 or 500 for success or failure, respectively. -->
-
-<!-- ### Amazon ElastiCache for Redis
-
-Amazon ElastiCache for Redis is used to provide the best sellers/leaderboard functionality.  In other words, the books that are the most ordered will be shown dynamically at the top of the best sellers list. 
-
-For the purposes of creating the leaderboard, the AWS Bookstore Demo App utilized [ZINCRBY](https://redis.io/commands/zincrby), which *“Increments the score of member in the sorted set stored at key byincrement. If member does not exist in the sorted set, it is added with increment as its score (as if its previous score was 0.0). If key does not exist, a new sorted set with the specified member as its sole member is created.”*
-
-The information to populate the leaderboard is provided from DynamoDB via DynamoDB Streams.  Whenever an order is placed (and subsequently created in the **Orders** table), this is streamed to Lambda, which updates the cache in ElastiCache for Redis.  The Lambda function used to pass this information is **UpdateBestSellers**.  -->
-
-<!-- ### Amazon CloudFront and Amazon S3
-
-Amazon CloudFront hosts the web application frontend that users interface with.  This includes web assets like pages and images.  For demo purposes, CloudFormation pulls these resources from S3. -->
-
 **Developer Tools**
 
 The frontend code (ReactJS) is hosted in AWS CodeCommit. AWS CodePipeline builds the web application using AWS CodeBuild. After successfully building, CodeBuild copies the build artifacts into a S3 bucket where the web application assets are maintained. Along with uploading to Amazon S3, CodeBuild invalidates the cache so users always see the latest experience when accessing the storefront through the Amazon CloudFront distribution.  AWS CodeCommit, AWS CodePipeline, and AWS CodeBuild are used in the deployment and update processes only, not while the application is in a steady-state of use.
@@ -134,11 +118,13 @@ EU (Ireland) |	eu-west-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/clo
 3. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
 ![CFN](../images/01-cfn-05.png)
 
-This CloudFormation template may take around 10 mins. You can hop over the progress of resources creation in `Events` tab in CloudFormation. 
+This CloudFormation template may take around 15 mins. You can hop over the progress of resources creation in `Events` tab in CloudFormation. 
 ![CFN](../images/01-cfn-06.png)
 
 Once your stack has successfully completed, navigate to the `Outputs` tab of your stack
 where you can find an `WebApplication` output that includes a CloudFront Domain name. Type this URL in your browser and check your Bookstore application.
+
+To save time in this step due to Cloudfront distribution creation, once you have confirm that the S3 bucket and DynamoDB tables, you can proceed to [the next lab module](../2_SecondaryRegion/README.md). However, do remember to check back later that this Cloudformation is fully created.
 
 ```
 https://d1zltjarei3438.cloudfront.net/

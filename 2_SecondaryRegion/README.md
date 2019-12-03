@@ -97,21 +97,21 @@ This S3 replication will replicate the static contents from Ireland region to Si
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
-export s3bucketRegion2=<arc309-ireland-bookstore>
+export s3bucket=<arc309-ireland-bookstore>
 ```
 ```bash
 aws s3api create-bucket \
-  --bucket $s3bucketRegion2-region2 \
+  --bucket $s3bucket-region2 \
   --region ap-southeast-1 \
   --create-bucket-configuration LocationConstraint=ap-southeast-1
 ```
 ```bash
 aws s3api put-bucket-versioning \
-  --bucket $s3bucketRegion2-region2 \
+  --bucket $s3bucket-region2 \
   --versioning-configuration Status=Enabled
 ```
 ```bash
-aws s3 website s3://$s3bucketRegion2-region2/ --index-document index.html
+aws s3 website s3://$s3bucket-region2/ --index-document index.html
 ```
 
 <!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
@@ -194,6 +194,8 @@ Go to DynamoDB in Ireland. Select `Books` table, go to `Global Tables` tab, and 
 Select `Singapore`, and click `Continue`.
 ![Replica DynamoDVB](../images/02-replica-04.png)
 
+If you get the `Internal Error` message in the creation, please close the window and try again.
+
 Do the same steps or `bookstore-Orders` and `bookstore-Cart` tables.
 
 <!-- aws dynamodb create-table \
@@ -257,7 +259,7 @@ AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildk
 * **AssetsBucketName**: S3 bucket name replicated from Ireland (eg.arc309-ireland-bookstore-region2)
 * **bookstoreVPC**: VPC id (output of `Wordpress-Secondary` cdk, vpc-xxxxxxxxxx)
 * **bookstoreSubnet1**: Subnet id for Elasticache (output of `Wordpress-Secondary` cdk, subnet-xxxxxxxxxx)
-* **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in Singapore (eg. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)
+* **OrderTableStreamARN**: Stream ARN of `Order` table in Dynamo Table in **Singapore** (eg. arn:aws:dynamodb:ap-southeast-1:376715876263:table/bookstore-Orders/stream/2019-11-03T06:37:12.684)
 * **UserPool**: Congnito UserPool Arn in Ireland region (eg. arn:aws:cognito-idp:eu-west-1:376715876263:userpool/eu-west-1_1rry319Ri)
 ![CFN](../images/02-cfn-01.png)
 3. Skip the `Configure stack options` and check the box of `I acknowledge that AWS CloudFormation might create IAM resources with custom names.` in `Review` step. Select `Create stack`.
@@ -278,6 +280,8 @@ Go to `ECS` in Singapore region, select `WordpressSecondarywordpresssvcTaskDefXX
 ![ECS](../images/02-ecs-01.png)
 Select `web` container and update `WORDPRESS_DB_HOST` with the above Aurora Read Replica endpoint. Click `Update`.
 ![ECS](../images/02-ecs-02.png)
+
+It goes back to `Create new revision of Task Definition` screen. Please scroll down and click `Create` button.
 
 And we need to update the password in AWS Secrets Manager in Singapore to connect the Aurora Read Replica in Singapore. 
 
@@ -351,7 +355,7 @@ Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
 Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
 ![CloudFront](../images/02-cf-07.png) -->
 
-Copy your CloudFront Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to `Route53`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
+Copy your [CloudFront](https://console.aws.amazon.com/cloudfront) Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to `[Route53](https://console.aws.amazon.com/route53/home?#hosted-zones:)`. Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
 * Type: A-IPv4 address
 * Alias: `Yes` and Target: `dunq4klru02xw.cloudfront.net`
 ![CloudFront](../images/02-cf-08.png)
