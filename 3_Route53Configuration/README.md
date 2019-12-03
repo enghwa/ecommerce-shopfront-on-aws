@@ -5,7 +5,7 @@ Now that we set up the Bookstore App in Ireland and Singapore regions, and let's
 
 You don't need to purchase or repurpose your domain name for this workshop as our CDK created subdomain automatically for you. Also the CDK script has requested ACM certificates in Ireland and Singapore regions for your convenience. 
 
-Naviagte to the ACM service and check you have 4 certificates in each region.
+Navigate to the ACM service in [Singapore](https://ap-southeast-1.console.aws.amazon.com/acm/home?region=ap-southeast-1#/) and [Ireland](https://eu-west-1.console.aws.amazon.com/acm/home?region=eu-west-1#/) regions. You need to have **4 certificates in each region**.
 ![ACM](../images/03-cert-01.png)
 
 ## 1. Configure Custom Domains on each API Gateway in each region
