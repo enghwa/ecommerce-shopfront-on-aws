@@ -42,10 +42,6 @@ aws s3api create-bucket \
   --create-bucket-configuration LocationConstraint=ap-southeast-1
 ```
 
-```
-aws s3 website s3://arc309-singapore-$MYSUBDOMAIN-bookstore/ --index-document index.html
-```
-
 ## Replication of Aurora, S3, and DynamoDB
 
 In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contents, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
@@ -125,7 +121,7 @@ aws s3api put-bucket-versioning \
   --versioning-configuration Status=Enabled
 ```
 
-<!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
+aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html
 
 <!-- $ aws iam create-role \
 --role-name crrRole \
