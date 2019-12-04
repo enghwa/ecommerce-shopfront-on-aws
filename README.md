@@ -87,9 +87,9 @@ Please check before creating resources to ensure you are in the correct region:
 **Important Note**
 
 In order to conduct this workshop you need, 
-1. your own **laptop** with Chrome or Firefox browsers
+1. your own **laptop** (not a tablet) with Chrome or Firefox browsers. You corporate laptop may have a problem accessing domain .xyz.
 2. **an AWS Account** with access to use IAM, S3, DynamoDB, Lambda and API Gateway The instructions in this workshop assume **only one student is using a given AWS account at a time**. If you try sharing an account with another student, you'll run into naming conflicts for certain resources - we do not recommend this as there may be unpredictable results or difficult to identify configuration issues.
-3. **AWS Account**: Also if you use the corporate account, you might have permission problems. We need **Administrator access** for the workshop. Please create a new AWS account with Administrator access. 
+3. **AWS Account**: Also if you use the corporate account, you might have permission (IAM) or SCP problems. We need **Administrator access** for the workshop. Please create a new AWS account with Administrator access. 
 4. **VPC**: Also if your corporate account already has 5 VPCs in Ireland and Singapore, you might experience to hit the default **VPC limit of 5**. 
 5. If your laptop's **security policy blocks any 3rd party cookies (required by Cloud9)**, pair up with someone else who has a laptop which is not blocked.
 
