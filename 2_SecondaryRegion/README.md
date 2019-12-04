@@ -96,7 +96,7 @@ Verify RDS cluster creation in [RDS console in Singapore region](https://ap-sout
 
 Provisioning the Aurora replica instance can take a while takes for a while, you can procced the next step while the instance is being deployed.
 
-<details>
+</details>
 
 <details><summary>### 2. Enable S3 replication for Web contents replication (Optinal)</summary>
 
