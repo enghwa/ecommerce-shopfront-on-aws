@@ -1,6 +1,6 @@
 # How to build a multi-region highly available active-active architecture
 
-This self-paced workshop takes to step by step building multi-region active-active (and active-passive) **serverless** architecture with polyglat persistent databases. The web application is a Bookstore, and it can be used as a reference architecture for highly available ecommerce store.   
+This self-paced workshop takes to step by step **Building Multi-Region Active-Active (and Active-Passive) solution with morden architecture and polyglat persistent databases**. The web application is a Bookstore, and it can be used as a reference architecture for highly available ecommerce store.   
 
 Key points on implementation:
 
@@ -36,6 +36,8 @@ The architeure includes the following flow:
 6. Configure API gateway Custom Domain Name and Route53 Health Check for the failover testing. (Module 3)
 
 For the purposes of this workshop, our failover is focused on the path from our application through API Gateway. 
+
+![Bookstore](images/bookstore.png)
 
 <!-- The backend components are replicated to the second region so that it can be
 failovered in the event of a disaster. All data in DynamoDB, S3, Aurora MySQL will be
