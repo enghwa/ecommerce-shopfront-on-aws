@@ -13,7 +13,7 @@ Go back to your Cloud9 (that you created in `Ireland`), and execute following co
 * Your `MYSUBDOMAIN` was previously exported in module 1.
 -->
 
-Let's make sure your environment variable MYSUBDOMAIN is correctly set. Key in the same MYSUBDOMAIN as you did from module 1.
+Let's make sure your environment variable MYSUBDOMAIN is correctly set. Enter the same MYSUBDOMAIN as you did previously from module 1.
 
 ```
 export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
