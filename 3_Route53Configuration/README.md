@@ -18,9 +18,13 @@ name.
 Gateway endpoint, an error will be returned unless you have this custom domain
 configuration. -->
 
+<details><summary>New feature in Custom Domains names of Amazon API Gateway</summary>
+
 AWS recently launched new feature in Custom Domains names of Amazon API Gateway. Customers can now create wildcard custom domain names for their Amazon API Gateway EDGE, Regional, and WebSocket APIs. This enhancement extends API Gateway’s existing support for invoking APIs via custom domain names backed by certificates from AWS Certificate Manager (ACM).
 
 Creating an API Gateway wildcard custom domain name makes it easy to provide flexible API invoke URLs to customers, allowing for scalable customer isolation. For example, a common custom domain name use case is to implement customer-specific routing by providing each API customer with a unique, branded invoke URL. Previously this required creating a new API Gateway custom domain name for each customer, but now implementing this strategy will be possible with just one wildcard custom domain name.
+
+</details>
 
 You need one domain configurations in each Region with `*.` 
 
@@ -109,8 +113,8 @@ before proceeding.
 ### 2.3 Configure DNS Routing Policy
 
 Now let's configure the zone records for our `api.` subdomain prefix. You will
-configure these as CNAME ALIAS records in a *Latency* routing policy using
-your health check for Multi-region active-active backend. *Latency* routing policy routes traffic to the region that provides the best latency.
+configure these as CNAME ALIAS records in a **Latency** routing policy using
+your health check for Multi-region active-active backend. **Latency** routing policy routes traffic to the region that provides the best latency.
 
 <!-- ***Note.*** To create records for complex routing configurations, you can also use the traffic flow 
 visual editor and save the configuration as a traffic policy. However, we use the routing policy
