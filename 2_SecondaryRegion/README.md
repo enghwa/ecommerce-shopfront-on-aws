@@ -31,6 +31,19 @@ npx cdk@1.8.0 deploy Wordpress-Secondary
 
 Now, your Book Blog in Singapore is completed. However, you will find `503 Service Temporarily Unavailable` error if you verify `https://secondary.blog.<MYSUBDOMAIN>.multi-region.xyz/` as the wordpress is not connected the Aurora MySQL in Singapore region yet. We will configure this in the next section.
 
+## Setup of the S3 in Singapore Region
+
+```
+aws s3api create-bucket \
+  --bucket arc309-singapore-$MYSUBDOMAIN-bookstore \
+  --region ap-southeast-1 \
+  --create-bucket-configuration LocationConstraint=ap-southeast-1
+```
+
+```
+aws s3 website s3://arc309-singapore-$MYSUBDOMAIN-bookstore/ --index-document index.html
+```
+
 ## Replication of Aurora, S3, and DynamoDB
 
 In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contents, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
@@ -103,20 +116,9 @@ This S3 replication will replicate the static contents from Ireland region to Si
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
-aws s3api create-bucket \
-  --bucket arc309-singapore-$MYSUBDOMAIN-bookstore \
-  --region ap-southeast-1 \
-  --create-bucket-configuration LocationConstraint=ap-southeast-1
-```
-
-```bash
 aws s3api put-bucket-versioning \
   --bucket arc309-singapore-$MYSUBDOMAIN-bookstore \
   --versioning-configuration Status=Enabled
-```
-
-```bash
-aws s3 website s3://arc309-singapore-$MYSUBDOMAIN-bookstore/ --index-document index.html
 ```
 
 <!-- aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html -->
