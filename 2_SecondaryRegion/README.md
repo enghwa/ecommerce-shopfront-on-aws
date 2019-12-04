@@ -248,7 +248,7 @@ Now, you completed the replication across two regions for Aurora MySQL, S3, and 
 
 1. Create CloudFormation stack with the following template in Singapore 
 
-Region name | Region code | Launch
+Region name | Region code | Click the button below
 --- | --- | ---
 AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/new?stackName=MyBookstoreSingapore&templateURL=https://arc309-bookstore-ap-southeast-1.s3-ap-southeast-1.amazonaws.com/arc309_secondary.yaml) 
 
