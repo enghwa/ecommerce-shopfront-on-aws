@@ -2,7 +2,7 @@
 
 We completed building the bookstore in the primary region (Ireland) in the previous module. In this module, we will build the same Bookstore in Singapore region and configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contects, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
-## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
+## 2-1. Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
 
 Go back to your Cloud9 (that you created in `Ireland`), and execute following commands. It will take around 15 mins.
 (It should be executed under `wordpress-lab` directory).
@@ -38,7 +38,7 @@ npx cdk@1.8.0 deploy Wordpress-Secondary
 
 Now, your Book Blog in Singapore is completed. However, you will find `503 Service Temporarily Unavailable` error if you verify `https://secondary.blog.<MYSUBDOMAIN>.multi-region.xyz/` as the wordpress is not connected the Aurora MySQL in Singapore region yet. We will configure this in the next section.
 
-## Setup of the S3 in Singapore Region
+## 2-2. Setup of the S3 in Singapore Region
 
 Similar to Ireland region, before you do the S3 replication, let's create the new S3 bucket for the reactJS app in Singapore (ap-southeast-1) region.
 
@@ -49,7 +49,7 @@ aws s3api create-bucket \
   --create-bucket-configuration LocationConstraint=ap-southeast-1
 ```
 
-## Replication of Aurora, S3, and DynamoDB
+## 2-2. Replication of Aurora, S3, and DynamoDB
 
 In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contents, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
@@ -255,7 +255,7 @@ aws dynamodb create-global-table \
 
 Now, you completed the replication across two regions for Aurora MySQL, S3, and DynamoDB. It's time to build the Bookstore eb/App layer in Singapore.
 
-## Building the Bookstore using Cloudformation in your Secondary Region (Singapore)
+## 2-3. Building the Bookstore using Cloudformation in your Secondary Region (Singapore)
 
 **Step-by-step instructions**
 
