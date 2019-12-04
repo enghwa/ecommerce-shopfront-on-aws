@@ -56,7 +56,7 @@ Now, let's check if the DNS is setup correctly in Route53. Enter the following c
 ```
 dig +short NS <<YOUR HOSTED NAME URL>> e.g. myUniqueTeamName.multi-region.xyz
 ```
-Now, compare the results with the ones in output of CDK. If they are the same, you can proceed to deploy the Wordpress with the following command. 
+Now, compare the results with the the output of CDK, `hostedZone.NameServers`. If they are the same, you can proceed to deploy the Wordpress with the following command. 
 
 <!-- ![Compare Route53 namespace](../images/01-r53-01.png) -->
 
@@ -66,7 +66,7 @@ npx cdk@1.8.0 deploy Wordpress-Primary
 Do you wish to deploy these changes (y/n)?
 ```
 
-Enter "**Y**", and it will take around 20 min. While you are waiting for the CloudFormation completion, you can play with our pre-built Bookstore. (Refer Module 6: [Build a Secondary region](../2_SecondaryRegion/README.md) )
+Enter "**Y**", and it will take around 20 min. While you are waiting for the CloudFormation completion, you can play with our pre-built Bookstore. (Refer Module 6: [Demo](../6_Demo/README.md) )
 
 **Your Book Blog is completed**
 
