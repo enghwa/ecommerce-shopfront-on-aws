@@ -33,6 +33,8 @@ Now, your Book Blog in Singapore is completed. However, you will find `503 Servi
 
 ## Setup of the S3 in Singapore Region
 
+Similar to Ireland region, before you do the S3 replication, let's create the new S3 bucket for the reactJS app in Singapore (ap-southeast-1) region.
+
 ```
 aws s3api create-bucket \
   --bucket arc309-singapore-$MYSUBDOMAIN-bookstore \
@@ -50,16 +52,17 @@ In this section, we will configure the replication of Aurora MySQL for the Blog 
 
 However, replication of Aurora MySQL and S3 is optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure.
 
-<details><summary>### 1. Enable Aurora MySQL Read replica in Singapore region (Optional)</summary>
+### 1. Enable Aurora MySQL Read replica in Singapore region (Optional)
 
-Aurora MySQL Read replica helps you have a redundancy plan. The replica in `Singapore` region can be promoted as the primary database when the primary database in the primary region (`Ireland`) has issues.
+<details><summary>
+Aurora MySQL Read replica helps you have a redundancy plan. The replica in `Singapore` region can be promoted as the primary database when the primary database in the primary region (`Ireland`) has issues.</summary>
 
 Go back to Cloud9, and execute the following commands to enable the read replica of Aurora MySQL in `Singapore` region
 from Ireland region using the AWS CLI.
 
 - `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region. Or use the following command in Cloud9.
 
-```bash
+```
 export ReplicationSourceIdentifier=`aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 \
     --query "Stacks[0].Outputs[?OutputKey=='RDSreplicationsourceidentifier'].OutputValue" --output text`
 echo $ReplicationSourceIdentifier
@@ -67,7 +70,7 @@ echo $ReplicationSourceIdentifier
 
 - `vpc-security-group-ids`: Get from Cloudformation stack `Wordpress-Secondary` in Singapore Region. Or use the following command in Cloud9.
 
-```bash
+```
 export VpcSecurityGroupIds=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region ap-southeast-1 \
     --query "Stacks[0].Outputs[?OutputKey=='WordpressDBsecurityGroupId'].OutputValue" --output text`
 echo $VpcSecurityGroupIds
@@ -75,7 +78,7 @@ echo $VpcSecurityGroupIds
 
 CLI to create read replica of Aurora MySQL in Singapore region.
 
-```bash
+```
 aws rds create-db-cluster \
   --db-cluster-identifier arc309-replica-cluster \
   --engine aurora \
@@ -88,13 +91,13 @@ aws rds create-db-cluster \
 
 Verify the RDS replication cluster is created in Singapore region.
 
-```bash
+```
 aws rds describe-db-clusters --db-cluster-identifier arc309-replica-cluster --region ap-southeast-1
 ```
 
 Create RDS read replica instance.
 
-```bash
+```
 aws rds create-db-instance \
   --db-instance-identifier arc309-replica-instance \
   --db-cluster-identifier arc309-replica-cluster \
@@ -110,9 +113,10 @@ Provisioning the Aurora replica instance can take a while takes for a while, you
 
 </details>
 
-<details><summary>### 2. Enable S3 replication for Web contents replication (Optional)</summary>
+### 2. Enable S3 replication for Web contents replication (Optional)
 
-This S3 replication will replicate the static contents from Ireland region to Singapore whenever there is an update.
+<details><summary>This S3 replication will replicate the static contents from Ireland region to Singapore whenever there is an update. </summary>
+
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
