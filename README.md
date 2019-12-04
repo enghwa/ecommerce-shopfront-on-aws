@@ -93,8 +93,8 @@ In order to conduct this workshop you need,
 4. **VPC**: Also if your corporate account already has 5 VPCs in Ireland and Singapore, you might experience to hit the default **VPC limit of 5**. 
 5. If your laptop's **security policy blocks any 3rd party cookies (required by Cloud9)**, pair up with someone else who has a laptop which is not blocked.
 
-To start the workshop you need the AWS Command Line Interface(CLI). The front end application is written on Amplify and requires nodejs and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured. Follow the instruction [here to launch a AWS Cloud9 IDE](0_Prerequisities/README.md) before we start the lab.
-Cloud9 will be deployed in the VPC in Ireand. If you don't have a VPC including **the default VPC**, please create a VPC with a Single Public Subnet through VPC console in Irelad. 
+To start the workshop you need the AWS Command Line Interface(CLI). The front end application uses Amplify and requires nodejs and npm. To avoid spending time on configuring your laptop, we will use [AWS Cloud9](https://aws.amazon.com/cloud9/) as our IDE. It has AWS CLI preconfigured. Follow the instruction [here to launch a AWS Cloud9 IDE](0_Prerequisities/README.md) before you start the lab.
+Cloud9 will be deployed in a VPC in Ireland. If you don't have any VPC, including **the default VPC**, please create a VPC with a Single Public Subnet using the [VPC console in Ireland](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1#vpcs:sort=VpcId). 
 
 ### Let's start!
 Start the lab: [Prepare prerequisites](0_Prerequisities/README.md)
