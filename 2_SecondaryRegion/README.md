@@ -22,7 +22,8 @@ export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
 ```
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
-export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
+export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone --region eu-west-1 \
+ --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
 npx cdk@1.8.0 bootstrap
