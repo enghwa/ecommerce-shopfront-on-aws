@@ -39,7 +39,7 @@ In this section, we will configure the replication of Aurora MySQL for the Blog 
 
 However, replication of Aurora MySQL and S3 is optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure. 
 
-<details><summary>### 1. Enable Aurora MySQL Read replica in Singapore region (Optinal)</summary>
+<details><summary>### 1. Enable Aurora MySQL Read replica in Singapore region (Optional)</summary>
 
 Aurora MySQL Read replica helps you have a redundancy plan. The replica in `Singapore` region can be promoted as the primary database when the primary database in the primary region (`Ireland`) has issues.
 
@@ -98,7 +98,7 @@ Provisioning the Aurora replica instance can take a while takes for a while, you
 
 </details>
 
-<details><summary>### 2. Enable S3 replication for Web contents replication (Optinal)</summary>
+<details><summary>### 2. Enable S3 replication for Web contents replication (Optional)</summary>
 
 This S3 replication will replicate the static contents from Ireland region to Singapore whenever there is an update. 
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
@@ -181,10 +181,10 @@ aws s3 sync s3://$s3bucket s3://$s3bucket-region2
 
 ### 3. Enable DynamoDB Global Tables using Console
 
-Let's take a look at continuously replicating the data in DynamoDB from the primary region (Ireland) to the
+Let's take a look at continuous replicating the data in DynamoDB from the primary region (Ireland) to the
 secondary region (Singapore) so that there is always a backup.
 
-We will be using a feature of DynamoDB Global Tables for this. Any changes 
+We will be using a feature of `DynamoDB Global Tables` for this. Any changes 
 made to any items in any replica tables will be replicated to all of the other 
 replicas within the same global table. In a global table, a newly-written item is 
 usually propagated to all replica tables within seconds.
@@ -256,7 +256,7 @@ Now, you completed the replication across two regions for Aurora MySQL, S3, and 
 
 **Step-by-step instructions**
 
-1. Create CloudFormation stack with the following template in Singapore 
+1. Create CloudFormation stack with the following template in Singapore (Create the `Launch Stack` button below)
 
 Region name | Region code | Click the button below
 --- | --- | ---
@@ -274,8 +274,11 @@ AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildk
 
 This CloudFormation template may take around 5 mins. You can proceed the next steps.
 
-## Update Blog DB connection with Read Replica in Singapore
-You remember the Book Blog you created above had `503 Service Temporarily Unavailable` error due to the Fargate didn't connect to Aurora MySQL in Singapore. You can find the endpoint of Read Replica in Singapore with the following commands:
+However, replication of Aurora MySQL is optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure. 
+
+<details><summary>## Update Blog DB connection with Read Replica in Singapore (Optional)</summary>
+
+You remember the Book Blog you created above had `503 Service Temporarily Unavailable` error due to the Fargate didn't connect to Aurora MySQL in `Singapore`. You can find the endpoint of Read Replica in Singapore with the following commands:
 
 ```bash
 aws rds describe-db-instances \
@@ -309,15 +312,17 @@ $(aws secretsmanager get-secret-value \
 ```
 
 ### Update Wordpress ECS Service
-1. Go to `ECS` in Singapore Region, select the cluster `Wordpress-Secondary-ecscluster6XXXXXXX`
+1. Go to `ECS` in `Singapore` Region, select the cluster `Wordpress-Secondary-ecscluster6XXXXXXX`
 2. Select the `Wordpress-Secondary-wordpresssvcSXXXXX` service and click `Update`, make sure the latest task definition is selected.
 3. Click `Next` 3 times and finally `Update Service`. 
 
 Your blog in the secondary region is now configured, it will be in Read-only mode as it is connected to the read-replica of our Aurora RDS cluster in Singapore.
 
+</details>
+
 ## Update Blog WebAsset URL with Wordpress Application Load Balancer
 
-Find your code repo in CodeCommit and edit `wordpressconfig.ts` (eg. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region with your own domain name.
+Find your code repo in `CodeCommit` and edit `wordpressconfig.ts` (eg. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region with your own domain name.
 ![Wordpress](../images/02-wp-01.png)
 
 Update `http://<FQDN of your Wordpress Application Load Balancer` to
@@ -335,7 +340,9 @@ Enter any `Author name` and `Email address`, and click `Commit changes`. You can
 
 ## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions 
 
-Origin Failover of CloudFront distributions improves the availability of content delivered to end users.
+Origin Failover of CloudFront distributions improves the availability of content delivered to end users. However, this is an optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure. 
+
+<details><summary>Create CloudFront Origin Group (Optional)</summary>
 
 With CloudFront’s Origin Failover capability, your content is served from your secondary origin (Singapore) if CloudFront detects that your primary origin (Ireland) is unavailable. 
 <!-- For example, you can have two Amazon S3 buckets that serve as your origin, that you independently upload your content to. If an object that CloudFront requests from your primary bucket is not present or if connection to your primary bucket times-out, CloudFront will request the object from your secondary bucket. So, you can configure CloudFront to trigger a failover in response to either HTTP 4xx or 5xx status codes. -->
@@ -362,6 +369,8 @@ Go to CloudFront, and edit `Alternate Domain Names` in `General` tab.
 
 Update `Alternate Domain Names` with your Domain name and select your ACM Certifacte created by CDK in module 1.
 ![CloudFront](../images/02-cf-07.png) -->
+
+</details>
 
 Copy your [CloudFront](https://console.aws.amazon.com/cloudfront) Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to [Route53](https://console.aws.amazon.com/route53/home?#hosted-zones:). Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
 * Type: A-IPv4 address
