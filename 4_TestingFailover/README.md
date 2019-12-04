@@ -28,19 +28,19 @@ failure.
 Since your DNS records are configured to use this health check, Route53 should
 automatically use this information to point your application to the second region (Singapore).
 
-You can validate this failover scenario when you visit `https://api-ir.<your subdomain>.multi-region.xyz/books` with `{"message":"Forbidden"}` error. However, you will get the book list when you visit `https://api.<your subdomain>.multi-region.xyz/books` as the Singapore region API is working properly (same as `https://api-sg.<your subdomain>.multi-region.xyz/books`. 
+You can validate this failover scenario when you visit `https://api-ir.<MYSUBDOMAIN>.multi-region.xyz/books` with `{"message":"Forbidden"}` error. However, you will get the book list when you visit `https://api.<MYSUBDOMAIN>.multi-region.xyz/books` as the Singapore region API is working properly (same as `https://api-sg.<MYSUBDOMAIN>.multi-region.xyz/books`. 
 
 The web application UI should also continue to 
 function and you should still be able to view and order books.
 
-To confirm everything went as expected, go to your Bookstore application (`https://<your subdomain>.multi-region.xyz/books`)
+To confirm everything went as expected, go to your Bookstore application (`https://MYSUBDOMAIN>.multi-region.xyz/books`)
 and order a book again. You should see your application indicates Singapore region. (**Singapore flag icon at top left hand corner**). In Singapore's DynamoDB console, you will also see that the `Orders` table has a new record.
 
 <details><summary>Troubleshooting Common Issues</summary>
 It is possible that your Operating system AND browser are caching the old DNS entries, hence your failover will have problem (eg: `403 error` in your browser as you purchase books.).  
 To fix this:
 
-* clear your dns entries in your OS, then verify how your OS is resolving your api endpoint, (eg: `host api.<your subdomain>.multi-region.xyz`). You can tell from the CNAME resolution which AWS region is being called.
+* clear your dns entries in your OS, then verify how your OS is resolving your api endpoint, (eg: `host api.<MYSUBDOMAIN>.multi-region.xyz`). You can tell from the CNAME resolution which AWS region is being called.
 * restart your browser or use another browser
 
 </details>

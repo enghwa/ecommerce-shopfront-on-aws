@@ -8,7 +8,7 @@ The CloudFront origin access identity is still being used, hence, we need to del
 Go to `CloudFront` and select your `CloudFront Distribution`. Go to `Origins and Origin Groups` and delete the `Origin Group` and `Orgin` that you created.
 
 ## 2. Delete API Gateway
-Go to `Custom Domain Names` in `API Gateway` in `Singapore` and select your `*.<your subdomain>.multi-region.xyz` domain name. Click `x` button to delete it.
+Go to `Custom Domain Names` in `API Gateway` in `Singapore` and select your `*.<MYSUBDOMAIN>.multi-region.xyz` domain name. Click `x` button to delete it.
 
 ## 3. Delete Aurora Read Replicas
 You created the Aurora Read Replica in `Singapore` using CLI. Go to `RDS` console, select Read Replica Cluster `arc309-replica-cluster`, and select `Promote` in `Actions`. We need to promte the read replia as standalone to delete the instance. Then select Read Replica Instance `arc309-replica-instance` and select `Delete` in `Actions`. In the deletion window, uncheck `Create snapshot`, check `acknowledgement`, type `delete me`, and click `Delete`.

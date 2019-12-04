@@ -1,6 +1,6 @@
 # AWS Cloud9 - Cloud IDE
 
-Login to AWS Console, go to *Ireland(eu-west-1) Region* and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. If you don't have a VPC including **the default VPC**, you cannot deploy the Cloud9. Please create a default VPC first first before launching the Cloud9. 
+Login to AWS Console, go to *Ireland(eu-west-1)* region and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. If you don't have a VPC including **the default VPC**, you cannot deploy the Cloud9. Please create a default VPC first first before launching the Cloud9. 
 
 <details><summary>Create a default VPC for Cloud9</summary>
 
@@ -10,7 +10,7 @@ Go to [VPC console in Ireland](https://eu-west-1.console.aws.amazon.com/vpc/home
 
 </details>
 
-https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1 
+If you have a VPC, go to [Cloud9](https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1 ) in Irelad.
 
 ![AWS Ireland](../images/00-c9-00.png)
 
@@ -24,6 +24,7 @@ AWS Cloud9 is free, you only pay for the underlying EC2 instance. Select your EC
 ![Create AWS Cloud9](../images/00-c9-03.png)
 
 Click "Next Step", click "Create environment" and AWS Cloud9 will start! It would typically take 30-60s to create your AWS Cloud9 environment.
+
 ![Create AWS Cloud9](../images/00-c9-04.png)
 
 ## Clone the workshop project
