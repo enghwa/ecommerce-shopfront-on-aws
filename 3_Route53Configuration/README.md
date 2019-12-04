@@ -140,6 +140,13 @@ your domain (remember to use HTTPS). Go to the `/books` path and notice which
 regions is served based on Weighted routing policy.
 ![Route53](../images/03-dns-07.png)
 
+The last step is creating CloudFront alias in Route53. 
+
+Copy your [CloudFront](https://console.aws.amazon.com/cloudfront) Domain Name (eg. dunq4klru02xw.cloudfront.net), and go to [Route53](https://console.aws.amazon.com/route53/home?#hosted-zones:). Select your Hosted Zones and `Create Record Set` for CloudFront CNAME. 
+* Type: A-IPv4 address
+* Alias: `Yes` and Target: `dunq4klru02xw.cloudfront.net`
+![CloudFront](../images/02-cf-08.png)
+
 ## 3. Update your UI with new API Gateway Endpoint
 
 Now that we have active-active configuration, you will need to change the API
