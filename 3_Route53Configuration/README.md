@@ -1,5 +1,5 @@
 <!-- # Replicate to a second region --> 
-# Configure Active-Active solution using Route53
+# 3. Configure Active-Active solution using Route53
 
 Now that we set up the Bookstore App in Ireland and Singapore regions, and let's configure Route53 for active-active multi-region solution. 
 
