@@ -66,7 +66,7 @@ npx cdk@1.8.0 deploy Wordpress-Primary
 Do you wish to deploy these changes (y/n)?
 ```
 
-Enter "**Y**", and it will take around 20 min. While you are waiting for the CloudFormation completion, you can play with our pre-built Bookstore. (Refer Module 6: [Demo](../6_Demo/README.md) )
+Enter "**Y**", and it will take around 20 min. While you are waiting for the CDK completion, you can play with our pre-built Bookstore. (Refer Module 6: [Demo](../6_Demo/README.md) )
 
 **Your Book Blog is completed**
 
@@ -126,7 +126,9 @@ ParameterKey=bookstoreSubnet1,ParameterValue=$subnetIreland \
 ParameterKey=SeedRepository,ParameterValue=http://woof.kopi.io/book10.zip
 ```
 
-Now, you can go to your [Cloudformation console at Ireland](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#) to check if the stack is successfully created. Once your stack has successfully completed, you can go to your app via the AWS Cloudfront URL to verify if it works. You can find it via the output tab under AWS Cloudformation in Wordpress-Primary or enter the below command to ge the URL:
+It will take around 25 mins. If you don't want to wait for the CloudFormation completion, you can jump to the Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md) to build the same stack in `Singapore`. However, don't forget to come back to verify your Bookstore in Ireland is completed.
+
+Now, you can go to your [Cloudformation console at Ireland](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#) to check if the stack is successfully created. Once your stack has successfully completed, you can go to your app via the AWS Cloudfront URL to verify if it works. You can find it via the output tab under AWS Cloudformation in Wordpress-Primary or enter the below command in Cloud9 to ge the URL:
 
 ```
 export cloudfronturl=`aws cloudformation describe-stacks --stack-name MyBookstoreIreland --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='WebApplication'].OutputValue" --output text`
