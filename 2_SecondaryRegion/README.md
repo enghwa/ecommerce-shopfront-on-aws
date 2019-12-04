@@ -324,7 +324,7 @@ Your blog in the secondary region is now configured, it will be in Read-only mod
 
 ## Update Blog WebAsset URL with Wordpress Application Load Balancer
 
-Find your code repo in `CodeCommit` and edit `wordpressconfig.ts` (eg. bookstore-WebAssets/src/wordpressconfig.ts) in Ireland region with your own domain name.
+Find your code repo in `CodeCommit` and edit `wordpressconfig.ts` (under bookstore-WebAssets/src/wordpressconfig.ts) in `Ireland` region with your own domain name.
 ![Wordpress](../images/02-wp-01.png)
 
 Update `http://<FQDN of your Wordpress Application Load Balancer>` to
