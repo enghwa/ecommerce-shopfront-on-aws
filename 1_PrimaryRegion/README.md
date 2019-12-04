@@ -66,7 +66,7 @@ npx cdk@1.8.0 deploy Wordpress-Primary
 Do you wish to deploy these changes (y/n)?
 ```
 
-Enter "**Y**", and it will take around 20 min. 
+Enter "**Y**", and it will take around 20 min. While you are waiting for the CloudFormation completion, you can play with our pre-built Bookstore. (Refer Module 6: [Build a Secondary region](../2_SecondaryRegion/README.md) )
 
 **Your Book Blog is completed**
 
