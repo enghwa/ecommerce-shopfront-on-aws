@@ -13,15 +13,12 @@ You will also create the IAM polices and roles required by these components.
 In Cloud9, go to `wordpress-lab` directory 
 (eg. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
 
-```
-cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
-```
-
 ![CDK](../images/01-cdk-01.png)
 
 Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Execute following commands **one by one** in AWS Cloud9.
 
 ```bash
+cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
 export AWS_DEFAULT_REGION=eu-west-1
 export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
