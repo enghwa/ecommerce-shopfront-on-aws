@@ -143,10 +143,11 @@ regions is served based on Weighted routing policy.
 ## 3. Update your UI with new API Gateway Endpoint
 
 Now that we have active-active configuration, you will need to change the API
-endpoint in your WebAssets (*bookstore-WebAssets/src/config.js*) to use our newly
+endpoint in your WebAssets to use our newly
 created DNS name for our API endpoint.
 
-Go to CodeCommit Repositories, and edit the *config.js* file with `https://api.<subdomain>.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name. Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
+Go to `CodeCommit`, select `Repositories`, and edit the *config.js* file (under *bookstore-WebAssets/src/config.js*) 
+with `https://api.<subdomain>.multi-region.xyz` (substituting your own domain, make sure there is no trailing `/`) instead of the region specific name. Commit the changes and wait for Codepipeline/Codebuild to rebuild and update the S3 repository.
 
 ![Route53](../images/03-dns-08a.png)
 
