@@ -274,9 +274,11 @@ AP (Singapore) |	ap-southeast-1 | [![Launch Stack](https://cdn.rawgit.com/buildk
 
 This CloudFormation template may take around 5 mins. You can proceed the next steps.
 
-However, replication of Aurora MySQL is optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure. 
+## Update Blog DB connection with Read Replica in Singapore (Optional)
 
-<details><summary>## Update Blog DB connection with Read Replica in Singapore (Optional)</summary>
+As we mentioned above, the replication of Aurora MySQL is optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure. 
+
+<details><summary>Update Blog DB connection with Read Replica in Singapore (Optional)</summary>
 
 You remember the Book Blog you created above had `503 Service Temporarily Unavailable` error due to the Fargate didn't connect to Aurora MySQL in `Singapore`. You can find the endpoint of Read Replica in Singapore with the following commands:
 
