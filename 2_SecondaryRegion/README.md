@@ -4,7 +4,8 @@ We completed building the bookstore in the primary region (Ireland) in the previ
 
 ## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
 
-Go back to your Cloud9, and execute following commands.It will take around 15 mins. (It should be executed under `wordpress-lab` directory)
+Go back to your Cloud9 (that you created in `Ireland`), and execute following commands. It will take around 15 mins.
+(It should be executed under `wordpress-lab` directory).
 <!-- 
 * **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (eg.Z7VDWLHBQQSCF)
 ![CDK](../images/02-cdk-01.png)
@@ -36,11 +37,13 @@ Now, your Book Blog in Singapore is completed. However, you will find `503 Servi
 
 In this section, we will configure the replication of Aurora MySQL for the Blog content, S3 bucket for static contents, and DynamoDB tables for the books/order/cart data from the primary region (Ireland) to the secondary region (Singapore).
 
-### 1. Enable Aurora MySQL Read replica in Singapore region
+However, replication of Aurora MySQL and S3 is optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure. 
 
-Aurora MySQL Read replica helps you have a redundancy plan. The replica in Singapore region can be promoted as the primary database when the primary database in the primary region (Ireland) has issues.
+<details><summary>### 1. Enable Aurora MySQL Read replica in Singapore region (Optinal)</summary>
 
-Go back to Cloud9, and execute the following commands to enable the read replica of Aurora MySQL in Singapore region
+Aurora MySQL Read replica helps you have a redundancy plan. The replica in `Singapore` region can be promoted as the primary database when the primary database in the primary region (`Ireland`) has issues.
+
+Go back to Cloud9, and execute the following commands to enable the read replica of Aurora MySQL in `Singapore` region
 from Ireland region using the AWS CLI. 
 
 * `replication-source-identifier`: Get from Cloudformation stack `Wordpress-Primary` in Ireland Region. Or use the following command in Cloud9.
@@ -76,6 +79,7 @@ Verify the RDS replication cluster is created in Singapore region.
 ```bash
 aws rds describe-db-clusters --db-cluster-identifier arc309-replica-cluster --region ap-southeast-1
 ```
+
 Create RDS read replica instance. 
 
 ```bash
@@ -92,13 +96,15 @@ Verify RDS cluster creation in [RDS console in Singapore region](https://ap-sout
 
 Provisioning the Aurora replica instance can take a while takes for a while, you can procced the next step while the instance is being deployed.
 
-### 2. Enable S3 replication for Web contents replication
+<details>
+
+<details><summary>### 2. Enable S3 replication for Web contents replication (Optinal)</summary>
 
 This S3 replication will replicate the static contents from Ireland region to Singapore whenever there is an update. 
 Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
 
 ```bash
-export s3bucket=<arc309-ireland-bookstore>
+export s3bucket=<your bucket name in Ireland>
 ```
 ```bash
 aws s3api create-bucket \
@@ -126,17 +132,16 @@ $ aws iam put-role-policy \
 --policy-document file://s3-role-permissions-policy.json \
 --policy-name crrRolePolicy \ -->
 
-Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the your Cloud9. You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack (eg.arc309-ireland) in Ireland or execute following command in the Cloud9.
+Add replication configuration to the source bucket in Ireland region. Save the following JSON in a file called replication.json to the your Cloud9. You need S3 replication role ARN for this exercise. You can find it in the output table of your CloudFormation stack (MyBookstoreIreland) in Ireland or execute following command in the Cloud9.
 
 ```bash
-export IrelandStackName=<arc309-ireland>
+export IrelandStackName=MyBookstoreIreland
 ```
 ```bash
 export GetReplicationArnRole=`aws cloudformation describe-stacks --stack-name $IrelandStackName --region eu-west-1 \
      --query "Stacks[0].Outputs[?OutputKey=='S3replicationRole'].OutputValue" --output text`
 export ReplicationArnRole="$GetReplicationArnRole"
 ```
-
 
 copy and paste the following command to create a replication.json file:
 
@@ -171,6 +176,8 @@ S3 doesn't replicate objects retroactively. S3 Objects that existed before you a
 ```bash
 aws s3 sync s3://$s3bucket s3://$s3bucket-region2
 ```
+
+</details>
 
 ### 3. Enable DynamoDB Global Tables using Console
 
