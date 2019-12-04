@@ -70,9 +70,11 @@ If you can find the VPC ID and Subnet ID (any private subnet in 4 subnets) from 
 
 ## 2. Building the Bookstore using CloudFormation in your Primary Region (Ireland)
 
+<details><summary>Bookstore Frontend and Backend</summary>
+
 **Frontend**
 
-Build artifacts are stored in a S3 bucket where web application assets are maintained (like book cover photos, web graphics, etc.). Amazon CloudFront caches the frontend content from S3, presenting the application to the user via a CloudFront distribution. The frontend interacts with Amazon Cognito and Amazon API Gateway only. Amazon Cognito is used for all authentication requests, whereas API Gateway (and Lambda) is used for all API calls interacting across DynamoDB and ElastiCache. 
+React Build artifacts are stored in a S3 bucket where web application assets are maintained (like book cover photos, web graphics, etc.). Amazon CloudFront caches the frontend content from S3, presenting the application to the user via a CloudFront distribution. The frontend interacts with Amazon Cognito and Amazon API Gateway only. Amazon Cognito is used for all authentication requests, whereas API Gateway (and Lambda) is used for all API calls interacting across DynamoDB and ElastiCache. 
 
 **Backend**
 
@@ -81,6 +83,8 @@ The core of the backend infrastructure consists of Amazon Cognito, Amazon Dynamo
 **Developer Tools**
 
 The frontend code (ReactJS) is hosted in AWS CodeCommit. AWS CodePipeline builds the web application using AWS CodeBuild. After successfully building, CodeBuild copies the build artifacts into a S3 bucket where the web application assets are maintained. Along with uploading to Amazon S3, CodeBuild invalidates the cache so users always see the latest experience when accessing the storefront through the Amazon CloudFront distribution.  AWS CodeCommit, AWS CodePipeline, and AWS CodeBuild are used in the deployment and update processes only, not while the application is in a steady-state of use.
+
+</details>
 
 <!-- ![Developer Tools Diagram](assets/readmeImages/DeveloperTools.png) -->
 
