@@ -2,12 +2,15 @@
 
 In this module, you will deploy the Bookstore application and Wordpress blog in the primary (Ireland, eu-west-1) region using AWS CDK(Cloud Development Kit) and AWS CloudFormation. The solution uses the following components:
 
-1. Module 1-1. 
-* Fargate and Aurora - Book blog posts with Wordpress (AWS Fargate is a compute engine for Amazon ECS and EKS that allows you to run containers without having to manage servers or clusters)
-2. Module 1-2. 
-* CloudFront and S3 - Web static content, ReactJS files
-* API Gateway, AWS Lambda and Cognito - App layer with authentication
-* DynamoDB and ElastiCache - Books, Order, Cart tables and Best Seller information
+1. Module 1-1.
+
+- Fargate and Aurora - Book blog posts with Wordpress (AWS Fargate is a compute engine for Amazon ECS and EKS that allows you to run containers without having to manage servers or clusters)
+
+2. Module 1-2.
+
+- CloudFront and S3 - Web static content, ReactJS files
+- API Gateway, AWS Lambda and Cognito - App layer with authentication
+- DynamoDB and ElastiCache - Books, Order, Cart tables and Best Seller information
 
 You will also create the IAM polices and roles required by these components.
 
@@ -56,7 +59,8 @@ Now, let's check if the DNS is setup correctly in Route53. Enter the following c
 ```
 dig +short NS <<YOUR HOSTED NAME URL>> e.g. myUniqueTeamName.multi-region.xyz
 ```
-Now, compare the results with the the output of CDK, `hostedZone.NameServers`. If they are the same, you can proceed to deploy the Wordpress with the following command. 
+
+Now, compare the results with the the output of CDK, `hostedZone.NameServers`. If they are the same, you can proceed to deploy the Wordpress with the following command.
 
 <!-- ![Compare Route53 namespace](../images/01-r53-01.png) -->
 
@@ -101,13 +105,22 @@ The frontend code (ReactJS) is hosted in AWS CodeCommit. AWS CodePipeline builds
 1. Let's "grep" all the variables we need from the Wordpress-Primary stack in Cloudformation via the commands below:
 
 ```
-export cfnAcmArn=`aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='CloudfrontACMARNuseast1'].OutputValue" --output text`
+export cfnAcmArn=`aws cloudformation describe-stacks --stack-name Wordpress-Primary \
+--region eu-west-1 \
+--query "Stacks[0].Outputs[?OutputKey=='CloudfrontACMARNuseast1'].OutputValue" \
+--output text`
 echo $cfnAcmArn
 
-export vpcIreland=`aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='PrimaryRegionVpcIdeuwest1'].OutputValue" --output text`
+export vpcIreland=`aws cloudformation describe-stacks --stack-name Wordpress-Primary \
+--region eu-west-1 \
+--query "Stacks[0].Outputs[?OutputKey=='PrimaryRegionVpcIdeuwest1'].OutputValue" \
+--output text`
 echo $vpcIreland
 
-export subnetIreland=`aws cloudformation describe-stacks --stack-name Wordpress-Primary --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='PrimaryRegionprivatesubnetforElasticachebookstoreSubnet1'].OutputValue" --output text`
+export subnetIreland=`aws cloudformation describe-stacks --stack-name Wordpress-Primary \
+--region eu-west-1 \
+--query "Stacks[0].Outputs[?OutputKey=='PrimaryRegionprivatesubnetforElasticachebookstoreSubnet1'].OutputValue" \
+--output text`
 echo $subnetIreland
 ```
 
