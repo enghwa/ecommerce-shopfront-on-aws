@@ -5,8 +5,8 @@ Now that we set up the Bookstore App in Ireland and Singapore regions, and let's
 
 You don't need to purchase or repurpose your domain name for this workshop as our CDK created subdomain automatically for you. Also the CDK script has requested ACM certificates in Ireland and Singapore regions for your convenience. 
 
-Navigate to the ACM service in [Singapore](https://ap-southeast-1.console.aws.amazon.com/acm/home?region=ap-southeast-1#/) and [Ireland](https://eu-west-1.console.aws.amazon.com/acm/home?region=eu-west-1#/) regions. You need to have **4 certificates in each region**.
-![ACM](../images/03-cert-01.png)
+<!-- Navigate to the ACM service in [Singapore](https://ap-southeast-1.console.aws.amazon.com/acm/home?region=ap-southeast-1#/) and [Ireland](https://eu-west-1.console.aws.amazon.com/acm/home?region=eu-west-1#/) regions. You need to have **4 certificates in each region**.
+![ACM](../images/03-cert-01.png) -->
 
 ## 1. Configure Custom Domains on each API Gateway in each region
 
@@ -112,10 +112,10 @@ Now let's configure the zone records for our `api.` subdomain prefix. You will
 configure these as CNAME ALIAS records in a *Latency* routing policy using
 your health check for Multi-region active-active backend. *Latency* routing policy routes traffic to the region that provides the best latency.
 
-***Note.*** To create records for complex routing configurations, you can also use the traffic flow 
+<!-- ***Note.*** To create records for complex routing configurations, you can also use the traffic flow 
 visual editor and save the configuration as a traffic policy. However, we use the routing policy
 for this workshop, as it is not possible to create an Alias record pointing to a DNS name that is 
-being managed by a traffic policy.
+being managed by a traffic policy. -->
 
 **High-level instructions**
 
