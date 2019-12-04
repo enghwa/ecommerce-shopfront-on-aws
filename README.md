@@ -42,6 +42,8 @@ failovered in the event of a disaster. All data in DynamoDB, S3, Aurora MySQL wi
 replicated from the primary region to the secondary region ensures that our
 application data will be available when we failover. -->
 
+<details><summary>Application, Database, Infrastructure componets</summary>
+
 **Application components**
 
 * Web application blueprint – We include a React web application pre-integrated out-of-the-box with tools such as ReactJS Bootstrap, Redux, React Router, internationalization, and more.
@@ -62,6 +64,8 @@ the API layer. *Note* We will only use a single region for Amazon Cognito, as th
 * Health check and routing - AWS Route53 is used for DNS and allows us to perform
 health checks on our primary region, and upon detecting an issue,
 automatically switching to the secondary region using Route53 DNS updates.
+
+</details>
 
 Implementation Instructions
 ===========================
