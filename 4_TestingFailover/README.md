@@ -5,14 +5,14 @@ In this module we will artificially break our primary region and observe our fai
 
 To demonstrate this, we conduct a scenario where a developer
 accidentally deletes the production setting in API gateway in
-primary region (Ireland), thus breaking the API layer. We expect our application detects
+primary region (`Ireland`), thus breaking the API layer. We expect our application detects
 this failure and adjusts the DNS settings to continue service of the
-application from the second region (Singapore),
+application from the second region (`Singapore`),
 maintaining availability of the API/Database and functionality of the UI.
 
 ## 1. Breaking API layer in primary region (Ireland)
 
-In the AWS Console, ensure you are in your primary region (Ireland) then head over to
+In the AWS Console, ensure you are in your primary region (`Ireland`) then head over to
 `API Gateway` console, choose `Custom Domain Name`. Then delete the `Base Path Mappings` and save changes.
 
 ![Failover](../images/04-failover-01.png)
