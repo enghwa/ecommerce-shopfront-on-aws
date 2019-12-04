@@ -118,12 +118,14 @@ ParameterKey=bookstoreSubnet1,ParameterValue=$subnetIreland \
 ParameterKey=SeedRepository,ParameterValue=http://woof.kopi.io/book10.zip
 ```
 
-Now, you can go to your [Cloudformation console at Ireland](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#) to check if the stack is successfully created. Once your stack has successfully completed, you can go to your app via the AWS Cloudfront URL to verify if it works. You can find it via the output tab under AWS Cloudformation in Wordpress Below shows the example of the bookstore website.
+Now, you can go to your [Cloudformation console at Ireland](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#) to check if the stack is successfully created. Once your stack has successfully completed, you can go to your app via the AWS Cloudfront URL to verify if it works. You can find it via the output tab under AWS Cloudformation in Wordpress-Primary or enter the below command to ge the URL:
 
 ```
 export cloudfronturl=`aws cloudformation describe-stacks --stack-name MyBookstoreIreland --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='WebApplication'].OutputValue" --output text`
 echo $cloudfronturl
 ```
+
+Below shows the example of the bookstore website.
 
 ![CFN](../images/01-cfn-07.png)
 
