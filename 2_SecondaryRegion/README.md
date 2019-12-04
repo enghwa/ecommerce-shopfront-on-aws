@@ -84,7 +84,7 @@ aws rds create-db-instance \
   --region ap-southeast-1
 ```
 
-Verify RDS replication in RDS console in Singapore region or using CLI in Cloud9.
+Verify RDS cluster creation in [RDS console in Singapore region](https://ap-southeast-1.console.aws.amazon.com/rds/home?region=ap-southeast-1#databases:).
 ![Replica Aurora](../images/02-replica-01.png)
 
 Provisioning the Aurora replica instance can take a while takes for a while, you can procced the next step while the instance is being deployed.
