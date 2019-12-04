@@ -47,9 +47,7 @@ Now, compare the results with the ones in Route53. If they are the same, you can
 
 ```
 npx cdk@1.8.0 deploy Wordpress-Primary
-```
 
-```
 Do you wish to deploy these changes (y/n)? 
 ```
 Type "Y", and it will take around 20 min.
