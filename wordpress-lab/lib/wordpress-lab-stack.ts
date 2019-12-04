@@ -213,7 +213,7 @@ export class WordpressLabStack extends cdk.Stack {
     // cdk/cfn output
     new cdk.CfnOutput(this, 'Primary Region VpcId_' + props.region, { value: vpc.vpcId });
     new cdk.CfnOutput(this, 'Primary Region private subnet for Elasticache (bookstoreSubnet1)', { value: vpc.selectSubnets({ subnetType: SubnetType.PRIVATE }).subnetIds[0] });
-    new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_' + props.region, { value: validatedWildCardCert.certificateArn });
+    //new cdk.CfnOutput(this, 'Wildcard_ACM_ARN_' + props.region, { value: validatedWildCardCert.certificateArn });
     new cdk.CfnOutput(this, 'Cloudfront_ACM_ARN_useast1', { value: validatedCloudFrontCert.certificateArn });
     new cdk.CfnOutput(this, 'RDS replication-source-identifier', { value: `arn:aws:rds:${this.region}:${this.account}:cluster:${dbcluster.clusterIdentifier}` });
   }
