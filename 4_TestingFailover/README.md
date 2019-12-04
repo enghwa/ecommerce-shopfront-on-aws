@@ -36,12 +36,14 @@ function and you should still be able to view and order books.
 To confirm everything went as expected, go to your Bookstore application (`https://<your subdomain>.multi-region.xyz/books`)
 and order a book again. You should see your application indicates Singapore region. (**Singapore flag icon at top left hand corner**). In Singapore's DynamoDB console, you will also see that the `Orders` table has a new record.
 
-### Troubleshooting Common Issues
+<details><summary>Troubleshooting Common Issues</summary>
 It is possible that your Operating system AND browser are caching the old DNS entries, hence your failover will have problem (eg: `403 error` in your browser as you purchase books.).  
 To fix this:
 
 * clear your dns entries in your OS, then verify how your OS is resolving your api endpoint, (eg: `host api.<your subdomain>.multi-region.xyz`). You can tell from the CNAME resolution which AWS region is being called.
 * restart your browser or use another browser
+
+</details>
  
 <!-- `To verify your api endpoint has fail-overed, you can also use a tool, [CacheCheck](https://cachecheck.opendns.com/). 
 Enter your api hostname (eg: `api.<your subdomain>.multi-region.xyz`) and observe how clients across the world are resovling your api endpoint. 
