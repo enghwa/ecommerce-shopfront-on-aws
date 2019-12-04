@@ -1,6 +1,14 @@
 # AWS Cloud9 - Cloud IDE
 
-Login to AWS Console, go to *Ireland(eu-west-1) Region* and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. If you don't have a VPC including **the default VPC**, you cannot deploy the Cloud9. Please create a VPC with a Single Public Subnet through VPC console in Irelad first before launching the Cloud9. 
+Login to AWS Console, go to *Ireland(eu-west-1) Region* and spin up a AWS Cloud9 environment. Please use Firefox or Chrome to open AWS Cloud9. If you don't have a VPC including **the default VPC**, you cannot deploy the Cloud9. Please create a default VPC first first before launching the Cloud9. 
+
+<details><summary>Create a default VPC for Cloud9<details>
+
+Go to [VPC console in Ireland](https://eu-west-1.console.aws.amazon.com/vpc/home?region=eu-west-1#vpcs:sort=VpcId) and select `Your VPCs`. Click `Create Default VPC` in Actions.
+
+![Default VPC](../images/00-c9-06.png)
+
+</details>
 
 https://eu-west-1.console.aws.amazon.com/cloud9/home?region=eu-west-1 
 

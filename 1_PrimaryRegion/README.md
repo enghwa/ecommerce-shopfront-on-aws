@@ -9,7 +9,7 @@ In this module, you will deploy the Bookstore application and Wordpress blog in 
 
 You will also create the IAM polices and roles required by these components.
 
-## 1. Building your Book Blog using AWS CDK in your Primary Region (Ireland)
+## 1-1. Building your Book Blog using AWS CDK in your Primary Region (Ireland)
 
 In Cloud9, go to `wordpress-lab` directory
 (eg. /home/ec2-user/environment/MultiRegion-Modern-Architecture/wordpress-lab)
@@ -42,17 +42,16 @@ Type "Y", and it will take around 5 min.
 
 ![CDK](../images/01-cdk-03.png)
 
-- You need `hostedZone.hostedZoneID` (Z7VDWLHBQQSCF) information in the module 2.
+- You need `hostedZone.hostedZoneID` information in the module 2.
 
 Now, let's check if the DNS is setup correctly in Route53. Open a new Terminal or iTerm and enter the following command to make sure you see that the DNS is resolving to the correct addresses.
 
 ```
 dig +short NS <<YOUR HOSTED NAME URL>> e.g. myUniqueTeamName.multi-region.xyz
 ```
+Now, compare the results with the ones in Route53. If they are the same, you can proceed to deploy the Wordpress. If not, please wait another 1 min before you seek help from the AWS instructors.
 
 ![Compare Route53 namespace](../images/01-r53-01.png)
-
-Now, compare the results with the ones in Route53. If they are the same, you can proceed to deploy the Wordpress. If not, please wait another 1 min before you seek help from the AWS instructors.
 
 ```
 npx cdk@1.8.0 deploy Wordpress-Primary
@@ -66,7 +65,7 @@ Enter "**Y**", and it will take around 20 min.
 
 Now, your Book Blog is built with the following url `https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/` and you can now go to your blog. Note that DNS resolution may take a while to reflect your website.
 
-## 2. Building the Bookstore using CloudFormation in your Primary Region (Ireland)
+## 1-2. Building the Bookstore using CloudFormation in your Primary Region (Ireland)
 
 <details><summary>Bookstore Frontend and Backend</summary>
 
