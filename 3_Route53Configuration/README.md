@@ -35,7 +35,7 @@ You need one domain configurations in each Region with `*.`
 
 **High-level instructions**
 
-Navigate over to the `API Gateway` in Ireland region (https://eu-west-1.console.aws.amazon.com/apigateway/home?region=eu-west-1#/apis), and create `Custom Domain Names`.
+Navigate over to the `[API Gateway](https://eu-west-1.console.aws.amazon.com/apigateway/home?region=eu-west-1#/apis)` in Ireland region, and create `Custom Domain Names`.
 * Choose `HTTP`
 * Domain Name: `*.<subdomain>.multi-region.xyz`
 * Choose `TLS 1.2`
