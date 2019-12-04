@@ -5,16 +5,19 @@ We completed building the bookstore in the primary region (Ireland) in the previ
 ## Building your Book Blog using AWS CDK in your Secondary Region (Singapore)
 
 Go back to your Cloud9, and execute following commands.It will take around 15 mins. (It should be executed under `wordpress-lab` directory)
-
+<!-- 
 * **hostedZoneID**: Get this information from the output of CDK or CloudFormation in the module 1. (eg.Z7VDWLHBQQSCF)
 ![CDK](../images/02-cdk-01.png)
 * Your `MYSUBDOMAIN` was previously exported in module 1.
+-->
 
 ```bash
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
-export hostedZoneID=<route53 hosted zone ID of MYSUBDOMAIN.multi-region.xyz>
-
+export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone --region eu-west-1 \
+ --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
+```
+```bash
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
 npx cdk@1.8.0 bootstrap
