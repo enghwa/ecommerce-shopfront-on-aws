@@ -13,7 +13,13 @@ Go back to your Cloud9 (that you created in `Ireland`), and execute following co
 * Your `MYSUBDOMAIN` was previously exported in module 1.
 -->
 
-```bash
+Let's make sure your environment variable MYSUBDOMAIN is correctly set. Key in the same MYSUBDOMAIN as you did from module 1.
+
+```
+export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
+```
+
+```
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
 export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
