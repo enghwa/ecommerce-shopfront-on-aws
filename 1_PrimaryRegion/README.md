@@ -18,13 +18,18 @@ In Cloud9, go to `wordpress-lab` directory
 
 ![CDK](../images/01-cdk-01.png)
 
-Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Execute following commands **one by one** in AWS Cloud9.
+Deploy Wordpress for the Book blog using AWS CDK with ALB (Application Load Balancer), AWS Fargate, ACM, and Aurora MySQL in Primary Region (Ireland). Export your own unqiue domain name in Cloud9.
 
 ```bash
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
 export AWS_DEFAULT_REGION=eu-west-1
 export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
+```
+
+Copy and execute the following command in Cloud9 to install npm and bootstrap and to deploy hostedZone cdk.
+
+```bash
 npm install
 npx cdk@1.8.0 bootstrap
 npx cdk@1.8.0 deploy hostedZone
@@ -66,6 +71,8 @@ Enter "**Y**", and it will take around 20 min.
 **Your Book Blog is completed**
 
 Now, your Book Blog is built with the following url `https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/` and you can now go to your blog. Note that DNS resolution may take a while to reflect your website.
+
+![CDK](../images/01-cdk-04.png)
 
 ## 1-2. Building the Bookstore using CloudFormation in your Primary Region (Ireland)
 
