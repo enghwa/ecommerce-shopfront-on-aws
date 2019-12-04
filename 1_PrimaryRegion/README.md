@@ -63,14 +63,6 @@ Do you wish to deploy these changes (y/n)?
 
 Enter "**Y**", and it will take around 20 min. 
 
-FYI. 
-
-
-
-
-
-export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
-
 **Your Book Blog is completed**
 
 Now, your Book Blog is built with the following url `https://primary.blog.<MYSUBDOMAIN>.multi-region.xyz/` and you can now go to your blog. Note that DNS resolution may take a while to reflect your website.
