@@ -126,7 +126,7 @@ ParameterKey=bookstoreSubnet1,ParameterValue=$subnetIreland \
 ParameterKey=SeedRepository,ParameterValue=http://woof.kopi.io/book10.zip
 ```
 
-It will take around 25 mins. If you don't want to wait for the CloudFormation completion, you can jump to the Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md) to build the same stack in `Singapore`. However, don't forget to come back to verify your Bookstore in Ireland is completed.
+It will take around 25 mins. (If you don't want to wait for the CloudFormation completion, you can jump to the "Module 2: [Build a Secondary region](../2_SecondaryRegion/README.md)" to build the same stack in `Singapore`. However, don't forget to come back to verify your Bookstore in Ireland is completed.)
 
 Now, you can go to your [Cloudformation console at Ireland](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#) to check if the stack is successfully created. Once your stack has successfully completed, you can go to your app via the AWS Cloudfront URL to verify if it works. You can find it via the output tab under AWS Cloudformation in Wordpress-Primary or enter the below command in Cloud9 to ge the URL:
 
