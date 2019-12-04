@@ -14,7 +14,8 @@ Go back to your Cloud9, and execute following commands.It will take around 15 mi
 ```bash
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
-export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
+export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone --region eu-west-1 \
+ --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
 
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
