@@ -259,16 +259,27 @@ Now, you completed the replication across two regions for Aurora MySQL, S3, and 
 1. Let's "grep" all the variables we need from the Wordpress-Primary stack in Cloudformation via the commands below:
 
 ```
-export vpcSingapore=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region ap-southeast-1 --query "Stacks[0].Outputs[?OutputKey=='SecondaryRegionVpcIdapsoutheast1'].OutputValue" --output text`
+export vpcSingapore=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary \
+--region ap-southeast-1 \
+--query "Stacks[0].Outputs[?OutputKey=='SecondaryRegionVpcIdapsoutheast1'].OutputValue" \
+--output text`
 echo $vpcSingapore
 
-export subnetSingapore=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary --region  ap-southeast-1 --query "Stacks[0].Outputs[?OutputKey=='SecondaryRegionprivatesubnetforElasticache'].OutputValue" --output text`
+export subnetSingapore=`aws cloudformation describe-stacks --stack-name Wordpress-Secondary \
+--region  ap-southeast-1 \
+--query "Stacks[0].Outputs[?OutputKey=='SecondaryRegionprivatesubnetforElasticache'].OutputValue" \
+--output text`
 echo $subnetSingapore
 
-export orderDdbArn=`aws dynamodb describe-table --region  ap-southeast-1 --table-name bookstore-Orders --query 'Table.LatestStreamArn'`
+export orderDdbArn=`aws dynamodb describe-table --table-name bookstore-Orders \
+--region ap-southeast-1 \
+--query 'Table.LatestStreamArn'`
 echo $orderDdbArn
 
-export cognitoIrelandPool=`aws cloudformation describe-stacks --stack-name MyBookstoreIreland --region eu-west-1 --query "Stacks[0].Outputs[?OutputKey=='UserPool'].OutputValue" --output text`
+export cognitoIrelandPool=`aws cloudformation describe-stacks --stack-name MyBookstoreIreland \
+--region eu-west-1 \
+--query "Stacks[0].Outputs[?OutputKey=='UserPool'].OutputValue" \
+--output text`
 echo $cognitoIrelandPool
 ```
 
