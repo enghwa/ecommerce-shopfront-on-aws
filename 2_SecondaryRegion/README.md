@@ -117,7 +117,7 @@ Provisioning the Aurora replica instance can take a while takes for a while, you
 
 <details><summary>This S3 replication will replicate the static contents from Ireland region to Singapore whenever there is an update. </summary>
 
-Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in ireland` with '`-region2` such as `arc309-ireland-bookstore-region2`.
+Follow the steps to enable the S3 replication using the AWS CLI in Cloud9. The destination bucket name should be `your bucket name in Singarpore` that you created above such as `arc309-singapore-$MYSUBDOMAIN-bookstore`.
 
 ```bash
 aws s3api put-bucket-versioning \
