@@ -297,7 +297,7 @@ ParameterKey=OrderTableStreamARN,ParameterValue=$orderDdbArn \
 ParameterKey=UserPool,ParameterValue=$cognitoIrelandPool
 ```
 
-This CloudFormation template may take around 20 mins. You can proceed the next steps.
+This CloudFormation template may take around 10 mins. You can proceed the next steps.
 
 ## Update Blog DB connection with Read Replica in Singapore (Optional)
 
