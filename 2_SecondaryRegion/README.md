@@ -126,7 +126,7 @@ aws s3api put-bucket-versioning \
 ```
 
 ```bash
-aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html
+aws s3 website s3://<arc309-singapore-$MYSUBDOMAIN-bookstore>/ --index-document index.html
 ```
 
 <!-- $ aws iam create-role \
