@@ -125,7 +125,9 @@ aws s3api put-bucket-versioning \
   --versioning-configuration Status=Enabled
 ```
 
+```bash
 aws s3 website s3://<AssetsBucketName-region2>/ --index-document index.html
+```
 
 <!-- $ aws iam create-role \
 --role-name crrRole \
@@ -155,7 +157,7 @@ echo '{
       "DeleteMarkerReplication": { "Status": "Disabled" },
       "Filter": {},
       "Destination": {
-        "Bucket": "arn:aws:s3:::arc309-ireland-'$MYSUBDOMAIN'-bookstore"
+        "Bucket": "arn:aws:s3:::arc309-singapore-'$MYSUBDOMAIN'-bookstore"
       }
     }
   ]
@@ -165,7 +167,7 @@ echo '{
 ```
 aws s3api put-bucket-replication \
   --replication-configuration file://replication.json \
-  --bucket arc309-singapore-$MYSUBDOMAIN-bookstore
+  --bucket arc309-ireland-$MYSUBDOMAIN-bookstore
 ```
 
 You can check the replication configuration in S3 console.
