@@ -15,7 +15,7 @@ Go back to your Cloud9 (that you created in `Ireland`), and execute following co
 Let's make sure your environment variable MYSUBDOMAIN is correctly set. Enter the same MYSUBDOMAIN as you did previously from module 1.
 
 ```
-export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
+export MYSUBDOMAIN=<enter a 8 char unique subdomain name with lower case, eg: team1234>
 ```
 
 Similar to Ireland region, before you do the S3 replication, let's create the new S3 bucket for the reactJS app in Singapore (ap-southeast-1) region.
