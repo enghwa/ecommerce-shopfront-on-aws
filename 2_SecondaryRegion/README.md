@@ -286,7 +286,7 @@ ParameterKey=OrderTableStreamARN,ParameterValue=$orderDdbArn \
 ParameterKey=UserPool,ParameterValue=$cognitoIrelandPool
 ```
 
-This CloudFormation template may take around 5 mins. You can proceed the next steps.
+This CloudFormation template may take around 20 mins. You can proceed the next steps.
 
 ## Update Blog DB connection with Read Replica in Singapore (Optional)
 
@@ -355,7 +355,7 @@ export default {
 Enter any `Author name` and `Email address`, and click `Commit changes`. You can check the progress in CodePipeline and CodeBuild.
 ![Code](../images/02-code-01.png)
 
-## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions
+## Create CloudFront Origin Group for both S3 buckets in primary and secondary regions (Optional)
 
 Origin Failover of CloudFront distributions improves the availability of content delivered to end users. However, this is an optional configuration for the Bookstore Failover testing in the next module. Hence, you can skip it now if you have no time to configure.
 
