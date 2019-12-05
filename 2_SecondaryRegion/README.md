@@ -18,6 +18,15 @@ Let's make sure your environment variable MYSUBDOMAIN is correctly set. Enter th
 export MYSUBDOMAIN=<enter a 8 char unique subdomain name, eg: team1234>
 ```
 
+Similar to Ireland region, before you do the S3 replication, let's create the new S3 bucket for the reactJS app in Singapore (ap-southeast-1) region.
+
+```
+aws s3api create-bucket \
+  --bucket arc309-singapore-$MYSUBDOMAIN-bookstore \
+  --region ap-southeast-1 \
+  --create-bucket-configuration LocationConstraint=ap-southeast-1
+```
+
 ```
 cd ~/environment/MultiRegion-Modern-Architecture/wordpress-lab/
 
@@ -36,17 +45,6 @@ npx cdk@1.8.0 deploy Wordpress-Secondary
 ![CDK](../images/02-cdk-03.png)
 
 Now, your Book Blog in Singapore is completed. However, you will find `503 Service Temporarily Unavailable` error if you verify `https://secondary.blog.<MYSUBDOMAIN>.multi-region.xyz/` as the wordpress is not connected the Aurora MySQL in Singapore region yet. We will configure this in the next section.
-
-## 2-2. Setup of the S3 in Singapore Region
-
-Similar to Ireland region, before you do the S3 replication, let's create the new S3 bucket for the reactJS app in Singapore (ap-southeast-1) region.
-
-```
-aws s3api create-bucket \
-  --bucket arc309-singapore-$MYSUBDOMAIN-bookstore \
-  --region ap-southeast-1 \
-  --create-bucket-configuration LocationConstraint=ap-southeast-1
-```
 
 ## 2-2. Replication of Aurora, S3, and DynamoDB
 
