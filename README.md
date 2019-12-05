@@ -1,6 +1,6 @@
 # How to build a multi-region highly available active-active architecture
 
-This self-paced workshop takes to step by step **Building Multi-Region Active-Active (and Active-Passive) solution with morden architecture and polyglat persistent databases**. The web application is a Bookstore, and it can be used as a reference architecture for highly available ecommerce store.
+This self-paced workshop takes to step by step **Building Multi-Region Active-Active (and Active-Passive) solution with morden architecture and polyglot persistent databases**. The web application is a Bookstore, and it can be used as a reference architecture for highly available ecommerce store.
 
 ![Bookstore](images/bookstore.png)
 
