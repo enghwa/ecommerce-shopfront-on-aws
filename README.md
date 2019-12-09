@@ -74,6 +74,17 @@ Implementation Instructions
 
 This workshop is broken up into multiple modules. In each, we will walk
 through a high level overview of how to implement or test a part of this architecture. 
+
+### Recorded Video walk-through of the labs
+
+[Lab 1-1a](https://youtu.be/NezXEBoDYZY)
+
+[Lab 1b-2](https://youtu.be/CzmhoHMXIsw)
+
+[Lab 2](https://youtu.be/pbj3wHvWssc)
+
+[Lab 3](https://youtu.be/aYCk7XOZ2wk)
+
 <!-- You will expand sections for detailed command or console instructions. -->
 
 **Region Selection**
