@@ -34,11 +34,11 @@ Copy and execute the following command in Cloud9 to install npm and bootstrap an
 
 ```bash
 npm install
-npx cdk@1.8.0 bootstrap
-npx cdk@1.8.0 deploy hostedZone
+npx cdk@1.22.0 bootstrap
+npx cdk@1.22.0 deploy hostedZone
 ```
 
-This command `npx cdk@1.8.0 bootstrap` creates an AWS Cloudformation Stack `CDKToolkit` in your Cloudformation console to manages resources necessary for managing your Cloud Applications with AWS CDK, which is an S3 bucket for all the configurations.
+This command `npx cdk@1.22.0 bootstrap` creates an AWS Cloudformation Stack `CDKToolkit` in your Cloudformation console to manages resources necessary for managing your Cloud Applications with AWS CDK, which is an S3 bucket for all the configurations.
 
 Next, we deploy `hostedZone` to spin up the necessary AWS resources to map the domain name, IAM roles and policies and Lambda functions you need to prepare for the app to run on **<YOUR SUBDOMAIN>.multi-region.xyz**.
 
@@ -65,7 +65,7 @@ Now, compare the results with the the output of CDK, `hostedZone.NameServers`. I
 <!-- ![Compare Route53 namespace](../images/01-r53-01.png) -->
 
 ```
-npx cdk@1.8.0 deploy Wordpress-Primary
+npx cdk@1.22.0 deploy Wordpress-Primary
 
 Do you wish to deploy these changes (y/n)?
 ```

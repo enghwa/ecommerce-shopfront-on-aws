@@ -173,6 +173,7 @@ Resources:
               KeyType: HASH
           Projection:
             ProjectionType: ALL
+          # BillingMode: PAY_PER_REQUEST
           # ProvisionedThroughput:
           #   ReadCapacityUnits: 1
           #   WriteCapacityUnits: 1
@@ -270,7 +271,7 @@ Resources:
       Role: !GetAtt 
         - RedisRole
         - Arn
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: '60'
       VpcConfig:
         SecurityGroupIds:
@@ -315,7 +316,7 @@ Resources:
       Description: Get list of books ordered by customerId
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -339,7 +340,7 @@ Resources:
       Description: Get book by id
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -363,7 +364,7 @@ Resources:
       Description: Get list of books by category
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -387,7 +388,7 @@ Resources:
       Description: Update Customer's cart
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -411,7 +412,7 @@ Resources:
       Description: Get item in cart by customer and book id
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -435,7 +436,7 @@ Resources:
       Description: Get list of items in cart
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -459,7 +460,7 @@ Resources:
       Description: Add a book to cart
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -483,7 +484,7 @@ Resources:
       Description: Remove a book from cart
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -507,7 +508,7 @@ Resources:
       Description: Get list of books ordered by customerId
       Handler: index.handler
       MemorySize: 256
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Role: !GetAtt 
         - DynamoDbRole
         - Arn
@@ -541,7 +542,7 @@ Resources:
       Role: !GetAtt
         - RedisRole
         - Arn
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: '60'
       VpcConfig:
         SecurityGroupIds:
@@ -575,7 +576,7 @@ Resources:
         'Fn::GetAtt':
           - SeederRole
           - Arn
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: '60'
       Code:
         S3Bucket: !FindInMap 
@@ -1683,7 +1684,7 @@ Resources:
           phases:
             install:
               runtime-versions:
-                nodejs: 8
+                nodejs: 10
             pre_build:
               commands:
                 - echo Installing NPM dependencies...
@@ -1788,7 +1789,7 @@ Resources:
         'Fn::GetAtt':
           - SeederRole
           - Arn
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Timeout: 300
       Environment:
         Variables:
