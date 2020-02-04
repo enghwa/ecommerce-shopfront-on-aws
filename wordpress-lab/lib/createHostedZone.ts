@@ -27,7 +27,7 @@ export class createHostedZoneStack extends cdk.Stack {
 
     const requestJoinMasterDomain = new lambda.Function(this, "requestJoinMasterDomain", {
       functionName: "requestJoinMasterDomain",
-      runtime: lambda.Runtime.NODEJS_8_10,
+      runtime: lambda.Runtime.NODEJS_10_X,
       code: lambda.Code.asset('lambda/submit.zip'),
       handler: "submit.handler",
       timeout: cdk.Duration.seconds(10)

@@ -34,8 +34,8 @@ export hostedZoneID=`aws cloudformation describe-stacks --stack-name hostedZone 
  --query "Stacks[0].Outputs[?OutputKey=='hostedZoneID'].OutputValue" --output text`
 export hostedZoneName=$MYSUBDOMAIN.multi-region.xyz
 export AWS_DEFAULT_REGION=ap-southeast-1
-npx cdk@1.8.0 bootstrap
-npx cdk@1.8.0 deploy Wordpress-Secondary
+npx cdk@1.22.0 bootstrap
+npx cdk@1.22.0 deploy Wordpress-Secondary
 ```
 
 ![CDK](../images/02-cdk-02.png)
